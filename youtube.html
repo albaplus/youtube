@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VidStream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f0f0f;--surface:#181818;--hover:#272727;
+  --border:#303030;--text:#fff;--muted:#aaaaaa;
+  --accent:#ff0000;--accent2:#cc0000;
+  --font:'Roboto',sans-serif;
+}
+html{scrollbar-width:thin;scrollbar-color:#555 transparent}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#555;border-radius:4px}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden}
+
+/* ── TOPBAR ── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:var(--bg);border-bottom:1px solid #1f1f1f;
+  display:flex;align-items:center;padding:0 16px;z-index:200;gap:16px;
+}
+.topbar-left{display:flex;align-items:center;gap:16px;min-width:240px}
+.hamburger{width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;border:none;background:none;color:var(--text)}
+.hamburger:hover{background:var(--hover)}
+.logo{display:flex;align-items:center;gap:4px;cursor:pointer;text-decoration:none}
+.logo-icon{color:var(--accent);display:flex;align-items:center}
+.logo-text{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+.logo-tld{font-size:11px;font-weight:400;color:var(--muted);align-self:flex-end;margin-bottom:3px;margin-left:1px}
+.search-bar{flex:1;max-width:640px;display:flex;align-items:center;gap:0;margin:0 auto}
+.search-input{flex:1;background:#121212;border:1px solid var(--border);border-right:none;color:var(--text);padding:0 16px;height:40px;font-family:var(--font);font-size:16px;border-radius:20px 0 0 20px;outline:none}
+.search-input:focus{border-color:#1c62b9;background:#000}
+.search-btn{width:64px;height:40px;background:#2e2e2e;border:1px solid var(--border);border-left:none;border-radius:0 20px 20px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text)}
+.search-btn:hover{background:var(--hover)}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.icon-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;border:none;background:none;color:var(--text)}
+.icon-btn:hover{background:var(--hover)}
+.avatar-btn{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;overflow:hidden}
+.avatar-btn img{width:100%;height:100%;object-fit:cover}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  position:fixed;left:0;top:56px;width:240px;height:calc(100vh - 56px);
+  background:var(--bg);overflow-y:auto;padding:12px 0;z-index:100;
+  transition:transform 0.2s ease;
+}
+#sidebar.collapsed{transform:translateX(-100%)}
+.sidebar-section{padding:8px 0}
+.sidebar-divider{border:none;border-top:1px solid var(--border);margin:8px 0}
+.sidebar-heading{padding:8px 24px;font-size:14px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.sidebar-item{
+  display:flex;align-items:center;gap:24px;padding:0 24px;height:40px;
+  cursor:pointer;border-radius:10px;margin:0 8px;
+  font-size:14px;font-weight:400;color:var(--text);text-decoration:none;
+  transition:background 0.15s;
+}
+.sidebar-item:hover{background:var(--hover)}
+.sidebar-item.active{background:var(--hover);font-weight:500}
+.sidebar-item .icon{font-size:20px;min-width:24px;text-align:center;display:flex;align-items:center;justify-content:center}
+.sidebar-channel{
+  display:flex;align-items:center;gap:16px;padding:0 16px;height:56px;
+  cursor:pointer;border-radius:10px;margin:0 8px;transition:background 0.15s;
+}
+.sidebar-channel:hover{background:var(--hover)}
+.sidebar-channel .ch-avatar{width:24px;height:24px;border-radius:50%;flex-shrink:0}
+.sidebar-channel .ch-name{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── MAIN CONTENT ── */
+#content{margin-left:240px;margin-top:56px;padding:0;transition:margin-left 0.2s}
+#content.expanded{margin-left:0}
+.content-inner{padding:24px}
+.chips-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 24px 8px;scrollbar-width:none}
+.chips-bar::-webkit-scrollbar{display:none}
+.chip{
+  background:var(--surface);color:var(--text);border:none;
+  padding:6px 16px;border-radius:20px;font-size:14px;font-family:var(--font);
+  cursor:pointer;white-space:nowrap;transition:background 0.15s;
+}
+.chip:hover{background:#3f3f3f}
+.chip.active{background:var(--text);color:var(--bg)}
+
+/* ── VIDEO GRID ── */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:0 24px 24px}
+.video-card{cursor:pointer;border-radius:12px;overflow:hidden;transition:transform 0.15s}
+.video-card:hover .vthumb-inner{transform:scale(1.03)}
+.video-thumbnail{width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;position:relative}
+.vthumb-inner{width:100%;height:100%;transition:transform 0.3s ease;position:relative}
+.vthumb-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.duration-badge{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.85);color:#fff;font-size:12px;font-weight:500;padding:2px 6px;border-radius:4px;letter-spacing:0.3px;z-index:2}
+.video-info{display:flex;gap:12px;padding:10px 4px 8px}
+.card-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;cursor:pointer;overflow:hidden}
+.card-avatar img{width:100%;height:100%;object-fit:cover}
+.card-meta{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:500;line-height:1.4;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px}
+.card-channel{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.card-stats{font-size:13px;color:var(--muted)}
+.verified-badge{display:inline-flex;align-items:center;justify-content:center;color:#aaa}
+
+/* ── VIDEO PLAYER ── */
+#player-view{display:none}
+.player-layout{display:grid;grid-template-columns:1fr 402px;gap:24px;padding:24px;max-width:1800px}
+@media(max-width:1200px){.player-layout{grid-template-columns:1fr;}.sidebar-panel{display:none}}
+.player-main{min-width:0}
+.player-wrap{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;position:relative}
+.player-wrap iframe{width:100%;height:100%;border:none}
+.player-sim{width:100%;height:100%;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s}
+.play-overlay.paused{opacity:1}
+.play-btn-big{width:72px;height:72px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:#fff;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.player-title{font-size:20px;font-weight:700;line-height:1.3;margin:16px 0 12px}
+.player-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.player-views-full{font-size:15px;font-weight:400;color:var(--text)}
+.player-date{font-size:14px;color:var(--muted);margin-top:2px}
+.player-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.action-btn{display:flex;align-items:center;gap:7px;background:var(--surface);border:none;color:var(--text);padding:8px 16px;border-radius:20px;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s;white-space:nowrap}
+.action-btn:hover{background:#3f3f3f}
+.action-btn.liked{background:#2e4a7a;color:#4e9fff}
+.action-btn.liked svg path{fill:#4e9fff}
+/* Like/dislike combo */
+.like-dislike-wrap{display:flex;align-items:center;background:var(--surface);border-radius:20px;overflow:hidden}
+.like-half,.dislike-half{display:flex;align-items:center;gap:7px;padding:8px 14px;border:none;background:none;color:var(--text);font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s}
+.like-half:hover{background:#3f3f3f}
+.dislike-half:hover{background:#3f3f3f}
+.like-half.liked{color:#4e9fff}
+.like-half.liked svg path{fill:#4e9fff}
+.ld-divider{width:1px;height:28px;background:var(--border)}
+.channel-row{display:flex;align-items:center;gap:16px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px}
+.channel-row .cr-avatar{width:48px;height:48px;border-radius:50%;cursor:pointer;flex-shrink:0;overflow:hidden}
+.channel-row .cr-avatar img{width:100%;height:100%;object-fit:cover}
+.channel-row .cr-name{font-weight:500;cursor:pointer}
+.channel-row .cr-name:hover{color:var(--muted)}
+.channel-row .cr-subs{font-size:13px;color:var(--muted)}
+.btn-sub{padding:10px 20px;border-radius:20px;border:none;background:var(--text);color:var(--bg);font-family:var(--font);font-weight:500;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.btn-sub.subbed{background:var(--hover);color:var(--text)}
+.description-box{background:var(--surface);border-radius:12px;padding:16px;font-size:14px;line-height:1.6;color:var(--muted);cursor:pointer}
+.desc-short{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.comments-section{margin-top:24px}
+.comments-title{font-size:18px;font-weight:500;margin-bottom:16px}
+.comment{display:flex;gap:12px;margin-bottom:20px}
+.comment-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0}
+.comment-body .user{font-size:13px;font-weight:500;margin-bottom:4px}
+.comment-body .ts{font-size:12px;color:var(--muted);margin-left:8px;font-weight:400}
+.comment-body .text{font-size:14px;line-height:1.5;color:var(--text)}
+.comment-actions{display:flex;align-items:center;gap:8px;margin-top:8px}
+.comment-like{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:20px}
+.comment-like:hover{background:var(--hover)}
+/* Sidebar panel */
+.up-next-title{font-size:16px;font-weight:500;margin-bottom:16px}
+.mini-card{display:flex;gap:8px;cursor:pointer;padding:4px;border-radius:8px;transition:background 0.15s;margin-bottom:4px}
+.mini-card:hover{background:var(--hover)}
+.mini-thumb{width:120px;min-width:120px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;position:relative}
+.mini-thumb img{width:100%;height:100%;object-fit:cover}
+.mini-meta{flex:1;min-width:0}
+.mini-title{font-size:13px;font-weight:500;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px}
+.mini-channel{font-size:12px;color:var(--muted)}
+.mini-stats{font-size:12px;color:var(--muted)}
+
+/* ── CHANNEL PAGE ── */
+#channel-view{display:none}
+.ch-banner{width:100%;height:190px;overflow:hidden;position:relative;margin-bottom:0;background:#111}
+.ch-banner img{width:100%;height:100%;object-fit:cover}
+.ch-info-row{display:flex;align-items:center;gap:24px;padding:16px 24px;flex-wrap:wrap}
+.ch-big-avatar{width:80px;height:80px;border-radius:50%;border:3px solid var(--bg);overflow:hidden;flex-shrink:0}
+.ch-big-avatar img{width:100%;height:100%;object-fit:cover}
+.ch-details{flex:1}
+.ch-name-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.ch-big-name{font-size:22px;font-weight:700}
+.ch-handle{font-size:14px;color:var(--muted)}
+.ch-stats-row{font-size:13px;color:var(--muted);margin-top:4px}
+.ch-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.ch-tab{padding:14px 20px;background:none;border:none;color:var(--muted);font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
+.ch-tab:hover{color:var(--text)}
+.ch-tab.active{color:var(--text);border-bottom-color:var(--text)}
+.ch-content{padding:24px}
+.section-heading{font-size:16px;font-weight:500;margin:0 0 16px}
+.section-block{margin-bottom:32px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--surface);border-radius:12px;padding:16px;text-align:center}
+.stat-value{font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px}
+.stat-label{font-size:13px;color:var(--muted)}
+.playlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.playlist-card{cursor:pointer;border-radius:12px;overflow:hidden;background:var(--surface);transition:background 0.15s}
+.playlist-card:hover{background:var(--hover)}
+.playlist-thumb-wrap{position:relative}
+.playlist-count{position:absolute;bottom:0;right:0;background:rgba(0,0,0,0.8);padding:4px 10px;font-size:13px;display:flex;align-items:center;gap:6px}
+.playlist-info{padding:12px}
+.playlist-name{font-weight:500;font-size:14px;margin-bottom:4px}
+.playlist-meta{font-size:13px;color:var(--muted)}
+.about-content{max-width:600px}
+.about-desc{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:24px}
+.about-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:14px;color:var(--muted)}
+.about-row .icon{font-size:18px;width:24px;text-align:center}
+.monetize-card{background:linear-gradient(135deg,#1a2a1a,#2a3a2a);border:1px solid #3a5a3a;border-radius:16px;padding:20px;margin-bottom:24px}
+.monetize-title{font-size:16px;font-weight:500;color:#6fcf97;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.earn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.earn-item{background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;text-align:center}
+.earn-val{font-size:22px;font-weight:700;color:#6fcf97}
+.earn-lbl{font-size:12px;color:#aaa;margin-top:2px}
+
+/* ── LIVE BADGE ── */
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;text-transform:uppercase}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#fff;animation:livePulse 1.5s infinite}
+.live-viewers{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.live-viewers-count{color:var(--text);font-weight:500}
+
+/* ── LIVE VIEW ── */
+#live-view{display:none}
+.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;padding:0 24px 24px}
+.live-card{cursor:pointer;border-radius:12px;overflow:hidden;background:var(--surface);transition:transform 0.15s}
+.live-card:hover{transform:translateY(-2px)}
+.live-thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden}
+.live-thumb img{width:100%;height:100%;object-fit:cover}
+.live-thumb-gradient{width:100%;height:100%}
+.live-badge-wrap{position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:8px}
+.live-info{padding:12px}
+.live-title{font-size:14px;font-weight:500;margin-bottom:6px;line-height:1.3}
+.live-channel-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+
+/* ── VIEW COUNT ANIMATION ── */
+@keyframes viewFlash{0%{color:var(--text)}50%{color:#4caf50}100%{color:var(--text)}}
+.views-tick{animation:viewFlash 0.6s ease}
+
+/* ── NOTIFICATIONS ── */
+.notif{position:fixed;bottom:24px;right:24px;background:#272727;color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;z-index:9999;opacity:0;transform:translateY(16px);transition:all 0.3s;pointer-events:none;border-left:3px solid var(--accent)}
+.notif.show{opacity:1;transform:translateY(0)}
+
+/* ── LIVE METRICS PULSE ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.metric-live{animation:pulse 2s infinite}
+.trend-up{color:#4caf50;font-size:12px}
+
+/* ── SEARCH RESULTS ── */
+#search-view{display:none}
+.search-result{display:flex;gap:16px;margin-bottom:16px;cursor:pointer;padding:4px;border-radius:8px}
+.search-result:hover{background:var(--hover)}
+.sr-thumb{width:240px;min-width:240px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0}
+.sr-thumb img{width:100%;height:100%;object-fit:cover}
+.sr-meta{flex:1}
+.sr-title{font-size:18px;font-weight:400;margin-bottom:8px;line-height:1.3}
+.sr-stats{font-size:13px;color:var(--muted);margin-bottom:6px}
+.sr-channel-row{display:flex;align-items:center;gap:8px}
+.sr-channel-name{font-size:13px;color:var(--muted)}
+.sr-desc{font-size:14px;color:var(--muted);margin-top:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn 0.25s ease}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:calc(200px + 100%) 0}}
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--hover) 37%,var(--surface) 63%);background-size:400px 100%;animation:shimmer 1.4s ease infinite}
+
+/* Scrollbar */
+#content{scrollbar-width:thin;scrollbar-color:#333 transparent}
+
+/* ── SVG ICONS ── */
+.icon-svg{display:flex;align-items:center;justify-content:center}
+svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <div class="topbar-left">
+    <button class="hamburger icon-svg" onclick="toggleSidebar()">
+      <svg class="yt-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+    <a class="logo" onclick="navigate('home')" style="cursor:pointer">
+      <span class="logo-icon">
+        <svg width="90" height="20" viewBox="0 0 90 20">
+          <rect x="0" y="2" width="28" height="16" rx="4" fill="#ff0000"/>
+          <polygon points="11,6 11,14 19,10" fill="white"/>
+          <text x="32" y="15" font-family="Roboto,sans-serif" font-size="14" font-weight="700" fill="white">VidStream</text>
+        </svg>
+      </span>
+      <span class="logo-tld">BR</span>
+    </a>
+  </div>
+  <div class="search-bar">
+    <input class="search-input" type="text" id="searchInput" placeholder="Pesquisar" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="search-btn icon-svg" onclick="doSearch()">
+      <svg class="yt-icon" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </button>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn icon-svg" title="Criar" onclick="showNotif('✨ Criar vídeo')">
+      <svg class="yt-icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></svg>
+    </button>
+    <button class="icon-btn icon-svg" title="Notificações" onclick="showNotif('🔔 Sem novas notificações')">
+      <svg class="yt-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+    </button>
+    <button class="avatar-btn" title="Conta" id="topbar-avatar-btn" onclick="navigate('channel','ch_001')">V</button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-section">
+    <a class="sidebar-item active" id="si-home" onclick="navigate('home')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
+      <span>Início</span>
+    </a>
+    <a class="sidebar-item" id="si-shorts" onclick="navigate('home')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M17.77 10.32l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.23-2.53-5.06-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25L7.4 14.2l-1.43.75c-1.84.96-2.53 3.23-1.56 5.06.96 1.84 3.23 2.53 5.06 1.56l8.5-4.5c1.29-.68 2.07-2.04 2-3.49-.07-1.42-.93-2.67-2.2-3.26zM10 14.65v-5.3L15 12l-5 2.65z"/></svg></span>
+      <span>Shorts</span>
+    </a>
+    <a class="sidebar-item" id="si-subs" onclick="showNotif('📺 Inscrições')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M10 18v-2h4v2h-4zm-4-4v-2h12v2H6zm-2-4V8h16v2H4z"/></svg></span>
+      <span>Inscrições</span>
+    </a>
+    <a class="sidebar-item" id="si-live" onclick="navigate('live')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg></span>
+      <span>Ao vivo</span>
+    </a>
+  </div>
+  <hr class="sidebar-divider">
+  <div class="sidebar-section">
+    <div class="sidebar-heading">Você</div>
+    <a class="sidebar-item" onclick="showNotif('📜 Histórico')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7v4l5-5-5-5v4z"/></svg></span>
+      <span>Histórico</span>
+    </a>
+    <a class="sidebar-item" onclick="showNotif('▶ Seus vídeos')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg></span>
+      <span>Seus vídeos</span>
+    </a>
+    <a class="sidebar-item" onclick="showNotif('⏱ Assistir depois')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg></span>
+      <span>Assistir depois</span>
+    </a>
+    <a class="sidebar-item" onclick="showNotif('👍 Vídeos curtidos')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg></span>
+      <span>Vídeos curtidos</span>
+    </a>
+  </div>
+  <hr class="sidebar-divider">
+  <div class="sidebar-section">
+    <div class="sidebar-heading">Inscrições</div>
+    <div id="sidebar-channels"></div>
+  </div>
+  <hr class="sidebar-divider">
+  <div class="sidebar-section">
+    <div class="sidebar-heading">Explorar</div>
+    <a class="sidebar-item" onclick="showNotif('🎵 Música')"><span class="icon">🎵</span><span>Música</span></a>
+    <a class="sidebar-item" onclick="showNotif('🎮 Games')"><span class="icon">🎮</span><span>Games</span></a>
+    <a class="sidebar-item" onclick="showNotif('📰 Notícias')"><span class="icon">📰</span><span>Notícias</span></a>
+    <a class="sidebar-item" onclick="showNotif('🎬 Filmes')"><span class="icon">🎬</span><span>Filmes</span></a>
+    <a class="sidebar-item" onclick="navigate('live')"><span class="icon">🔴</span><span>Ao vivo</span></a>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="content">
+
+  <!-- HOME VIEW -->
+  <div id="home-view">
+    <div class="chips-bar" id="chips"></div>
+    <div class="video-grid" id="video-grid"></div>
+  </div>
+
+  <!-- PLAYER VIEW -->
+  <div id="player-view">
+    <div class="player-layout">
+      <div class="player-main">
+        <div class="player-wrap" id="player-wrap"></div>
+        <h1 class="player-title" id="player-title"></h1>
+        <div class="player-meta">
+          <div>
+            <div class="player-views-full" id="player-views-full"></div>
+            <div class="player-date" id="player-date"></div>
+          </div>
+          <div class="player-actions" id="player-actions"></div>
+        </div>
+        <div class="channel-row" id="player-channel-row"></div>
+        <div class="description-box" id="player-desc" onclick="toggleDesc(this)"></div>
+        <div class="comments-section">
+          <div class="comments-title" id="comments-count"></div>
+          <div id="comments-list"></div>
+        </div>
+      </div>
+      <div class="sidebar-panel">
+        <div class="up-next-title">A seguir</div>
+        <div id="up-next-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANNEL VIEW -->
+  <div id="channel-view">
+    <div class="ch-banner" id="ch-banner"></div>
+    <div class="ch-info-row">
+      <div class="ch-big-avatar" id="ch-big-avatar"></div>
+      <div class="ch-details">
+        <div class="ch-name-row">
+          <span class="ch-big-name" id="ch-big-name"></span>
+          <span id="ch-verified"></span>
+        </div>
+        <div class="ch-handle" id="ch-handle"></div>
+        <div class="ch-stats-row" id="ch-stats-row"></div>
+      </div>
+      <button class="btn-sub" id="ch-sub-btn" onclick="toggleChannelSub()">Inscrever-se</button>
+    </div>
+    <div class="ch-tabs" id="ch-tabs">
+      <button class="ch-tab active" onclick="switchTab('home')">Início</button>
+      <button class="ch-tab" onclick="switchTab('videos')">Vídeos</button>
+      <button class="ch-tab" onclick="switchTab('shorts')">Shorts</button>
+      <button class="ch-tab" onclick="switchTab('playlists')">Playlists</button>
+      <button class="ch-tab" onclick="switchTab('live')">Ao vivo</button>
+      <button class="ch-tab" onclick="switchTab('community')">Comunidade</button>
+      <button class="ch-tab" onclick="switchTab('monetize')">💰 Ganhos</button>
+      <button class="ch-tab" onclick="switchTab('about')">Sobre</button>
+    </div>
+    <div class="ch-content" id="ch-content"></div>
+  </div>
+
+  <!-- LIVE VIEW -->
+  <div id="live-view">
+    <div class="content-inner" style="padding-bottom:8px">
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px">🔴 Ao vivo agora</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:0">Streams ao vivo dos seus canais e mais</p>
+    </div>
+    <div class="live-grid" id="live-grid"></div>
+  </div>
+
+  <!-- SEARCH VIEW -->
+  <div id="search-view">
+    <div class="content-inner" id="search-results"></div>
+  </div>
+
+</main>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATABASE DEFAULT
+// ══════════════════════════════════════════════
+const DEFAULT_DB = {
+  channels:[
+    {
+      id:"ch_001",name:"venna",handle:"@venna",subscribers:120034,verified:true,
+      description:"noite, luxo e silêncio — artista visual e sonora",creation_date:"2025-12-01",
+      gradient:["#0d0d1a","#1a0a2e","#2a0a3e"],subscribed:true,
+      avatar_url:"https://picsum.photos/seed/venna_av/200/200",
+      banner_url:"https://picsum.photos/seed/venna_bn/1280/351",
+      identity:{aesthetic:"cinematic noir",tone:"misterioso",upload_pattern:"irregular",fanbase_name:"nocturnos"},
+      about:{bio:"artista visual e sonora",location:"Rio de Janeiro",
+             links:["instagram.com/venna","twitter.com/venna","open.spotify.com/artist/venna"],joined:"2025-12-01"}
+    },
+    {
+      id:"ch_002",name:"Lofi Dreams",handle:"@lofidreams",subscribers:834000,verified:true,
+      description:"beats for late nights",gradient:["#1a0a0a","#2e0a0a","#1a1a0a"],subscribed:false,
+      avatar_url:"https://picsum.photos/seed/lofidreams_av/200/200",
+      banner_url:"https://picsum.photos/seed/lofidreams_bn/1280/351"
+    },
+    {
+      id:"ch_003",name:"NightWave",handle:"@nightwave",subscribers:91200,verified:false,
+      description:"synthwave & nostalgia",gradient:["#0a0a1a","#0a1a2e","#001a2e"],subscribed:true,
+      avatar_url:"https://picsum.photos/seed/nightwave_av/200/200",
+      banner_url:"https://picsum.photos/seed/nightwave_bn/1280/351"
+    },
+    {
+      id:"ch_004",name:"CineArt",handle:"@cineart",subscribers:210000,verified:true,
+      description:"visual storytelling",gradient:["#1a1a0a","#2e2a0a","#1a0a0a"],subscribed:false,
+      avatar_url:"https://picsum.photos/seed/cineart_av/200/200",
+      banner_url:"https://picsum.photos/seed/cineart_bn/1280/351"
+    },
+  ],
+  videos:[
+    {id:"vid_001",title:"Noite de Vidro",channel_id:"ch_001",views:18234,likes:3921,dislikes:124,
+     upload_date:"2026-04-01",duration:"3:21",
+     description:"silêncio cortante como vidro na madrugada\n\nAcompanhe venna nas redes:\nInstagram · Twitter · Spotify",
+     thumbnail_url:"https://picsum.photos/seed/vid001/480/270",
+     embed_url:null,
+     gradient:["#050520","#1a0a3a","#2a0a5a"],liked:false,
+     engagement:{velocity:1.8,like_ratio:0.21,trend:"growing"}},
+    {id:"vid_002",title:"Espelho Partido",channel_id:"ch_001",views:42810,likes:9340,dislikes:201,
+     upload_date:"2026-03-15",duration:"4:07",
+     description:"fragmentos de luz numa sala escura",
+     thumbnail_url:"https://picsum.photos/seed/vid002/480/270",
+     embed_url:null,
+     gradient:["#1a0505","#3a0a0a","#200010"],liked:false,
+     engagement:{velocity:2.4,like_ratio:0.218,trend:"viral"}},
+    {id:"vid_003",title:"Névoa",channel_id:"ch_001",views:9810,likes:2100,dislikes:67,
+     upload_date:"2026-03-28",duration:"2:54",
+     description:"quando a névoa cobre tudo e resta só o silêncio",
+     thumbnail_url:"https://picsum.photos/seed/vid003/480/270",
+     embed_url:null,
+     gradient:["#050a15","#0a1a25","#051520"],liked:false,
+     engagement:{velocity:1.2,like_ratio:0.214,trend:"steady"}},
+    {id:"vid_004",title:"Diamante Bruto",channel_id:"ch_001",views:71230,likes:15200,dislikes:380,
+     upload_date:"2026-02-20",duration:"5:12",
+     description:"bruto por fora. eterno por dentro.",
+     thumbnail_url:"https://picsum.photos/seed/vid004/480/270",
+     embed_url:null,
+     gradient:["#0a0a05","#1a1a00","#2a2500"],liked:false,
+     engagement:{velocity:3.1,like_ratio:0.213,trend:"growing"}},
+    {id:"vid_005",title:"Última Luz",channel_id:"ch_001",views:29450,likes:6300,dislikes:155,
+     upload_date:"2026-03-05",duration:"3:48",
+     description:"a última luz antes do amanhecer",
+     thumbnail_url:"https://picsum.photos/seed/vid005/480/270",
+     embed_url:null,
+     gradient:["#150a00","#2a1500","#1a0a10"],liked:false,
+     engagement:{velocity:1.5,like_ratio:0.214,trend:"growing"}},
+    {id:"vid_006",title:"Chuva de Neon",channel_id:"ch_001",views:55900,likes:12100,dislikes:290,
+     upload_date:"2026-01-30",duration:"4:33",
+     description:"neon dissolve na chuva · loopable",
+     thumbnail_url:"https://picsum.photos/seed/vid006/480/270",
+     embed_url:null,
+     gradient:["#05101a","#00152a","#0a0520"],liked:false,
+     engagement:{velocity:2.1,like_ratio:0.216,trend:"growing"}},
+    {id:"vid_007",title:"Madrugada",channel_id:"ch_001",views:14020,likes:2980,dislikes:88,
+     upload_date:"2026-04-08",duration:"3:00",
+     description:"3am. janela aberta. tudo parado.",
+     thumbnail_url:"https://picsum.photos/seed/vid007/480/270",
+     embed_url:null,
+     gradient:["#050510","#0a0a20","#05051a"],liked:false,
+     engagement:{velocity:1.6,like_ratio:0.213,trend:"growing"}},
+    {id:"vid_008",title:"Vazio",channel_id:"ch_001",views:6200,likes:1420,dislikes:31,
+     upload_date:"2026-04-14",duration:"1:47",
+     description:"vazio não é ausência. é presença de tudo de uma vez.",
+     thumbnail_url:"https://picsum.photos/seed/vid008/480/270",
+     embed_url:null,
+     gradient:["#000000","#050505","#020210"],liked:false,
+     engagement:{velocity:0.9,like_ratio:0.229,trend:"steady"}},
+    {id:"vid_009",title:"2AM Study Session ☁",channel_id:"ch_002",views:2840000,likes:182000,dislikes:2100,
+     upload_date:"2026-02-10",duration:"3:02:45",
+     description:"lofi hip hop radio · beats to study/relax",
+     thumbnail_url:"https://picsum.photos/seed/vid009/480/270",
+     embed_url:"https://www.youtube.com/embed/jfKfPfyJRdk",
+     gradient:["#100a05","#1e1005","#150a00"],liked:false,
+     engagement:{velocity:4.5,like_ratio:0.064,trend:"growing"}},
+    {id:"vid_010",title:"BLADE RUNNER DREAMS",channel_id:"ch_003",views:380000,likes:42000,dislikes:820,
+     upload_date:"2026-03-01",duration:"1:08:22",
+     description:"synthwave mix · replicant vibes",
+     thumbnail_url:"https://picsum.photos/seed/vid010/480/270",
+     embed_url:"https://www.youtube.com/embed/G85bkBWPMBY",
+     gradient:["#050010","#0a0020","#050015"],liked:false,
+     engagement:{velocity:2.8,like_ratio:0.110,trend:"growing"}},
+    {id:"vid_011",title:"Luz Dourada — Film Look Tutorial",channel_id:"ch_004",views:127000,likes:14800,dislikes:310,
+     upload_date:"2026-03-18",duration:"18:44",
+     description:"como criar looks cinematográficos no Premiere",
+     thumbnail_url:"https://picsum.photos/seed/vid011/480/270",
+     embed_url:null,
+     gradient:["#15100a","#251a00","#1a1000"],liked:false,
+     engagement:{velocity:1.9,like_ratio:0.117,trend:"steady"}},
+    {id:"vid_012",title:"Horizonte Invisível",channel_id:"ch_001",views:3100,likes:720,dislikes:19,
+     upload_date:"2026-04-17",duration:"2:28",
+     description:"o horizonte que só existe quando você para de procurar",
+     thumbnail_url:"https://picsum.photos/seed/vid012/480/270",
+     embed_url:null,
+     gradient:["#050a10","#0a1015","#050810"],liked:false,
+     engagement:{velocity:2.2,like_ratio:0.232,trend:"viral"}},
+  ],
+  shorts:[
+    {id:"short_001",title:"Quando tudo apaga",channel_id:"ch_001",views:198000,likes:32000,duration:"0:18",
+     thumbnail_url:"https://picsum.photos/seed/sh001/270/480",
+     gradient:["#0d0a1a","#1a0a30","#0a0520"]},
+    {id:"short_002",title:"Espelho #noir",channel_id:"ch_001",views:442000,likes:78000,duration:"0:30",
+     thumbnail_url:"https://picsum.photos/seed/sh002/270/480",
+     gradient:["#1a0505","#2a0a10","#150010"]},
+    {id:"short_003",title:"3AM vibe check",channel_id:"ch_001",views:89000,likes:15000,duration:"0:22",
+     thumbnail_url:"https://picsum.photos/seed/sh003/270/480",
+     gradient:["#050510","#0a0a1a","#08051a"]},
+    {id:"short_004",title:"neon rain loop",channel_id:"ch_001",views:312000,likes:54000,duration:"0:15",
+     thumbnail_url:"https://picsum.photos/seed/sh004/270/480",
+     gradient:["#050f1a","#001520","#050a15"]},
+  ],
+  live_streams:[
+    {id:"live_001",title:"madrugada ao vivo — sessão de criação",channel_id:"ch_001",
+     viewers:1842,thumbnail_url:"https://picsum.photos/seed/live001/480/270",
+     embed_url:null,gradient:["#0d0a1a","#1a0a30","#0a0520"],
+     category:"Música",started_ago:"há 2h"},
+    {id:"live_002",title:"lofi radio 24/7 — late night study",channel_id:"ch_002",
+     viewers:24830,thumbnail_url:"https://picsum.photos/seed/live002/480/270",
+     embed_url:"https://www.youtube.com/embed/jfKfPfyJRdk",
+     gradient:["#100a05","#1e1005","#150a00"],
+     category:"Música",started_ago:"há 14h"},
+    {id:"live_003",title:"SYNTHWAVE LIVE — full cyberpunk session",channel_id:"ch_003",
+     viewers:3291,thumbnail_url:"https://picsum.photos/seed/live003/480/270",
+     embed_url:null,gradient:["#050010","#0a0020","#050015"],
+     category:"Música",started_ago:"há 45min"},
+    {id:"live_004",title:"color grading ao vivo — tutorial DaVinci",channel_id:"ch_004",
+     viewers:812,thumbnail_url:"https://picsum.photos/seed/live004/480/270",
+     embed_url:null,gradient:["#15100a","#251a00","#1a1000"],
+     category:"Educação",started_ago:"há 1h"},
+  ],
+  playlists:[
+    {id:"pl_001",title:"era diamante",channel_id:"ch_001",
+     videos:["vid_004","vid_006","vid_002","vid_001"],views:230000,
+     description:"os clássicos da fase mais densa"},
+    {id:"pl_002",title:"madrugada playlist",channel_id:"ch_001",
+     videos:["vid_007","vid_003","vid_008","vid_012"],views:94000,
+     description:"para ouvir quando a cidade dorme"},
+    {id:"pl_003",title:"melhores de venna",channel_id:"ch_001",
+     videos:["vid_002","vid_004","vid_006","vid_001","vid_005"],views:510000,
+     description:"curadoria oficial"},
+  ],
+  comments:{
+    vid_001:[
+      {user:"nocturn0s",text:"isso aqui é absurdo como pode uma música fazer isso com a gente",likes:847,ts:"há 2 semanas"},
+      {user:"melancholia_x",text:"o tipo de coisa que você ouve de madrugada e não consegue dormir depois",likes:423,ts:"há 1 semana"},
+      {user:"glassnight",text:"noite de vidro ✦ literalmente minha estética de vida",likes:312,ts:"há 5 dias"},
+      {user:"void__user",text:"venna entregando mais uma obra-prima sem nem avisar",likes:198,ts:"há 3 dias"},
+      {user:"silencio404",text:"essa produção.. cada detalhe foi pensado",likes:156,ts:"há 2 dias"},
+    ],
+    vid_002:[
+      {user:"darkroom_kid",text:"ESPELHO PARTIDO > tudo que saiu esse ano",likes:1204,ts:"há 1 mês"},
+      {user:"vennanocturno",text:"já ouvi 47 vezes e ainda não enjoou",likes:892,ts:"há 3 semanas"},
+      {user:"cristalx",text:"aquela transição no 2:30 me deu calafrios",likes:567,ts:"há 2 semanas"},
+    ],
+    vid_004:[
+      {user:"brutoeterno",text:"diamante bruto foi o momento em que venna virou outro nível",likes:2100,ts:"há 2 meses"},
+      {user:"nocturn0s",text:"essa música mudou meu ano",likes:1456,ts:"há 6 semanas"},
+      {user:"fx_wanderer",text:"mixing perfeito nesse aqui",likes:834,ts:"há 1 mês"},
+    ],
+  },
+  channel_stats:{
+    ch_001:{total_views:5823491,total_likes:934221,videos_count:8,shorts_count:4,engagement_rate:0.21,
+            analytics:{subscriber_growth:[110000,114000,118000,120034],views_last_7_days:84200,
+                       top_regions:["BR","PT","US"],watch_time_hours:127400},
+            monetization:{total_earnings:4821.22,monthly_earnings:842.11,top_video:"vid_004",rpm_avg:2.3}},
+  },
+  trending:["vid_002","vid_004","vid_012","vid_009","vid_010"],
+  tick_system:{interval:"5s",update:["views","likes"],persist:true},
+  live_simulation:{active:true,boost_multiplier:2.5},
+  logs:[],
+};
+
+// ══════════════════════════════════════════════
+// STATE & STORAGE
+// ══════════════════════════════════════════════
+let DB = {};
+let STATE = {view:'home',currentChannel:null,currentVideo:null,currentTab:'home',sidebarOpen:true,currentChip:'all'};
+
+function loadDB(){
+  try{const s=localStorage.getItem('vidstream_db2');if(s){DB=JSON.parse(s);return;}}catch(e){}
+  DB=JSON.parse(JSON.stringify(DEFAULT_DB));
+  saveDB();
+}
+function saveDB(){
+  try{localStorage.setItem('vidstream_db2',JSON.stringify(DB));}catch(e){}
+}
+
+// ══════════════════════════════════════════════
+// METRICS TICK SYSTEM
+// ══════════════════════════════════════════════
+let tickCount=0;
+function tick(){
+  tickCount++;
+  const now=Date.now();
+  DB.videos.forEach(v=>{
+    const vel=v.engagement.velocity;
+    const factor=v.engagement.trend==='viral'?3:v.engagement.trend==='growing'?1.5:1;
+    const addViews=Math.floor(10*vel*factor*(0.8+Math.random()*0.4));
+    const addLikes=Math.floor(addViews*v.engagement.like_ratio*(0.9+Math.random()*0.2));
+    v.views+=addViews;
+    v.likes+=addLikes;
+    if(Math.random()<0.002&&v.engagement.trend!=='viral'){
+      v.engagement.trend='viral';
+      v.engagement.velocity=Math.min(v.engagement.velocity*1.5,5);
+      showNotif(`🔥 "${v.title}" está viralizando!`);
+    }
+    DB.logs.push({video_id:v.id,timestamp:now,views_added:addViews,likes_added:addLikes});
+  });
+  // Live viewer fluctuation
+  if(DB.live_streams){
+    DB.live_streams.forEach(ls=>{
+      const delta=Math.floor((Math.random()-0.4)*50);
+      ls.viewers=Math.max(100,ls.viewers+delta);
+    });
+  }
+  DB.channels.forEach(ch=>{
+    if(Math.random()<0.1) ch.subscribers+=Math.floor(Math.random()*3);
+  });
+  if(DB.logs.length>500) DB.logs=DB.logs.slice(-200);
+  saveDB();
+  // Update live UI
+  if(STATE.view==='player'&&STATE.currentVideo){
+    const v=getVideo(STATE.currentVideo);
+    if(v){
+      const el=document.getElementById('player-views-full');
+      if(el){
+        el.textContent=fmtNumFull(v.views)+' visualizações';
+        el.classList.remove('views-tick');
+        void el.offsetWidth;
+        el.classList.add('views-tick');
+      }
+      const acts=document.getElementById('player-actions');
+      if(acts){const lb=acts.querySelector('.like-count');if(lb)lb.textContent=fmtNum(v.likes);}
+    }
+  }
+  if(STATE.view==='channel'&&STATE.currentChannel){
+    const el=document.getElementById('ch-stats-row');
+    const ch=getChannel(STATE.currentChannel);
+    if(el&&ch) el.textContent=`${fmtNum(ch.subscribers)} inscritos`;
+  }
+  if(STATE.view==='live'){
+    renderLiveGrid();
+  }
+}
+setInterval(tick,5000);
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function getVideo(id){return DB.videos.find(v=>v.id===id)}
+function getChannel(id){return DB.channels.find(c=>c.id===id)}
+function getChannelVideos(chId){return DB.videos.filter(v=>v.channel_id===chId)}
+function fmtNum(n){
+  if(n>=1e9)return(n/1e9).toFixed(1)+'B';
+  if(n>=1e6)return(n/1e6).toFixed(1)+'M';
+  if(n>=1e3)return(n/1e3).toFixed(0)+'K';
+  return n.toString();
+}
+function fmtNumFull(n){
+  return n.toLocaleString('pt-BR');
+}
+function fmtDate(d){
+  const diff=Math.floor((Date.now()-new Date(d).getTime())/86400000);
+  if(diff<1)return'hoje';if(diff<7)return`há ${diff} dias`;
+  if(diff<30)return`há ${Math.floor(diff/7)} semanas`;
+  if(diff<365)return`há ${Math.floor(diff/30)} meses`;
+  return`há ${Math.floor(diff/365)} anos`;
+}
+function gradientCSS(g){return`linear-gradient(135deg,${g.join(',')})`}
+
+// Verified badge SVG (YouTube style)
+function verifiedSVG(size=16){
+  return`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="fill:#aaa;vertical-align:middle;margin-left:3px" title="Canal verificado"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
+}
+
+function makeAvatar(chId,size=36){
+  const ch=getChannel(chId);
+  if(!ch)return`<div style="width:${size}px;height:${size}px;border-radius:50%;background:#333;flex-shrink:0"></div>`;
+  if(ch.avatar_url){
+    return`<div style="width:${size}px;height:${size}px;border-radius:50%;overflow:hidden;flex-shrink:0;cursor:pointer" onclick="navigate('channel','${chId}')"><img src="${ch.avatar_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentNode.innerHTML='<div style=\'width:${size}px;height:${size}px;border-radius:50%;background:${gradientCSS(ch.gradient||['#333','#555'])};display:flex;align-items:center;justify-content:center;font-size:${Math.floor(size*0.4)}px;font-weight:700;color:#fff\'>${ch.name[0].toUpperCase()}</div>'"></div>`;
+  }
+  const initials=ch.name.substring(0,1).toUpperCase();
+  const g=ch.gradient||['#333','#555'];
+  return`<div style="width:${size}px;height:${size}px;border-radius:50%;background:${gradientCSS(g)};display:flex;align-items:center;justify-content:center;font-size:${Math.floor(size*0.4)}px;font-weight:700;flex-shrink:0;cursor:pointer;color:#fff" onclick="navigate('channel','${chId}')">${initials}</div>`;
+}
+
+function makeThumbnail(video){
+  if(video.thumbnail_url){
+    return`<div class="vthumb-inner" style="position:relative">
+      <img src="${video.thumbnail_url}" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:100%;height:100%;background:${gradientCSS(video.gradient||['#111','#222'])};align-items:center;justify-content:center;padding:16px;text-align:center;position:absolute;inset:0">
+        <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.7)">${video.title}</span>
+      </div>
+      <div class="duration-badge">${video.duration}</div>
+    </div>`;
+  }
+  return`<div class="vthumb-inner" style="background:${gradientCSS(video.gradient||['#111','#222'])};display:flex;align-items:center;justify-content:center;padding:16px;text-align:center">
+    <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);line-height:1.3">${video.title}</span>
+    <div class="duration-badge">${video.duration}</div>
+  </div>`;
+}
+
+function showNotif(msg){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3500);
+}
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+function navigate(view,id){
+  ['home-view','player-view','channel-view','search-view','live-view'].forEach(v=>{
+    document.getElementById(v).style.display='none';
+  });
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  STATE.view=view;
+  if(view==='home'){
+    document.getElementById('home-view').style.display='block';
+    document.getElementById('si-home').classList.add('active');
+    renderHome();
+  } else if(view==='player'){
+    STATE.currentVideo=id;
+    document.getElementById('player-view').style.display='block';
+    renderPlayer(id);
+    window.scrollTo(0,0);
+  } else if(view==='channel'){
+    STATE.currentChannel=id;
+    STATE.currentTab='home';
+    document.getElementById('channel-view').style.display='block';
+    renderChannel(id);
+    window.scrollTo(0,0);
+  } else if(view==='search'){
+    document.getElementById('search-view').style.display='block';
+    renderSearch(id);
+  } else if(view==='live'){
+    document.getElementById('live-view').style.display='block';
+    document.getElementById('si-live').classList.add('active');
+    renderLiveGrid();
+    window.scrollTo(0,0);
+  }
+}
+
+function toggleSidebar(){
+  STATE.sidebarOpen=!STATE.sidebarOpen;
+  const s=document.getElementById('sidebar');
+  const c=document.getElementById('content');
+  if(STATE.sidebarOpen){s.classList.remove('collapsed');c.classList.remove('expanded');}
+  else{s.classList.add('collapsed');c.classList.add('expanded');}
+}
+
+// ══════════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════════
+function renderHome(){
+  renderChips();
+  const grid=document.getElementById('video-grid');
+  let vids=[...DB.videos];
+  if(STATE.currentChip!=='all'){
+    if(STATE.currentChip==='trending'){
+      vids=DB.trending.map(id=>getVideo(id)).filter(Boolean);
+    } else {
+      vids=vids.filter(v=>{const ch=getChannel(v.channel_id);return ch&&ch.name.toLowerCase().includes(STATE.currentChip)});
+    }
+  }
+  grid.innerHTML=vids.map(v=>videoCard(v)).join('');
+  grid.className='video-grid fade-in';
+  renderSidebarChannels();
+  // Set topbar avatar
+  const ch1=getChannel('ch_001');
+  const ab=document.getElementById('topbar-avatar-btn');
+  if(ch1&&ch1.avatar_url){
+    ab.innerHTML=`<img src="${ch1.avatar_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentNode.textContent='V'">`;
+  }
+}
+
+function renderChips(){
+  const chips=['all','trending','venna','lofi','night'];
+  const labels={all:'Tudo',trending:'🔥 Trending',venna:'venna',lofi:'Lofi',night:'NightWave'};
+  document.getElementById('chips').innerHTML=chips.map(c=>`
+    <button class="chip${c===STATE.currentChip?' active':''}" onclick="setChip('${c}')">${labels[c]||c}</button>
+  `).join('');
+}
+
+function setChip(c){STATE.currentChip=c;renderHome();}
+
+function videoCard(v){
+  const ch=getChannel(v.channel_id);
+  if(!ch)return'';
+  return`<div class="video-card" onclick="navigate('player','${v.id}')">
+    <div class="video-thumbnail">${makeThumbnail(v)}</div>
+    <div class="video-info">
+      ${makeAvatar(v.channel_id,36)}
+      <div class="card-meta">
+        <div class="card-title">${v.title}</div>
+        <div class="card-channel">${ch.name}${ch.verified?verifiedSVG(14):''}</div>
+        <div class="card-stats">${fmtNum(v.views)} visualizações · ${fmtDate(v.upload_date)}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderSidebarChannels(){
+  const el=document.getElementById('sidebar-channels');
+  const subChans=DB.channels.filter(c=>c.subscribed);
+  el.innerHTML=subChans.map(c=>`
+    <div class="sidebar-channel" onclick="navigate('channel','${c.id}')">
+      ${c.avatar_url
+        ? `<img src="${c.avatar_url}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">`
+        : `<div style="width:24px;height:24px;border-radius:50%;background:${gradientCSS(c.gradient||['#333','#555'])};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff">${c.name[0]}</div>`
+      }
+      <span class="ch-name">${c.name}</span>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════
+// LIVE VIEW
+// ══════════════════════════════════════════════
+function renderLiveGrid(){
+  const grid=document.getElementById('live-grid');
+  if(!grid)return;
+  const streams=DB.live_streams||[];
+  grid.innerHTML=streams.map(ls=>{
+    const ch=getChannel(ls.channel_id);
+    return`<div class="live-card" onclick="navigate('player-live','${ls.id}')">
+      <div class="live-thumb">
+        ${ls.thumbnail_url
+          ? `<img src="${ls.thumbnail_url}" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='block'">
+             <div class="live-thumb-gradient" style="display:none;background:${gradientCSS(ls.gradient)}"></div>`
+          : `<div class="live-thumb-gradient" style="background:${gradientCSS(ls.gradient)}"></div>`
+        }
+        <div class="live-badge-wrap">
+          <span class="live-badge"><span class="live-dot"></span>AO VIVO</span>
+          <span class="live-viewers"><svg width="14" height="14" viewBox="0 0 24 24" style="fill:var(--muted)"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            <span class="live-viewers-count" id="lv-${ls.id}">${fmtNum(ls.viewers)}</span>
+          </span>
+        </div>
+      </div>
+      <div class="live-info">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          ${makeAvatar(ls.channel_id,36)}
+          <div>
+            <div class="live-title">${ls.title}</div>
+            <div class="live-channel-row">${ch?ch.name:''}${ch&&ch.verified?verifiedSVG(12):''}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px">${ls.category} · iniciou ${ls.started_ago}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  // Also update viewer counts if already rendered
+  streams.forEach(ls=>{
+    const el=document.getElementById(`lv-${ls.id}`);
+    if(el) el.textContent=fmtNum(ls.viewers);
+  });
+}
+
+// ══════════════════════════════════════════════
+// PLAYER
+// ══════════════════════════════════════════════
+let playerState={playing:true,descExpanded:false};
+
+function renderPlayer(vid){
+  const v=getVideo(vid);
+  if(!v){
+    // Check if it's a live stream
+    const ls=(DB.live_streams||[]).find(l=>l.id===vid);
+    if(ls){renderLivePlayer(ls);return;}
+    return;
+  }
+  const ch=getChannel(v.channel_id);
+  v.views+=Math.floor(10+Math.random()*20);
+  saveDB();
+  // Player wrap — embed or simulated
+  const pw=document.getElementById('player-wrap');
+  if(v.embed_url){
+    pw.innerHTML=`<iframe src="${v.embed_url}?autoplay=1&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%;border:none;border-radius:12px"></iframe>`;
+  } else {
+    pw.innerHTML=`<div class="player-sim" style="background:${gradientCSS(v.gradient||['#000','#111'])}" onclick="togglePlay()">
+      <div class="play-overlay${playerState.playing?'':' paused'}" id="play-overlay">
+        <button class="play-btn-big">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
+        ${v.thumbnail_url
+          ? `<img src="${v.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4" onerror="this.remove()">`
+          : ''
+        }
+        <div style="position:relative;font-size:32px;font-weight:700;color:rgba(255,255,255,0.18);text-align:center;padding:32px;z-index:1">${v.title}</div>
+      </div>
+    </div>`;
+  }
+  // Title
+  document.getElementById('player-title').textContent=v.title;
+  // Full view count
+  document.getElementById('player-views-full').textContent=fmtNumFull(v.views)+' visualizações';
+  document.getElementById('player-date').textContent=fmtDate(v.upload_date)+' · '+v.engagement.trend;
+  // Actions — YT style
+  document.getElementById('player-actions').innerHTML=`
+    <div class="like-dislike-wrap">
+      <button class="like-half${v.liked?' liked':''}" onclick="toggleLike('${v.id}')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>
+        <span class="like-count">${fmtNum(v.likes)}</span>
+      </button>
+      <div class="ld-divider"></div>
+      <button class="dislike-half" onclick="showNotif('👎 Não curtir')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+      </button>
+    </div>
+    <button class="action-btn" onclick="showNotif('🔗 Link copiado!')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+      Compartilhar
+    </button>
+    <button class="action-btn" onclick="showNotif('⏱ Adicionado à fila!')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/></svg>
+      Salvar
+    </button>
+    <button class="action-btn" onclick="showNotif('⋯ Opções')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </button>
+  `;
+  // Channel row
+  const cr=document.getElementById('player-channel-row');
+  if(ch) cr.innerHTML=`
+    ${makeAvatar(ch.id,48)}
+    <div style="flex:1">
+      <div class="cr-name" onclick="navigate('channel','${ch.id}')">${ch.name}${ch.verified?verifiedSVG():''}</div>
+      <div class="cr-subs">${fmtNum(ch.subscribers)} inscritos</div>
+    </div>
+    <button class="btn-sub${ch.subscribed?' subbed':''}" id="player-sub-btn" onclick="toggleSub('${ch.id}')">${ch.subscribed?'Inscrito ✓':'Inscrever-se'}</button>
+  `;
+  // Description
+  const db=document.getElementById('player-desc');
+  db.innerHTML=`<div style="margin-bottom:8px;font-size:13px;font-weight:500;color:var(--text)">${fmtNumFull(v.views)} visualizações · ${fmtDate(v.upload_date)}</div><div class="desc-short" id="desc-inner">${v.description.replace(/\n/g,'<br>')} <span style="color:#aaa;font-size:13px">...mais</span></div>`;
+  // Comments
+  const comms=DB.comments[vid]||[];
+  document.getElementById('comments-count').innerHTML=`<span style="font-size:18px;font-weight:500">${fmtNumFull(Math.floor(comms.length*12+v.views*0.003))} comentários</span>`;
+  document.getElementById('comments-list').innerHTML=comms.map(c=>comment(c)).join('');
+  // Up next
+  const others=DB.videos.filter(x=>x.id!==vid).slice(0,8);
+  document.getElementById('up-next-list').innerHTML=others.map(x=>miniCard(x)).join('');
+}
+
+function renderLivePlayer(ls){
+  const ch=getChannel(ls.channel_id);
+  const pw=document.getElementById('player-wrap');
+  if(ls.embed_url){
+    pw.innerHTML=`<iframe src="${ls.embed_url}?autoplay=1" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%;border:none"></iframe>`;
+  } else {
+    pw.innerHTML=`<div class="player-sim" style="background:${gradientCSS(ls.gradient||['#000','#111'])}">
+      ${ls.thumbnail_url?`<img src="${ls.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5" onerror="this.remove()">`:``}
+      <div style="position:relative;z-index:1;text-align:center">
+        <span class="live-badge" style="font-size:14px;padding:6px 14px"><span class="live-dot"></span>AO VIVO</span>
+        <div style="margin-top:16px;font-size:28px;font-weight:700;color:rgba(255,255,255,0.3)">${ls.title}</div>
+      </div>
+    </div>`;
+  }
+  document.getElementById('player-title').innerHTML=`${ls.title} <span class="live-badge" style="font-size:12px;vertical-align:middle"><span class="live-dot"></span>AO VIVO</span>`;
+  document.getElementById('player-views-full').innerHTML=`<span class="live-viewers"><svg width="16" height="16" viewBox="0 0 24 24" style="fill:var(--muted);vertical-align:middle"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> <span id="live-viewer-count">${fmtNumFull(ls.viewers)}</span> assistindo agora</span>`;
+  document.getElementById('player-date').textContent=ls.category+' · iniciou '+ls.started_ago;
+  document.getElementById('player-actions').innerHTML=`
+    <button class="action-btn" onclick="showNotif('🔗 Link copiado!')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+      Compartilhar
+    </button>
+    <button class="action-btn" onclick="showNotif('🔔 Lembrete ativado!')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      Lembrar
+    </button>
+  `;
+  if(ch) document.getElementById('player-channel-row').innerHTML=`
+    ${makeAvatar(ch.id,48)}
+    <div style="flex:1">
+      <div class="cr-name" onclick="navigate('channel','${ch.id}')">${ch.name}${ch.verified?verifiedSVG():''}</div>
+      <div class="cr-subs">${fmtNum(ch.subscribers)} inscritos</div>
+    </div>
+    <button class="btn-sub${ch.subscribed?' subbed':''}" id="player-sub-btn" onclick="toggleSub('${ch.id}')">${ch.subscribed?'Inscrito ✓':'Inscrever-se'}</button>
+  `;
+  document.getElementById('player-desc').innerHTML=`<div class="desc-short">${ls.title}<br><br>Stream ao vivo · ${ls.category}</div>`;
+  document.getElementById('comments-count').textContent='Chat ao vivo';
+  document.getElementById('comments-list').innerHTML=`<div style="color:var(--muted);font-size:14px">O chat ao vivo está disponível durante a transmissão.</div>`;
+  document.getElementById('up-next-list').innerHTML=DB.videos.slice(0,8).map(x=>miniCard(x)).join('');
+}
+
+function comment(c){
+  const colors=['#6c63ff','#ff6584','#43e97b','#f9ca24','#ff4757','#5352ed'];
+  const col=colors[Math.abs(c.user.charCodeAt(0))%colors.length];
+  return`<div class="comment">
+    <div style="width:40px;height:40px;border-radius:50%;background:${col};display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0">${c.user[0].toUpperCase()}</div>
+    <div class="comment-body">
+      <div class="user">@${c.user} <span class="ts">${c.ts}</span></div>
+      <div class="text">${c.text}</div>
+      <div class="comment-actions">
+        <button class="comment-like">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>
+          ${fmtNum(c.likes)}
+        </button>
+        <button class="comment-like">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+        </button>
+        <button class="comment-like">Responder</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function miniCard(v){
+  const ch=getChannel(v.channel_id);
+  return`<div class="mini-card" onclick="navigate('player','${v.id}')">
+    <div class="mini-thumb">
+      ${v.thumbnail_url
+        ? `<img src="${v.thumbnail_url}" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`
+        : `<div style="background:${gradientCSS(v.gradient||['#111','#222'])};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center"><span style="font-size:10px;color:rgba(255,255,255,0.6)">${v.title}</span></div>`
+      }
+      <div class="duration-badge" style="font-size:10px">${v.duration}</div>
+    </div>
+    <div class="mini-meta">
+      <div class="mini-title">${v.title}</div>
+      <div class="mini-channel">${ch?ch.name:''}</div>
+      <div class="mini-stats">${fmtNum(v.views)} views</div>
+    </div>
+  </div>`;
+}
+
+function togglePlay(){
+  playerState.playing=!playerState.playing;
+  const o=document.getElementById('play-overlay');
+  if(o) o.className=`play-overlay${playerState.playing?'':' paused'}`;
+}
+
+function toggleLike(vid){
+  const v=getVideo(vid);
+  if(!v)return;
+  v.liked=!v.liked;
+  if(v.liked){v.likes++;showNotif('👍 Você curtiu este vídeo');}
+  else{v.likes--;showNotif('Curtida removida');}
+  saveDB();
+  renderPlayer(vid);
+}
+
+function toggleSub(chId){
+  const ch=getChannel(chId);
+  if(!ch)return;
+  ch.subscribed=!ch.subscribed;
+  if(ch.subscribed){ch.subscribers++;showNotif(`🔔 Inscrito em ${ch.name}!`);}
+  else{ch.subscribers--;showNotif(`Inscrição cancelada em ${ch.name}`);}
+  saveDB();
+  const btn=document.getElementById('player-sub-btn');
+  if(btn){btn.textContent=ch.subscribed?'Inscrito ✓':'Inscrever-se';btn.className=`btn-sub${ch.subscribed?' subbed':''}`;}
+  renderSidebarChannels();
+}
+
+function toggleDesc(el){
+  const inner=el.querySelector('#desc-inner');
+  if(!inner)return;
+  if(inner.classList.contains('desc-short')){inner.classList.remove('desc-short');}
+  else{inner.classList.add('desc-short');}
+}
+
+// ══════════════════════════════════════════════
+// CHANNEL PAGE
+// ══════════════════════════════════════════════
+function renderChannel(chId){
+  const ch=getChannel(chId);
+  if(!ch)return;
+  const stats=DB.channel_stats[chId]||{total_views:0,total_likes:0,videos_count:0,shorts_count:0};
+  // Banner
+  const bannerEl=document.getElementById('ch-banner');
+  if(ch.banner_url){
+    bannerEl.innerHTML=`<img src="${ch.banner_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentNode.style.background='${gradientCSS(ch.gradient||['#111','#222'])}';this.remove()">`;
+    bannerEl.style.background='';
+  } else {
+    bannerEl.style.background=gradientCSS(ch.gradient||['#111','#222']);
+    bannerEl.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;color:rgba(255,255,255,0.06);font-weight:700;letter-spacing:20px;text-transform:uppercase">${ch.name}</div>`;
+  }
+  // Avatar
+  const avEl=document.getElementById('ch-big-avatar');
+  if(ch.avatar_url){
+    avEl.innerHTML=`<img src="${ch.avatar_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" loading="lazy" onerror="this.parentNode.innerHTML='${ch.name[0]}'">`;
+  } else {
+    avEl.innerHTML=`<div style="width:100%;height:100%;border-radius:50%;background:${gradientCSS(ch.gradient||['#333','#555'])};display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#fff">${ch.name[0].toUpperCase()}</div>`;
+  }
+  document.getElementById('ch-big-name').textContent=ch.name;
+  document.getElementById('ch-verified').innerHTML=ch.verified?verifiedSVG(20):'';
+  document.getElementById('ch-handle').textContent=ch.handle;
+  document.getElementById('ch-stats-row').innerHTML=`${fmtNum(ch.subscribers)} inscritos · ${fmtNum((stats.videos_count||0)+(stats.shorts_count||0))} vídeos · ${fmtNum(stats.total_views||0)} visualizações`;
+  const sb=document.getElementById('ch-sub-btn');
+  sb.textContent=ch.subscribed?'Inscrito ✓':'Inscrever-se';
+  sb.className=`btn-sub${ch.subscribed?' subbed':''}`;
+  renderChannelTab(chId,STATE.currentTab);
+}
+
+function switchTab(tab){
+  STATE.currentTab=tab;
+  document.querySelectorAll('.ch-tab').forEach((b,i)=>{
+    const tabs=['home','videos','shorts','playlists','live','community','monetize','about'];
+    b.classList.toggle('active',tabs[i]===tab);
+  });
+  renderChannelTab(STATE.currentChannel,tab);
+}
+
+function renderChannelTab(chId,tab){
+  const ch=getChannel(chId);
+  const stats=DB.channel_stats[chId]||{};
+  const mon=stats.monetization||{};
+  const analytics=stats.analytics||{};
+  const el=document.getElementById('ch-content');
+  const chVideos=getChannelVideos(chId);
+  const chShorts=DB.shorts.filter(s=>s.channel_id===chId);
+  const chPlaylists=DB.playlists.filter(p=>p.channel_id===chId);
+  const chLive=(DB.live_streams||[]).filter(ls=>ls.channel_id===chId);
+
+  if(tab==='home'){
+    const featured=[...chVideos].sort((a,b)=>b.views-a.views)[0];
+    const popular=[...chVideos].sort((a,b)=>b.views-a.views).slice(0,4);
+    el.innerHTML=`
+      <div class="section-block">
+        <div class="section-heading">Vídeo em destaque</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="cursor:pointer" onclick="navigate('player','${featured.id}')">
+            <div style="aspect-ratio:16/9;border-radius:12px;overflow:hidden;position:relative">
+              ${featured.thumbnail_url
+                ? `<img src="${featured.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`
+                : ''
+              }
+              <div style="${featured.thumbnail_url?'display:none;':'display:flex;'}position:absolute;inset:0;background:${gradientCSS(featured.gradient)};align-items:center;justify-content:center">
+                <span style="font-size:20px;font-weight:700;color:rgba(255,255,255,0.3);text-align:center;padding:24px">${featured.title}</span>
+              </div>
+              <div class="duration-badge">${featured.duration}</div>
+            </div>
+            <div style="margin-top:10px;font-size:16px;font-weight:500">${featured.title}</div>
+            <div style="font-size:13px;color:var(--muted)">${fmtNum(featured.views)} visualizações · ${fmtDate(featured.upload_date)}</div>
+          </div>
+          <div>
+            <div class="section-heading" style="margin-bottom:12px">Populares</div>
+            ${popular.slice(1).map(v=>miniCard(v)).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="section-block">
+        <div class="section-heading">Shorts em destaque</div>
+        <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">
+          ${chShorts.map(s=>`
+            <div style="min-width:160px;cursor:pointer" onclick="showNotif('▶ Reproduzindo short: ${s.title}')">
+              <div style="aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative;display:flex;align-items:center;justify-content:center">
+                ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6" onerror="this.remove()">`:''}
+                <span style="position:relative;font-size:12px;color:rgba(255,255,255,0.5);text-align:center;padding:12px">${s.title}</span>
+                <div class="duration-badge">${s.duration}</div>
+              </div>
+              <div style="margin-top:8px;font-size:13px;font-weight:500">${s.title}</div>
+              <div style="font-size:12px;color:var(--muted)">${fmtNum(s.views)} views</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    `;
+  } else if(tab==='videos'){
+    const sorted=[...chVideos].sort((a,b)=>b.upload_date.localeCompare(a.upload_date));
+    el.innerHTML=`
+      <div style="display:flex;gap:12px;margin-bottom:16px">
+        <button class="chip active" onclick="sortVideos('latest')">Mais recentes</button>
+        <button class="chip" onclick="sortVideos('popular')">Mais populares</button>
+        <button class="chip" onclick="sortVideos('oldest')">Mais antigos</button>
+      </div>
+      <div class="video-grid" id="ch-video-grid">${sorted.map(v=>videoCard(v)).join('')}</div>
+    `;
+  } else if(tab==='shorts'){
+    el.innerHTML=`
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px">
+        ${chShorts.map(s=>`
+          <div style="cursor:pointer" onclick="showNotif('▶ Reproduzindo: ${s.title}')">
+            <div style="aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative;display:flex;align-items:center;justify-content:center">
+              ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6" onerror="this.remove()">`:''}
+              <span style="position:relative;font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);text-align:center;padding:16px">${s.title}</span>
+              <div class="duration-badge">${s.duration}</div>
+            </div>
+            <div style="margin-top:8px;font-size:13px;font-weight:500">${s.title}</div>
+            <div style="font-size:12px;color:var(--muted)">${fmtNum(s.views)} views</div>
+          </div>`).join('')}
+      </div>
+    `;
+  } else if(tab==='playlists'){
+    el.innerHTML=`<div class="playlist-grid">${chPlaylists.map(pl=>playlistCard(pl)).join('')}</div>`;
+  } else if(tab==='live'){
+    if(!chLive.length){
+      el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:16px">📡</div><div>Nenhuma transmissão ao vivo agora</div></div>`;
+    } else {
+      el.innerHTML=`
+        <div class="live-grid" style="padding:0;margin:0">
+          ${chLive.map(ls=>`
+            <div class="live-card" onclick="navigate('player-live','${ls.id}');STATE.view='player'">
+              <div class="live-thumb">
+                ${ls.thumbnail_url?`<img src="${ls.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:``}
+                <div class="live-thumb-gradient" style="background:${gradientCSS(ls.gradient)};position:absolute;inset:0;opacity:${ls.thumbnail_url?0.4:1}"></div>
+                <div class="live-badge-wrap">
+                  <span class="live-badge"><span class="live-dot"></span>AO VIVO</span>
+                  <span class="live-viewers"><span class="live-viewers-count">${fmtNum(ls.viewers)}</span> assistindo</span>
+                </div>
+              </div>
+              <div class="live-info">
+                <div class="live-title">${ls.title}</div>
+                <div class="live-channel-row">${ch?ch.name:''} · ${ls.started_ago}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      `;
+    }
+  } else if(tab==='community'){
+    el.innerHTML=`
+      <div style="max-width:640px">
+        <div style="background:var(--surface);border-radius:16px;padding:20px;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            ${makeAvatar(chId,40)}
+            <div style="font-weight:500">${ch.name} <span style="font-size:12px;color:var(--muted);font-weight:400">· há 3 dias</span></div>
+          </div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text)">novo capítulo chegando em breve. preparados, nocturnos? 🌑</p>
+          <div style="margin-top:16px;display:flex;gap:12px">
+            <button class="action-btn" onclick="showNotif('👍 Você curtiu!')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>
+              4,2K
+            </button>
+            <button class="action-btn">💬 392 comentários</button>
+          </div>
+        </div>
+        <div style="background:var(--surface);border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            ${makeAvatar(chId,40)}
+            <div style="font-weight:500">${ch.name} <span style="font-size:12px;color:var(--muted);font-weight:400">· há 1 semana</span></div>
+          </div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text)">📊 Enquete: qual era foi mais intensa?</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+            ${['Era Diamante (2026)','Era Névoa (2025-2026)','Fase Noite de Vidro'].map((op,i)=>`
+              <button onclick="showNotif('Você votou em: ${op}')" style="background:var(--hover);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;cursor:pointer;text-align:left;font-family:var(--font);font-size:14px;display:flex;justify-content:space-between">
+                <span>${op}</span><span style="color:var(--muted)">${[48,31,21][i]}%</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  } else if(tab==='monetize'){
+    el.innerHTML=`
+      <div class="monetize-card">
+        <div class="monetize-title">💰 Painel de Monetização — ${ch.name}</div>
+        <div class="earn-grid">
+          <div class="earn-item"><div class="earn-val">R$ ${mon.total_earnings?.toFixed(2)||'0.00'}</div><div class="earn-lbl">Total acumulado</div></div>
+          <div class="earn-item"><div class="earn-val">R$ ${mon.monthly_earnings?.toFixed(2)||'0.00'}</div><div class="earn-lbl">Este mês</div></div>
+          <div class="earn-item"><div class="earn-val">R$ ${mon.rpm_avg||0}/mil</div><div class="earn-lbl">RPM médio</div></div>
+          <div class="earn-item"><div class="earn-val">${fmtNum(stats.total_views||0)}</div><div class="earn-lbl">Visualizações totais</div></div>
+        </div>
+      </div>
+      <div class="section-block">
+        <div class="section-heading">📈 Analytics do Canal</div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-value">${fmtNum(analytics.views_last_7_days||0)}</div><div class="stat-label">Views (7 dias)</div></div>
+          <div class="stat-card"><div class="stat-value">${fmtNum(analytics.watch_time_hours||0)}h</div><div class="stat-label">Horas assistidas</div></div>
+          <div class="stat-card"><div class="stat-value">${fmtNum(ch.subscribers)}</div><div class="stat-label">Inscritos</div></div>
+          <div class="stat-card"><div class="stat-value">${((stats.engagement_rate||0)*100).toFixed(1)}%</div><div class="stat-label">Engajamento</div></div>
+        </div>
+        <div style="background:var(--surface);border-radius:12px;padding:20px">
+          <div style="font-size:14px;font-weight:500;margin-bottom:12px">Crescimento de Inscritos</div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:80px">
+            ${(analytics.subscriber_growth||[]).map((v,i,arr)=>{
+              const max=Math.max(...arr);const pct=Math.floor((v/max)*100);
+              return`<div style="flex:1;background:var(--accent);border-radius:4px 4px 0 0;height:${pct}%;min-height:4px;position:relative;cursor:default" title="${fmtNum(v)} inscritos">
+                <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);white-space:nowrap">${fmtNum(v)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            ${(analytics.subscriber_growth||[]).map((_,i)=>`<div style="flex:1;font-size:10px;color:var(--muted);text-align:center">sem ${i+1}</div>`).join('')}
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          ${(analytics.top_regions||[]).map(r=>`<span style="background:var(--surface);padding:6px 14px;border-radius:20px;font-size:13px">🌎 ${r}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  } else if(tab==='about'){
+    el.innerHTML=`
+      <div class="about-content">
+        <p class="about-desc">${ch.description}</p>
+        <div class="about-row"><span class="icon">📍</span><span>Rio de Janeiro, Brasil</span></div>
+        <div class="about-row"><span class="icon">📅</span><span>Canal criado em ${ch.creation_date||'—'}</span></div>
+        <div class="about-row"><span class="icon">👁</span><span>${fmtNum(stats.total_views||0)} visualizações totais</span></div>
+        <div class="about-row"><span class="icon">🎨</span><span>Estética: ${ch.identity?.aesthetic||'—'}</span></div>
+        <div class="about-row"><span class="icon">💫</span><span>Fãs: <strong>${ch.identity?.fanbase_name||'—'}</strong></span></div>
+        <div style="margin-top:24px">
+          <div style="font-size:14px;font-weight:500;margin-bottom:12px">Links</div>
+          ${(ch.about?.links||['instagram.com/venna','twitter.com/venna']).map(l=>`
+            <div class="about-row"><span class="icon">🔗</span><a href="#" style="color:#4e9fff;text-decoration:none">${l}</a></div>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+  el.className='ch-content fade-in';
+}
+
+function playlistCard(pl){
+  const vids=pl.videos.map(id=>getVideo(id)).filter(Boolean);
+  const first=vids[0];
+  return`<div class="playlist-card" onclick="showNotif('▶ Reproduzindo playlist: ${pl.title}')">
+    <div class="playlist-thumb-wrap">
+      <div style="aspect-ratio:16/9;position:relative;overflow:hidden">
+        ${first&&first.thumbnail_url
+          ? `<img src="${first.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`
+          : ''
+        }
+        <div style="position:absolute;inset:0;background:${first?gradientCSS(first.gradient):'#222'};opacity:${first&&first.thumbnail_url?0.5:1};display:flex;align-items:center;justify-content:center;padding:16px">
+          <span style="font-size:12px;color:rgba(255,255,255,0.4)">${pl.title}</span>
+        </div>
+      </div>
+      <div class="playlist-count">▶ ${pl.videos.length} vídeos</div>
+    </div>
+    <div class="playlist-info">
+      <div class="playlist-name">${pl.title}</div>
+      <div class="playlist-meta">${fmtNum(pl.views)} visualizações</div>
+    </div>
+  </div>`;
+}
+
+function toggleChannelSub(){
+  if(STATE.currentChannel) toggleSub(STATE.currentChannel);
+  const ch=getChannel(STATE.currentChannel);
+  if(ch){
+    const btn=document.getElementById('ch-sub-btn');
+    btn.textContent=ch.subscribed?'Inscrito ✓':'Inscrever-se';
+    btn.className=`btn-sub${ch.subscribed?' subbed':''}`;
+    document.getElementById('ch-stats-row').innerHTML=`${fmtNum(ch.subscribers)} inscritos`;
+    renderSidebarChannels();
+  }
+}
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!q)return;
+  navigate('search',q);
+}
+
+function renderSearch(q){
+  const results=DB.videos.filter(v=>
+    v.title.toLowerCase().includes(q)||
+    (getChannel(v.channel_id)?.name.toLowerCase().includes(q))
+  );
+  const el=document.getElementById('search-results');
+  if(!results.length){
+    el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted)">Nenhum resultado para "<strong>${q}</strong>"</div>`;
+    return;
+  }
+  el.innerHTML=`<div style="margin-bottom:16px;font-size:16px;color:var(--muted)">Resultados para "<strong style="color:var(--text)">${q}</strong>"</div>`+
+    results.map(v=>{
+      const ch=getChannel(v.channel_id);
+      return`<div class="search-result" onclick="navigate('player','${v.id}')">
+        <div class="sr-thumb">
+          ${v.thumbnail_url
+            ? `<img src="${v.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`
+            : `<div style="background:${gradientCSS(v.gradient)};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center"><span style="font-size:12px;color:rgba(255,255,255,0.5)">${v.title}</span></div>`
+          }
+          <div class="duration-badge">${v.duration}</div>
+        </div>
+        <div class="sr-meta">
+          <div class="sr-title">${v.title}</div>
+          <div class="sr-stats">${fmtNum(v.views)} visualizações · ${fmtDate(v.upload_date)}</div>
+          <div class="sr-channel-row">${makeAvatar(v.channel_id,24)}<span class="sr-channel-name">${ch?.name||''}</span></div>
+          <div class="sr-desc">${v.description}</div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ══════════════════════════════════════════════
+// SORT CHANNEL VIDEOS
+// ══════════════════════════════════════════════
+function sortVideos(by){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  event.target.classList.add('active');
+  const chVideos=getChannelVideos(STATE.currentChannel);
+  let sorted;
+  if(by==='popular') sorted=[...chVideos].sort((a,b)=>b.views-a.views);
+  else if(by==='oldest') sorted=[...chVideos].sort((a,b)=>a.upload_date.localeCompare(b.upload_date));
+  else sorted=[...chVideos].sort((a,b)=>b.upload_date.localeCompare(a.upload_date));
+  const grid=document.getElementById('ch-video-grid');
+  if(grid) grid.innerHTML=sorted.map(v=>videoCard(v)).join('');
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+loadDB();
+navigate('home');
+</script>
+</body>
+</html>
