@@ -59,7 +59,7 @@
       "id": "vid_001",
       "title": "Noite de Vidro",
       "channel_id": "ch_001",
-      "views": 18234,
+      "views": 1918234,
       "likes": 3921,
       "dislikes": 124,
       "upload_date": "2026-04-01",
@@ -68,7 +68,7 @@
       "gradient": ["#050520", "#1a0a3a", "#2a0a5a"],
       "liked": false,
       "engagement": {
-        "velocity": 1.8,
+        "velocity": 20.8,
         "like_ratio": 0.21,
         "trend": "growing"
       }
