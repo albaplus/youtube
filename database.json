@@ -102,7 +102,7 @@
       "type": "music",
       "title": "Madonna - Holiday (official audio)",
       "artist": "Madonna",
-      "album": "Madonna (Deluxe Edition)",
+      "album": "",
       "channel_id": "ch_001",
       "views": 29938282,
       "likes": 1300000,
@@ -121,6 +121,76 @@
         "velocity": 3.4,
         "like_ratio": 0.043,
         "trend": "viral"
+      }
+    },
+    {
+      "id": "mus_002",
+      "type": "album",
+      "title": "Diamond Life",
+      "artist": "Sade",
+      "album": "Diamond Life",
+      "channel_id": "ch_002",
+      "views": 45000000,
+      "likes": 620000,
+      "dislikes": 12000,
+      "duration": "44:28",
+      "upload_date": "1984-07-16",
+      "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ad27e16c5f844ea1ad6797cd",
+      "gradient": ["#2c3e50", "#34495e", "#1a252f"],
+      "genre": "Soul / Smooth Jazz",
+      "description": "Debut studio album by Sade, released in 1984. Featuring timeless classics including 'Smooth Operator' and 'Your Love Is King'.",
+      "tracks": [
+        {
+          "title": "Smooth Operator",
+          "duration": "4:58",
+          "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs"
+        },
+        {
+          "title": "Your Love Is King",
+          "duration": "3:39",
+          "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg"
+        },
+        {
+          "title": "Hang on to Your Love",
+          "duration": "5:58",
+          "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0"
+        },
+        {
+          "title": "Frankie's First Affair",
+          "duration": "4:38",
+          "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o"
+        },
+        {
+          "title": "When Am I Going to Make a Living",
+          "duration": "3:27",
+          "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo"
+        },
+        {
+          "title": "Cherry Pie",
+          "duration": "6:20",
+          "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio"
+        },
+        {
+          "title": "Sally",
+          "duration": "5:23",
+          "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ"
+        },
+        {
+          "title": "I Will Be Your Friend",
+          "duration": "4:45",
+          "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA"
+        },
+        {
+          "title": "Why Can't We Live Together",
+          "duration": "5:27",
+          "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I"
+        }
+      ],
+      "liked": false,
+      "engagement": {
+        "velocity": 2.1,
+        "like_ratio": 0.014,
+        "trend": "steady"
       }
     }
   ],
@@ -236,13 +306,13 @@
       }
     },
     "ch_002": {
-      "total_views": 223678215,
-      "total_likes": 3800000,
+      "total_views": 268678215,
+      "total_likes": 4420000,
       "videos_count": 1,
       "shorts_count": 0,
-      "music_count": 0,
+      "music_count": 1,
       "films_count": 0,
-      "engagement_rate": 0.017,
+      "engagement_rate": 0.016,
       "analytics": {
         "subscriber_growth": [950000, 980000, 995000, 1000000],
         "views_last_7_days": 4500000,
@@ -250,15 +320,15 @@
         "watch_time_hours": 620000
       },
       "monetization": {
-        "total_earnings": 89500.00,
-        "monthly_earnings": 11200.50,
+        "total_earnings": 107500.00,
+        "monthly_earnings": 13437.50,
         "top_video": "vid_002",
         "rpm_avg": 3.1
       }
     }
   },
-  "trending": ["vid_002", "mus_001", "vid_001"],
-  "trending_music": ["mus_001"],
+  "trending": ["vid_002", "mus_001", "vid_001", "mus_002"],
+  "trending_music": ["mus_001", "mus_002"],
   "trending_films": [],
   "trending_shorts": [],
   "algorithm": {
