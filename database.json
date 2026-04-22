@@ -28,11 +28,7 @@
       "about": {
         "bio": "Official NBC channel on VidStream. Broadcasting iconic moments and full episodes.",
         "location": "New York, NY, USA",
-        "links": [
-          "nbc.com",
-          "twitter.com/nbc",
-          "instagram.com/nbc"
-        ],
+        "links": ["nbc.com", "twitter.com/nbc", "instagram.com/nbc"],
         "joined": "2005-03-01"
       }
     }
