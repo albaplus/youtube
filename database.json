@@ -6,7 +6,6 @@
     "created_at": "2026-04-21",
     "description": "Base de dados completa do VidStream — canais, vídeos, shorts, lives, playlists, comentários, analytics, monetização"
   },
-
   "channels": [
     {
       "id": "ch_005",
@@ -38,97 +37,87 @@
       }
     }
   ],
-
   "videos": [
     {
       "id": "vid_013",
       "title": "Madonna - Holiday live on American Bandstand + Interview",
       "channel_id": "ch_005",
-      "views": 1847,
-      "likes": 412,
-      "dislikes": 8,
+      "views": 100392,
+      "likes": 12450,
+      "dislikes": 87,
       "liked": false,
-      "upload_date": "2026-04-21",
-      "published_ago": "há 30 minutos",
+      "upload_date": "2026-04-21T10:00:00Z",
       "duration": "5:48",
       "description": "Madonna performs 'Holiday' live on American Bandstand, followed by a short interview with Dick Clark. January 14, 1984.",
       "thumbnail_url": "https://i.ytimg.com/vi/pu_sZHl_XuY/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/xbSTzlzoUi4",
       "gradient": ["#5e2c8a", "#9b4d96", "#c55ba0"],
       "engagement": {
-        "velocity": 6.2,
-        "like_ratio": 0.223,
+        "velocity": 8.7,
+        "like_ratio": 0.124,
         "trend": "viral"
       }
     }
   ],
-
   "shorts": [],
-
   "live_streams": [],
-
   "playlists": [],
-
   "comments": {
     "vid_013": [
       {
         "user": "80sforever",
         "text": "This performance is iconic. Madonna was just getting started!",
         "likes": 1254,
-        "ts": "há 2 meses"
+        "ts": "há 5 minutos"
       },
       {
         "user": "popculturefan",
         "text": "Dick Clark was such a great interviewer. And Holiday is still a banger.",
         "likes": 890,
-        "ts": "há 1 mês"
+        "ts": "há 3 minutos"
       },
       {
         "user": "vinylcollector",
         "text": "The energy is unmatched. 1984 was a special year.",
         "likes": 672,
-        "ts": "há 3 semanas"
+        "ts": "há 2 minutos"
       },
       {
         "user": "madgefan",
         "text": "Holiday! Celebrate! 🎉 Still celebrating 40+ years later.",
         "likes": 541,
-        "ts": "há 1 semana"
+        "ts": "agora mesmo"
       }
     ]
   },
-
   "channel_stats": {
     "ch_005": {
-      "total_views": 1847,
-      "total_likes": 412,
+      "total_views": 100392,
+      "total_likes": 12450,
       "videos_count": 1,
       "shorts_count": 0,
-      "engagement_rate": 0.223,
+      "engagement_rate": 0.124,
       "analytics": {
-        "subscriber_growth": [12400000, 12450000, 12480000, 12500000],
-        "views_last_7_days": 1847,
-        "top_regions": ["US", "UK", "CA"],
-        "watch_time_hours": 178
+        "subscriber_growth": [12450000, 12470000, 12485000, 12500000],
+        "views_last_7_days": 100392,
+        "top_regions": ["US", "UK", "CA", "BR"],
+        "watch_time_hours": 970
       },
       "monetization": {
-        "total_earnings": 12.93,
-        "monthly_earnings": 12.93,
+        "total_earnings": 210.82,
+        "monthly_earnings": 210.82,
         "top_video": "vid_013",
         "rpm_avg": 2.1
       }
     }
   },
-
   "trending": ["vid_013"],
-
   "home_chips": [
-    { "id": "all",      "label": "Tudo" },
-    { "id": "nbc",      "label": "NBC" }
+    { "id": "all", "label": "Tudo" },
+    { "id": "trending", "label": "🔥 Trending" },
+    { "id": "nbc", "label": "NBC" }
   ],
-
   "community_posts": [],
-
   "system": {
     "tick_system": {
       "interval_ms": 5000,
