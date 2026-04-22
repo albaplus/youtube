@@ -24,6 +24,31 @@
         "links": ["madonna.com", "instagram.com/madonna", "twitter.com/madonna"],
         "joined": "2005-10-25"
       }
+    },
+    {
+      "id": "ch_002",
+      "name": "Sade",
+      "handle": "@sade",
+      "subscribers": 1000000,
+      "verified": true,
+      "description": "Official Sade YouTube Channel. Smooth soul.",
+      "creation_date": "2020-02-14",
+      "gradient": ["#2c3e50", "#34495e", "#1a252f"],
+      "subscribed": false,
+      "avatar_url": "https://radioplanetasaudade.com.br/wp-content/uploads/2024/03/sade-adu-singer-hd-wallpaper-preview.jpg",
+      "banner_url": "https://images.squarespace-cdn.com/content/v1/56858337cbced60d3b293aef/1611861264609-TPH56TACE7FO9GP2BMFP/Sade_DiamondLife_crop_16x9.jpg",
+      "identity": {
+        "aesthetic": "smooth soul",
+        "tone": "elegant",
+        "upload_pattern": "occasional",
+        "fanbase_name": "Sade Soldiers"
+      },
+      "about": {
+        "bio": "Official channel of Sade. Timeless music.",
+        "location": "United Kingdom",
+        "links": ["sade.com", "instagram.com/sade"],
+        "joined": "2020-02-14"
+      }
     }
   ],
   "videos": [
@@ -46,6 +71,27 @@
         "velocity": 2.8,
         "like_ratio": 0.052,
         "trend": "steady"
+      }
+    },
+    {
+      "id": "vid_002",
+      "type": "video",
+      "title": "Sade - Smooth Operator - Official",
+      "channel_id": "ch_002",
+      "views": 223678215,
+      "likes": 3800000,
+      "dislikes": 45000,
+      "upload_date": "2026-03-22",
+      "duration": "4:16",
+      "description": "Official video for Smooth Operator by Sade. Digitally remastered and upscaled to Full HD.",
+      "thumbnail_url": "https://i.ytimg.com/vi/4TYv2PhG89A/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/qQ_GNl667YE",
+      "gradient": ["#8e44ad", "#9b59b6", "#6c3483"],
+      "liked": false,
+      "engagement": {
+        "velocity": 4.5,
+        "like_ratio": 0.017,
+        "trend": "viral"
       }
     }
   ],
@@ -79,7 +125,19 @@
     }
   ],
   "films": [],
-  "live_streams": [],
+  "live_streams": [
+    {
+      "id": "live_001",
+      "title": "JAZZ SADE IN LIVE 24H",
+      "channel_id": "ch_002",
+      "viewers": 6293,
+      "thumbnail_url": "https://i.ytimg.com/vi/t8j9uwhUeek/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/t8j9uwhUeek",
+      "gradient": ["#1a1a2e", "#16213e", "#0f3460"],
+      "category": "Música",
+      "started_ago": "há 2h"
+    }
+  ],
   "playlists": [],
   "comments": {
     "vid_001": [
@@ -133,6 +191,26 @@
         "likes": 1500,
         "ts": "5 hours ago"
       }
+    ],
+    "vid_002": [
+      {
+        "user": "SmoothJazzLover",
+        "text": "The definition of timeless. Sade's voice is like velvet.",
+        "likes": 45000,
+        "ts": "1 month ago"
+      },
+      {
+        "user": "80sSoul",
+        "text": "This video is pure class. They don't make music like this anymore.",
+        "likes": 32000,
+        "ts": "3 weeks ago"
+      },
+      {
+        "user": "VinylCollector",
+        "text": "Finally in HD! Thank you Sade team. 🎷",
+        "likes": 21000,
+        "ts": "2 weeks ago"
+      }
     ]
   },
   "channel_stats": {
@@ -156,9 +234,30 @@
         "top_video": "mus_001",
         "rpm_avg": 2.2
       }
+    },
+    "ch_002": {
+      "total_views": 223678215,
+      "total_likes": 3800000,
+      "videos_count": 1,
+      "shorts_count": 0,
+      "music_count": 0,
+      "films_count": 0,
+      "engagement_rate": 0.017,
+      "analytics": {
+        "subscriber_growth": [950000, 980000, 995000, 1000000],
+        "views_last_7_days": 4500000,
+        "top_regions": ["US", "UK", "BR", "FR", "JP"],
+        "watch_time_hours": 620000
+      },
+      "monetization": {
+        "total_earnings": 89500.00,
+        "monthly_earnings": 11200.50,
+        "top_video": "vid_002",
+        "rpm_avg": 3.1
+      }
     }
   },
-  "trending": ["mus_001", "vid_001"],
+  "trending": ["vid_002", "mus_001", "vid_001"],
   "trending_music": ["mus_001"],
   "trending_films": [],
   "trending_shorts": [],
@@ -175,13 +274,13 @@
   },
   "tick_system": {
     "interval": "5s",
-    "update": ["views", "likes", "music_streams"],
+    "update": ["views", "likes", "music_streams", "live_viewers"],
     "persist": true
   },
   "live_simulation": {
-    "active": false,
-    "boost_multiplier": 1.0,
-    "viewer_fluctuation_range": 0
+    "active": true,
+    "boost_multiplier": 2.0,
+    "viewer_fluctuation_range": 150
   },
   "logs": []
 }
