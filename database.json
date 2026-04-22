@@ -54,12 +54,12 @@
     {
       "id": "mus_001",
       "type": "music",
-      "title": "Holiday (7\" Version) [2022 Remaster]",
+      "title": "Madonna - Holiday (official audio)",
       "artist": "Madonna",
       "album": "Madonna (Deluxe Edition)",
       "channel_id": "ch_001",
-      "views": 1293283,
-      "likes": 85000,
+      "views": 29938282,
+      "likes": 1300000,
       "dislikes": 1200,
       "duration": "4:01",
       "upload_date": "2026-04-22",
@@ -73,7 +73,7 @@
       "liked": false,
       "engagement": {
         "velocity": 3.4,
-        "like_ratio": 0.065,
+        "like_ratio": 0.043,
         "trend": "viral"
       }
     }
@@ -137,13 +137,13 @@
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 3221575,
-      "total_likes": 185000,
+      "total_views": 31866574,
+      "total_likes": 1400000,
       "videos_count": 1,
       "shorts_count": 0,
       "music_count": 1,
       "films_count": 0,
-      "engagement_rate": 0.057,
+      "engagement_rate": 0.044,
       "analytics": {
         "subscriber_growth": [500000, 504000, 507000, 509000],
         "views_last_7_days": 12400,
