@@ -81,6 +81,35 @@
       "banner_url": "https://picsum.photos/seed/cineart_bn/1280/351",
       "identity": null,
       "about": null
+    },
+    {
+      "id": "ch_005",
+      "name": "NBC",
+      "handle": "@nbc",
+      "subscribers": 12500000,
+      "verified": true,
+      "subscribed": false,
+      "description": "Welcome to NBC on VidStream — classic moments and full episodes.",
+      "creation_date": "2005-03-01",
+      "gradient": ["#091c3d", "#1e3a6e", "#2b5797"],
+      "avatar_url": "https://yt3.googleusercontent.com/Lh3IR3_DCVkvF5xsFkGk6KhQcYmp0gplmeQR145r0rcu2VdrAPhIMef3yvgqZ4QIaldVSou53o4=s900-c-k-c0x00ffffff-no-rj",
+      "banner_url": "https://yt3.googleusercontent.com/2r-usLE4ZqU0H8q00BGaPbHp3fS6TGfsaSlhoVta_kyN3vDf_Th7OuCPfggM0gK73ym3rFTcdFY=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+      "identity": {
+        "aesthetic": "classic television",
+        "tone": "nostalgic",
+        "upload_pattern": "regular",
+        "fanbase_name": "viewers"
+      },
+      "about": {
+        "bio": "Official NBC channel on VidStream. Broadcasting iconic moments and full episodes.",
+        "location": "New York, NY, USA",
+        "links": [
+          "nbc.com",
+          "twitter.com/nbc",
+          "instagram.com/nbc"
+        ],
+        "joined": "2005-03-01"
+      }
     }
   ],
 
@@ -89,7 +118,7 @@
       "id": "vid_001",
       "title": "Noite de Vidro",
       "channel_id": "ch_001",
-      "views": 1018234,
+      "views": 18234,
       "likes": 3921,
       "dislikes": 124,
       "liked": false,
@@ -324,6 +353,26 @@
         "like_ratio": 0.232,
         "trend": "viral"
       }
+    },
+    {
+      "id": "vid_013",
+      "title": "Madonna - Holiday live on American Bandstand + Interview",
+      "channel_id": "ch_005",
+      "views": 45039,
+      "likes": 3847,
+      "dislikes": 112,
+      "liked": false,
+      "upload_date": "1984-01-14",
+      "duration": "5:48",
+      "description": "Madonna performs 'Holiday' live on American Bandstand, followed by a short interview with Dick Clark. January 14, 1984.",
+      "thumbnail_url": "https://picsum.photos/seed/nbc_madonna/480/270",
+      "embed_url": "https://www.youtube.com/embed/xbSTzlzoUi4",
+      "gradient": ["#5e2c8a", "#9b4d96", "#c55ba0"],
+      "engagement": {
+        "velocity": 1.1,
+        "like_ratio": 0.085,
+        "trend": "steady"
+      }
     }
   ],
 
@@ -516,6 +565,32 @@
         "likes": 834,
         "ts": "há 1 mês"
       }
+    ],
+    "vid_013": [
+      {
+        "user": "80sforever",
+        "text": "This performance is iconic. Madonna was just getting started!",
+        "likes": 1254,
+        "ts": "há 2 meses"
+      },
+      {
+        "user": "popculturefan",
+        "text": "Dick Clark was such a great interviewer. And Holiday is still a banger.",
+        "likes": 890,
+        "ts": "há 1 mês"
+      },
+      {
+        "user": "vinylcollector",
+        "text": "The energy is unmatched. 1984 was a special year.",
+        "likes": 672,
+        "ts": "há 3 semanas"
+      },
+      {
+        "user": "madgefan",
+        "text": "Holiday! Celebrate! 🎉 Still celebrating 40+ years later.",
+        "likes": 541,
+        "ts": "há 1 semana"
+      }
     ]
   },
 
@@ -538,17 +613,37 @@
         "top_video": "vid_004",
         "rpm_avg": 2.3
       }
+    },
+    "ch_005": {
+      "total_views": 45039,
+      "total_likes": 3847,
+      "videos_count": 1,
+      "shorts_count": 0,
+      "engagement_rate": 0.085,
+      "analytics": {
+        "subscriber_growth": [12400000, 12450000, 12480000, 12500000],
+        "views_last_7_days": 12400,
+        "top_regions": ["US", "UK", "CA"],
+        "watch_time_hours": 4350
+      },
+      "monetization": {
+        "total_earnings": 312.78,
+        "monthly_earnings": 92.44,
+        "top_video": "vid_013",
+        "rpm_avg": 2.1
+      }
     }
   },
 
-  "trending": ["vid_002", "vid_004", "vid_012", "vid_009", "vid_010"],
+  "trending": ["vid_002", "vid_004", "vid_012", "vid_009", "vid_010", "vid_013"],
 
   "home_chips": [
     { "id": "all",      "label": "Tudo" },
     { "id": "trending", "label": "🔥 Trending" },
     { "id": "venna",    "label": "venna" },
     { "id": "lofi",     "label": "Lofi" },
-    { "id": "night",    "label": "NightWave" }
+    { "id": "night",    "label": "NightWave" },
+    { "id": "nbc",      "label": "NBC" }
   ],
 
   "community_posts": [
