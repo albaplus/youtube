@@ -1,112 +1,140 @@
-// vidstream-simulator.js
-(function() {
-  const STORAGE_KEY = 'vidstream_db_nbc';
-  const TICK_INTERVAL_MS = 2000; // 2 segundos
-
-  // Dados iniciais (caso não exista nada salvo)
-  const INITIAL_DATA = { ... }; // cole o JSON acima aqui
-
-  // --- Funções auxiliares ---
-  function loadData() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        return JSON.parse(stored);
-      } catch (e) {
-        console.error('Erro ao parsear dados salvos, usando fallback.');
+{
+  "channels": [
+    {
+      "id": "ch_001",
+      "name": "Madonna",
+      "handle": "@madonna",
+      "subscribers": 509000,
+      "verified": true,
+      "description": "Official Madonna YouTube Channel",
+      "creation_date": "2005-10-25",
+      "gradient": ["#1a1a2e", "#16213e", "#0f3460"],
+      "subscribed": false,
+      "avatar_url": "https://m.media-amazon.com/images/M/MV5BMjUwZDM1YjQtNWJiYS00YzkwLWIyMzAtMDRjZjg1MTkxNjU3XkEyXkFqcGc@._V1_.jpg",
+      "banner_url": "https://i.ytimg.com/vi/GpSWmn-mXes/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGH8gSygoMA8=&rs=AOn4CLBv4-VKU-yspKgjpvmM26jHHlzpZA",
+      "identity": {
+        "aesthetic": "pop icon",
+        "tone": "legendary",
+        "upload_pattern": "archive & remaster",
+        "fanbase_name": "Madonna Fans"
+      },
+      "about": {
+        "bio": "Queen of Pop. Official YouTube channel featuring music videos, live performances, and more.",
+        "location": "Worldwide",
+        "links": ["madonna.com", "instagram.com/madonna", "twitter.com/madonna"],
+        "joined": "2005-10-25"
       }
     }
-    // Se não houver dados salvos, clona o INITIAL_DATA
-    return JSON.parse(JSON.stringify(INITIAL_DATA));
-  }
-
-  function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }
-
-  // --- Lógica de incremento ---
-  function applyTick(data) {
-    // Atualiza apenas se o sistema de tick estiver ativo
-    if (!data.system?.tick_system) return data;
-
-    const fields = data.system.tick_system.update_fields || ['views', 'likes'];
-    const boost = data.system.live_simulation?.active 
-      ? data.system.live_simulation.boost_multiplier || 1.0 
-      : 1.0;
-
-    // Atualiza vídeos
-    if (data.videos) {
-      data.videos.forEach(video => {
-        if (fields.includes('views')) {
-          // Incremento base: ~30 views por tick (ajuste conforme desejar)
-          const baseIncrement = Math.floor(25 + Math.random() * 15);
-          video.views += Math.floor(baseIncrement * boost);
-        }
-        if (fields.includes('likes')) {
-          const likeIncrement = Math.floor(video.views * (video.engagement?.like_ratio || 0.01) * 0.05);
-          video.likes += Math.max(1, likeIncrement);
-        }
-        // Atualiza engagement velocity (apenas para referência)
-        if (video.engagement) {
-          video.engagement.velocity = (video.views / 10000).toFixed(1);
-        }
-      });
+  ],
+  "videos": [
+    {
+      "id": "vid_001",
+      "type": "video",
+      "title": "Madonna - Holiday (Live from Top of the Pops 1984) (Official Video)",
+      "channel_id": "ch_001",
+      "views": 1928292,
+      "likes": 100000,
+      "dislikes": 22000,
+      "upload_date": "2022-07-28",
+      "duration": "4:08",
+      "description": "You're watching the official HD video of Madonna performing 'Holiday' live on BBC's Top of the Pops in 1984. Original song taken from Madonna's debut album 'Madonna' released on Sire Records in 1983.",
+      "thumbnail_url": "https://todayinmadonnahistory.com/wp-content/uploads/2015/01/holiday-16-peak-billboard-solid-gold-1.jpg",
+      "embed_url": "https://www.youtube.com/embed/Fq_khJD1WVQ",
+      "gradient": ["#ff6b6b", "#ee5a24", "#f0932b"],
+      "liked": false,
+      "engagement": {
+        "velocity": 2.8,
+        "like_ratio": 0.052,
+        "trend": "steady"
+      }
     }
-
-    // Atualiza channel_stats
-    if (data.channel_stats) {
-      Object.keys(data.channel_stats).forEach(chId => {
-        const stats = data.channel_stats[chId];
-        const channelVideos = data.videos.filter(v => v.channel_id === chId);
-        stats.total_views = channelVideos.reduce((sum, v) => sum + v.views, 0);
-        stats.total_likes = channelVideos.reduce((sum, v) => sum + v.likes, 0);
-        if (stats.analytics) {
-          stats.analytics.views_last_7_days = stats.total_views;
-          stats.analytics.watch_time_hours = Math.floor(stats.total_views * 0.008);
-        }
-        if (stats.monetization) {
-          stats.monetization.total_earnings = parseFloat((stats.total_views * 0.0021).toFixed(2));
-          stats.monetization.monthly_earnings = parseFloat((stats.monetization.total_earnings / 4).toFixed(2));
-        }
-      });
+  ],
+  "shorts": [],
+  "music": [],
+  "films": [],
+  "live_streams": [],
+  "playlists": [],
+  "comments": {
+    "vid_001": [
+      {
+        "user": "80smusiclover",
+        "text": "This performance is pure joy. Madonna was already a superstar in the making!",
+        "likes": 3400,
+        "ts": "1 year ago"
+      },
+      {
+        "user": "PopHistoryBuff",
+        "text": "The energy, the smile, the dance moves... ICONIC. Holiday never gets old.",
+        "likes": 2800,
+        "ts": "8 months ago"
+      },
+      {
+        "user": "MadonnaFanForever",
+        "text": "42 years later and this still makes me want to dance. Queen of Pop for a reason 👑",
+        "likes": 1900,
+        "ts": "3 months ago"
+      },
+      {
+        "user": "RetroVibes",
+        "text": "That outfit, that hair, the pure 80s joy. They don't make 'em like this anymore.",
+        "likes": 1500,
+        "ts": "1 month ago"
+      },
+      {
+        "user": "MusicArchive",
+        "text": "Historic performance. This was the moment the world started paying attention.",
+        "likes": 1200,
+        "ts": "2 weeks ago"
+      }
+    ]
+  },
+  "channel_stats": {
+    "ch_001": {
+      "total_views": 1928292,
+      "total_likes": 100000,
+      "videos_count": 1,
+      "shorts_count": 0,
+      "music_count": 0,
+      "films_count": 0,
+      "engagement_rate": 0.052,
+      "analytics": {
+        "subscriber_growth": [500000, 504000, 507000, 509000],
+        "views_last_7_days": 12400,
+        "top_regions": ["US", "UK", "BR", "CA"],
+        "watch_time_hours": 2400
+      },
+      "monetization": {
+        "total_earnings": 820.00,
+        "monthly_earnings": 68.33,
+        "top_video": "vid_001",
+        "rpm_avg": 2.1
+      }
     }
-
-    return data;
-  }
-
-  // --- Inicialização ---
-  let appData = loadData();
-
-  // Função de renderização (você deve adaptar ao seu HTML)
-  function render() {
-    const video = appData.videos[0];
-    if (!video) return;
-
-    // Exemplo: atualizar elementos com ids
-    document.getElementById('views-count').textContent = video.views.toLocaleString();
-    document.getElementById('likes-count').textContent = video.likes.toLocaleString();
-    document.getElementById('subs-count').textContent = appData.channels[0].subscribers.toLocaleString();
-
-    // Atualiza channel stats se necessário
-    const stats = appData.channel_stats.ch_005;
-    document.getElementById('total-channel-views').textContent = stats.total_views.toLocaleString();
-  }
-
-  // Tick loop
-  function tick() {
-    appData = applyTick(appData);
-    if (appData.system.tick_system.persist) {
-      saveData(appData);
-    }
-    render();
-  }
-
-  // Inicia o intervalo
-  setInterval(tick, TICK_INTERVAL_MS);
-
-  // Render inicial
-  render();
-
-  // Opcional: expor dados para debug
-  window.vidstreamData = appData;
-})();
+  },
+  "trending": ["vid_001"],
+  "trending_music": [],
+  "trending_films": [],
+  "trending_shorts": [],
+  "algorithm": {
+    "weights": {
+      "retention": 0.40,
+      "likes": 0.25,
+      "subscribers": 0.20,
+      "recent_engagement": 0.15
+    },
+    "viralization_threshold": 0.003,
+    "velocity_boost_viral": 3.0,
+    "velocity_boost_growing": 1.5
+  },
+  "tick_system": {
+    "interval": "5s",
+    "update": ["views", "likes"],
+    "persist": true
+  },
+  "live_simulation": {
+    "active": false,
+    "boost_multiplier": 1.0,
+    "viewer_fluctuation_range": 0
+  },
+  "logs": []
+}
