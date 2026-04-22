@@ -99,34 +99,72 @@
       "type": "video",
       "title": "Sade - Smooth Operator - Official",
       "channel_id": "ch_002",
-      "views": 3892,
-      "likes": 187,
-      "dislikes": 12,
-      "upload_date": "2026-04-21",
+      "views": 98394392,
+      "likes": 1892345,
+      "dislikes": 34218,
+      "upload_date": "2025-08-22",
+      "age": "8 meses",
       "duration": "4:16",
       "description": "Official video for Smooth Operator by Sade. Digitally remastered and upscaled to Full HD.",
       "thumbnail_url": "https://i.ytimg.com/vi/4TYv2PhG89A/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/qQ_GNl667YE",
       "gradient": ["#8e44ad", "#9b59b6", "#6c3483"],
       "liked": false,
-      "engagement": { "velocity": 0.12, "like_ratio": 0.048, "trend": "slow" }
+      "engagement": { "velocity": 0.31, "like_ratio": 0.019, "trend": "slow" }
     },
     {
       "id": "vid_003",
       "type": "video",
       "title": "Madonna - La Isla Bonita (Official Video)",
       "channel_id": "ch_001",
-      "views": 15938472,
-      "likes": 891234,
-      "dislikes": 12389,
-      "upload_date": "2026-04-22",
+      "views": 390394239,
+      "likes": 12345678,
+      "dislikes": 156789,
+      "upload_date": "2025-06-15",
+      "age": "10 meses",
       "duration": "4:02",
-      "description": "Official music video for 'La Isla Bonita' by Madonna. Remastered in HD.",
+      "description": "Official music video for 'La Isla Bonita' by Madonna. Remastered in stunning HD. Celebrando 390 milhões de views!",
       "thumbnail_url": "https://i.ytimg.com/vi/zpzdgmqIHOQ/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ",
       "gradient": ["#e8a87c", "#d4845a", "#c06038"],
       "liked": false,
-      "engagement": { "velocity": 5.81, "like_ratio": 0.056, "trend": "viral" }
+      "engagement": { "velocity": 4.82, "like_ratio": 0.031, "trend": "growing" }
+    },
+    {
+      "id": "vid_004",
+      "type": "video",
+      "title": "Madonna - Like A Virgin (Official Video)",
+      "channel_id": "ch_001",
+      "views": 178234567,
+      "likes": 3456789,
+      "dislikes": 89123,
+      "upload_date": "2024-11-10",
+      "age": "1 ano",
+      "duration": "3:38",
+      "description": "Official music video for 'Like A Virgin' by Madonna. From the album 'Like A Virgin' (1984). Remastered in HD.",
+      "thumbnail_url": "https://i.ytimg.com/vi/s__rX_WL100/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/s__rX_WL100",
+      "gradient": ["#ff6b9d", "#ff4081", "#e91e63"],
+      "liked": false,
+      "engagement": { "velocity": 3.21, "like_ratio": 0.019, "trend": "growing" }
+    },
+    {
+      "id": "vid_005",
+      "type": "video",
+      "title": "Madonna - Papa Don't Preach (Official Video) [HD]",
+      "channel_id": "ch_001",
+      "views": 145678234,
+      "likes": 2891234,
+      "dislikes": 67891,
+      "upload_date": "2024-09-05",
+      "age": "1 ano",
+      "duration": "4:29",
+      "description": "Official HD music video for 'Papa Don't Preach' by Madonna. From the album 'True Blue' (1986).",
+      "thumbnail_url": "https://i.ytimg.com/vi/G333Is7VPOg/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/G333Is7VPOg",
+      "gradient": ["#9b59b6", "#8e44ad", "#6c3483"],
+      "liked": false,
+      "engagement": { "velocity": 2.94, "like_ratio": 0.019, "trend": "steady" }
     }
   ],
   "shorts": [],
@@ -282,12 +320,18 @@
       { "user": "80smusiclover", "text": "This performance is pure joy!", "likes": 3412, "ts": "1 year ago" }
     ],
     "vid_002": [
-      { "user": "smoothjazz_fan", "text": "Finally someone uploaded this! Such an underrated gem 💎", "likes": 42, "ts": "2 days ago" },
-      { "user": "retro_vibes", "text": "Why does this only have 3k views? This is a classic!", "likes": 28, "ts": "1 day ago" },
-      { "user": "sade_soldier", "text": "Sharing this everywhere. More people need to hear this masterpiece.", "likes": 15, "ts": "12 hours ago" }
+      { "user": "smoothjazz_fan", "text": "98 milhões em 8 meses... crescimento lento mas constante. Um clássico que nunca morre 💎", "likes": 3421, "ts": "1 month ago" }
     ],
     "vid_003": [
-      { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! 💃", "likes": 2812, "ts": "1 hour ago" }
+      { "user": "latinpopfan", "text": "390 MILHÕES! La Isla Bonita é simplesmente atemporal 💃🌺", "likes": 45231, "ts": "2 days ago" }
+    ],
+    "vid_004": [
+      { "user": "80sforever", "text": "Like a Virgin definiu uma geração. Madonna é rainha 👑", "likes": 28912, "ts": "2 weeks ago" },
+      { "user": "popculturefan", "text": "Esse vídeo é puro suco dos anos 80. Icônico!", "likes": 21456, "ts": "1 month ago" }
+    ],
+    "vid_005": [
+      { "user": "madonnafan4life", "text": "Papa Don't Preach é uma das músicas mais corajosas da carreira dela. Atemporal.", "likes": 18765, "ts": "3 weeks ago" },
+      { "user": "musiclover_80s", "text": "A mensagem dessa música continua relevante até hoje. Obra-prima!", "likes": 15234, "ts": "1 month ago" }
     ],
     "mus_003": [
       { "user": "rockfan_ny", "text": "4 meses e ainda não enjoei. Álbum do ano! 🔥", "likes": 3412, "ts": "1 month ago" }
@@ -298,22 +342,22 @@
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 608229358,
-      "total_likes": 13942468,
-      "videos_count": 2,
+      "total_views": 1323140806,
+      "total_likes": 32612269,
+      "videos_count": 4,
       "music_count": 1,
       "singles_count": 0,
       "albums_count": 1,
-      "engagement_rate": 0.022
+      "engagement_rate": 0.024
     },
     "ch_002": {
-      "total_views": 610398185,
-      "total_likes": 8912532,
+      "total_views": 708788685,
+      "total_likes": 10803579,
       "videos_count": 1,
       "music_count": 1,
       "albums_count": 1,
       "singles_count": 0,
-      "engagement_rate": 0.014
+      "engagement_rate": 0.015
     },
     "ch_003": {
       "total_views": 880283110,
@@ -325,16 +369,16 @@
       "engagement_rate": 0.036
     }
   },
-  "trending": ["mus_005", "mus_003", "vid_003", "mus_002"],
+  "trending": ["vid_003", "mus_005", "vid_004", "mus_003", "vid_005", "mus_002", "vid_002"],
   "trending_music": [
     "mus_005",
+    "trk_035",
     "trk_029",
+    "trk_031",
     "trk_027",
+    "trk_032",
     "trk_018",
     "trk_011",
-    "trk_025",
-    "trk_013",
-    "trk_010",
     "trk_001",
     "mus_003"
   ],
