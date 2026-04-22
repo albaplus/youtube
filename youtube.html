@@ -1404,6 +1404,13 @@ function _navigateTo(view,id,tab,updateHist){
     document.getElementById('player-view').style.display='block';
     renderPlayer(id);
     window.scrollTo(0,0);
+  } else if(view==='player-live'){
+    STATE.currentVideo=id;
+    STATE.view='player';
+    document.getElementById('player-view').style.display='block';
+    const ls=(DB.live_streams||[]).find(l=>l.id===id);
+    if(ls) renderLivePlayer(ls);
+    window.scrollTo(0,0);
   } else if(view==='channel'){
     STATE.currentChannel=id;
     STATE.currentTab=tab||'home';
@@ -1908,7 +1915,60 @@ function renderChannelTab(chId,tab){
 
   if(tab==='home'){
     const featured=[...chVideos].sort((a,b)=>b.views-a.views)[0];
-    el.innerHTML=`
+    const chMusic=(DB.music||[]).filter(m=>m.channel_id===chId);
+    const liveBlock=chLive.length?`
+      <div class="section-block">
+        <div class="section-heading" style="display:flex;align-items:center;gap:10px">
+          <span class="live-badge"><span class="live-dot"></span>AO VIVO</span>
+          Transmissões ao vivo
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+          ${chLive.map(ls=>`
+            <div class="live-card" onclick="navigate('player-live','${ls.id}')" style="cursor:pointer;border-radius:12px;overflow:hidden;transition:transform 0.15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+              <div class="live-thumb" style="border-radius:12px;overflow:hidden">
+                ${ls.thumbnail_url?`<img src="${ls.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:''}
+                <div class="live-thumb-gradient" style="background:${gradientCSS(ls.gradient)};position:absolute;inset:0;opacity:${ls.thumbnail_url?0.4:1}"></div>
+                <div class="live-badge-wrap">
+                  <span class="live-badge"><span class="live-dot"></span>AO VIVO</span>
+                  <span class="live-viewers"><span class="live-viewers-count">${fmtNum(ls.viewers)}</span> assistindo</span>
+                </div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
+                  <div style="width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="live-info" style="padding:10px 4px 0">
+                <div class="live-title">${ls.title}</div>
+                <div class="live-channel-row">${ls.category} · iniciou ${ls.started_ago}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`:'';
+    const musicBlock=chMusic.length?`
+      <div class="section-block">
+        <div class="section-heading">Músicas</div>
+        <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
+          ${chMusic.map(m=>`
+            <div style="min-width:180px;max-width:180px;cursor:pointer;flex-shrink:0" onclick="navigate('player','${m.id}')">
+              <div style="aspect-ratio:1/1;border-radius:10px;overflow:hidden;position:relative">
+                ${m.thumbnail_url?`<img src="${m.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:''}
+                <div style="position:absolute;inset:0;background:${gradientCSS(m.gradient||['#111','#222'])}${m.thumbnail_url?';opacity:0.3':''}"></div>
+                <div class="type-badge music" style="top:8px;left:8px">MÚSICA</div>
+                <div class="duration-badge">${m.duration}</div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+                  <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.title}</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px">${m.artist||ch.name} · ${m.genre}</div>
+              <div style="font-size:12px;color:var(--muted)">${fmtNum(m.views)} streams</div>
+            </div>`).join('')}
+        </div>
+      </div>`:'';
+    el.innerHTML=liveBlock+musicBlock+`
       <div class="section-block">
         <div class="section-heading">Vídeo em destaque</div>
         <div style="max-width:640px;cursor:pointer" onclick="navigate('player','${featured.id}')">
@@ -1976,7 +2036,7 @@ function renderChannelTab(chId,tab){
       el.innerHTML=`
         <div class="live-grid" style="padding:0;margin:0">
           ${chLive.map(ls=>`
-            <div class="live-card" onclick="navigate('player-live','${ls.id}');STATE.view='player'">
+            <div class="live-card" onclick="navigate('player-live','${ls.id}')">
               <div class="live-thumb">
                 ${ls.thumbnail_url?`<img src="${ls.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:``}
                 <div class="live-thumb-gradient" style="background:${gradientCSS(ls.gradient)};position:absolute;inset:0;opacity:${ls.thumbnail_url?0.4:1}"></div>
