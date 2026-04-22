@@ -110,6 +110,23 @@
       "gradient": ["#8e44ad", "#9b59b6", "#6c3483"],
       "liked": false,
       "engagement": { "velocity": 4.5, "like_ratio": 0.017, "trend": "viral" }
+    },
+    {
+      "id": "vid_003",
+      "type": "video",
+      "title": "Madonna - La Isla Bonita (Official Video)",
+      "channel_id": "ch_001",
+      "views": 15938282,
+      "likes": 980000,
+      "dislikes": 18000,
+      "upload_date": "2009-10-27",
+      "duration": "4:03",
+      "description": "You're watching the official music video for 'La Isla Bonita' from Madonna's album 'True Blue'.",
+      "thumbnail_url": "https://i.ytimg.com/vi/zpzdgmqIHOQ/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ",
+      "gradient": ["#e74c3c", "#c0392b", "#f39c12"],
+      "liked": false,
+      "engagement": { "velocity": 2.1, "like_ratio": 0.061, "trend": "growing" }
     }
   ],
   "shorts": [],
@@ -189,7 +206,7 @@
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
       "subgenres": ["Post-Grunge", "Indie Rock"],
-      "description": "The highly anticipated debut album from Bronx. 'Color of Pain' explores themes of loss, redemption, and finding beauty in darkness. Recorded at Electric Lady Studios in New York and produced by Dave Sardy (Oasis, LCD Soundsystem), the album delivers a raw, visceral sound that has already captivated millions worldwide.",
+      "description": "The highly anticipated debut album from Bronx. 'Color of Pain' explores themes of loss, redemption, and finding beauty in darkness. Recorded at Electric Lady Studios in New York and produced by Dave Sardy.",
       "credits": {
         "label": "Dark Horse Records",
         "producer": "Dave Sardy, Bronx",
@@ -198,41 +215,11 @@
         "studio": "Electric Lady Studios, NYC"
       },
       "tracks": [
-        {
-          "title": "Color of Pain",
-          "duration": "3:42",
-          "plays": 21800000,
-          "likes": 1400000,
-          "embed_url": null
-        },
-        {
-          "title": "Broken Glass",
-          "duration": "4:05",
-          "plays": 18200000,
-          "likes": 1200000,
-          "embed_url": null
-        },
-        {
-          "title": "Fading Lights",
-          "duration": "3:58",
-          "plays": 12400000,
-          "likes": 820000,
-          "embed_url": null
-        },
-        {
-          "title": "Echoes",
-          "duration": "4:33",
-          "plays": 8600000,
-          "likes": 580000,
-          "embed_url": null
-        },
-        {
-          "title": "Runaway",
-          "duration": "3:27",
-          "plays": 4100000,
-          "likes": 280000,
-          "embed_url": null
-        }
+        { "title": "Color of Pain", "duration": "3:42", "plays": 21800000, "likes": 1400000, "embed_url": null },
+        { "title": "Broken Glass", "duration": "4:05", "plays": 18200000, "likes": 1200000, "embed_url": null },
+        { "title": "Fading Lights", "duration": "3:58", "plays": 12400000, "likes": 820000, "embed_url": null },
+        { "title": "Echoes", "duration": "4:33", "plays": 8600000, "likes": 580000, "embed_url": null },
+        { "title": "Runaway", "duration": "3:27", "plays": 4100000, "likes": 280000, "embed_url": null }
       ],
       "liked": false,
       "engagement": { "velocity": 5.2, "like_ratio": 0.063, "trend": "viral" }
@@ -257,6 +244,11 @@
     "vid_001": [
       { "user": "80smusiclover", "text": "This performance is pure joy!", "likes": 3400, "ts": "1 year ago" }
     ],
+    "vid_003": [
+      { "user": "latinpoplover", "text": "This song is timeless. La Isla Bonita never gets old 🌺", "likes": 5200, "ts": "2 weeks ago" },
+      { "user": "80sforever", "text": "The dress, the setting, the vibe... pure 80s magic", "likes": 3800, "ts": "1 month ago" },
+      { "user": "madgefan", "text": "One of her best videos ever. The Spanish aesthetic is everything", "likes": 2100, "ts": "3 days ago" }
+    ],
     "mus_003": [
       { "user": "rockfan_ny", "text": "Finally! 'Broken Glass' is an instant classic 🔥", "likes": 1200, "ts": "2 hours ago" },
       { "user": "altmusicjunkie", "text": "The production on this album is insane.", "likes": 980, "ts": "5 hours ago" },
@@ -265,11 +257,11 @@
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 31866574,
-      "total_likes": 1400000,
-      "videos_count": 1,
+      "total_views": 47766574,
+      "total_likes": 2380000,
+      "videos_count": 2,
       "music_count": 1,
-      "engagement_rate": 0.044
+      "engagement_rate": 0.050
     },
     "ch_002": {
       "total_views": 268678215,
@@ -286,7 +278,7 @@
       "engagement_rate": 0.063
     }
   },
-  "trending": ["mus_003", "vid_002", "mus_001", "vid_001", "mus_002"],
+  "trending": ["mus_003", "vid_002", "vid_003", "mus_001", "vid_001", "mus_002"],
   "trending_music": ["mus_003", "mus_001", "mus_002"],
   "trending_films": [],
   "trending_shorts": [],
