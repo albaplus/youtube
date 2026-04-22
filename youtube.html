@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VidStream</title>
+<title>YouTube</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -670,11 +670,14 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
     <button class="hamburger icon-svg" onclick="toggleSidebar()" title="Menu">
       <svg class="yt-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
     </button>
-    <a class="logo" onclick="navigate('home')" title="VidStream Início">
+    <button class="icon-btn icon-svg" id="back-btn" onclick="goBack()" title="Voltar" style="display:none">
+      <svg class="yt-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <a class="logo" onclick="navigate('home')" title="YouTube Início">
       <svg width="92" height="20" viewBox="0 0 92 20">
         <rect x="0" y="1" width="28" height="18" rx="4" fill="#ff0000"/>
         <polygon points="11,5.5 11,14.5 19.5,10" fill="white"/>
-        <text x="33" y="15.5" font-family="Roboto,sans-serif" font-size="14" font-weight="700" fill="white" letter-spacing="-0.3">VidStream</text>
+        <text x="33" y="15.5" font-family="Roboto,sans-serif" font-size="14" font-weight="700" fill="white" letter-spacing="-0.3">YouTube</text>
       </svg>
       <span class="logo-tld">BR</span>
     </a>
@@ -845,10 +848,11 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
       <button class="ch-tab active" onclick="switchTab('home')">Início</button>
       <button class="ch-tab" onclick="switchTab('videos')">Vídeos</button>
       <button class="ch-tab" onclick="switchTab('shorts')">Shorts</button>
+      <button class="ch-tab" onclick="switchTab('music')">Música</button>
       <button class="ch-tab" onclick="switchTab('playlists')">Playlists</button>
       <button class="ch-tab" onclick="switchTab('live')">Ao vivo</button>
       <button class="ch-tab" onclick="switchTab('community')">Comunidade</button>
-      <button class="ch-tab" onclick="switchTab('monetize')">💰 Ganhos</button>
+      <button class="ch-tab" onclick="switchTab('dados')">Dados</button>
       <button class="ch-tab" onclick="switchTab('about')">Sobre</button>
     </div>
     <div class="ch-content" id="ch-content"></div>
@@ -857,7 +861,7 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
   <!-- LIVE VIEW -->
   <div id="live-view">
     <div class="content-inner" style="padding-bottom:8px">
-      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px">🔴 Ao vivo agora</h2>
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px">Ao vivo agora</h2>
       <p style="font-size:14px;color:var(--muted);margin-bottom:0">Streams ao vivo dos seus canais e mais</p>
     </div>
     <div class="live-grid" id="live-grid"></div>
@@ -871,12 +875,12 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
   <!-- EXPLORE VIEW -->
   <div id="explore-view">
     <div class="explore-tabs-bar" id="explore-tabs-bar">
-      <button class="explore-tab" data-tab="trending" onclick="switchExploreTab('trending')">🔥 Trending</button>
-      <button class="explore-tab" data-tab="shorts" onclick="switchExploreTab('shorts')">⚡ Shorts</button>
-      <button class="explore-tab" data-tab="music" onclick="switchExploreTab('music')">🎵 Música</button>
-      <button class="explore-tab" data-tab="films" onclick="switchExploreTab('films')">🎬 Filmes</button>
-      <button class="explore-tab" data-tab="gaming" onclick="switchExploreTab('gaming')">🎮 Games</button>
-      <button class="explore-tab" data-tab="news" onclick="switchExploreTab('news')">📰 Notícias</button>
+      <button class="explore-tab" data-tab="trending" onclick="switchExploreTab('trending')">Tendências</button>
+      <button class="explore-tab" data-tab="shorts" onclick="switchExploreTab('shorts')">Shorts</button>
+      <button class="explore-tab" data-tab="music" onclick="switchExploreTab('music')">Música</button>
+      <button class="explore-tab" data-tab="films" onclick="switchExploreTab('films')">Filmes</button>
+      <button class="explore-tab" data-tab="gaming" onclick="switchExploreTab('gaming')">Games</button>
+      <button class="explore-tab" data-tab="news" onclick="switchExploreTab('news')">Notícias</button>
     </div>
     <div class="explore-content" id="explore-content"></div>
   </div>
@@ -1182,17 +1186,26 @@ const DEFAULT_DB = {
 // STATE & STORAGE
 // ══════════════════════════════════════════════
 let DB = {};
-let STATE = {view:'home',currentChannel:null,currentVideo:null,currentTab:'home',sidebarOpen:true,currentChip:'all'};
+let STATE = {view:'home',currentChannel:null,currentVideo:null,currentTab:'home',sidebarOpen:true,currentChip:'all',history:[]};
 
 async function loadDB(){
+  // Always check localStorage first — preserves accumulated view counts
+  try{
+    const s=localStorage.getItem('vidstream_db2');
+    if(s){
+      DB=JSON.parse(s);
+      navigate('home');
+      return;
+    }
+  }catch(_){}
+  // No local data: fetch remote seed
   try{
     const res=await fetch('https://raw.githubusercontent.com/albaplus/youtube/refs/heads/main/database.json');
     if(!res.ok) throw new Error('HTTP '+res.status);
     DB=await res.json();
     saveDB();
   }catch(e){
-    console.warn('Falha ao carregar JSON remoto, usando cache local:',e);
-    try{const s=localStorage.getItem('vidstream_db2');if(s){DB=JSON.parse(s);return;}}catch(_){}
+    console.warn('Falha ao carregar DB remoto:',e);
     DB=JSON.parse(JSON.stringify(DEFAULT_DB));
     saveDB();
   }
@@ -1246,7 +1259,7 @@ function tick(){
   });
   if(DB.logs.length>500) DB.logs=DB.logs.slice(-200);
   saveDB();
-  // Update live UI
+  // ── Live UI updates ──
   if(STATE.view==='player'&&STATE.currentVideo){
     const v=getVideo(STATE.currentVideo);
     if(v){
@@ -1265,6 +1278,13 @@ function tick(){
     const el=document.getElementById('ch-stats-row');
     const ch=getChannel(STATE.currentChannel);
     if(el&&ch) el.textContent=`${fmtNum(ch.subscribers)} inscritos`;
+  }
+  if(STATE.view==='home'){
+    // Update view counts in visible cards without full re-render
+    document.querySelectorAll('[data-vid-id]').forEach(el=>{
+      const v=getVideo(el.dataset.vidId);
+      if(v) el.textContent=fmtNum(v.views)+' visualizações';
+    });
   }
   if(STATE.view==='live'){
     renderLiveGrid();
@@ -1343,7 +1363,33 @@ function showNotif(msg){
 // ══════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════
+function updateBackBtn(){
+  const btn=document.getElementById('back-btn');
+  if(btn) btn.style.display=STATE.history.length>0?'flex':'none';
+}
+
+function goBack(){
+  if(!STATE.history.length) return;
+  const prev=STATE.history.pop();
+  // navigate without pushing to history
+  _navigateTo(prev.view, prev.id, prev.tab, false);
+}
+
 function navigate(view,id){
+  // Push current state to history before leaving (skip if already home→home)
+  if(STATE.view!==view || STATE.currentVideo!==id){
+    STATE.history.push({
+      view:STATE.view,
+      id:STATE.view==='player'?STATE.currentVideo:STATE.view==='channel'?STATE.currentChannel:STATE.exploreTab,
+      tab:STATE.currentTab
+    });
+    // Cap history at 20
+    if(STATE.history.length>20) STATE.history.shift();
+  }
+  _navigateTo(view,id,null,true);
+}
+
+function _navigateTo(view,id,tab,updateHist){
   ['home-view','player-view','channel-view','search-view','live-view','explore-view'].forEach(v=>{
     document.getElementById(v).style.display='none';
   });
@@ -1360,7 +1406,7 @@ function navigate(view,id){
     window.scrollTo(0,0);
   } else if(view==='channel'){
     STATE.currentChannel=id;
-    STATE.currentTab='home';
+    STATE.currentTab=tab||'home';
     document.getElementById('channel-view').style.display='block';
     renderChannel(id);
     window.scrollTo(0,0);
@@ -1379,6 +1425,7 @@ function navigate(view,id){
     renderExplore(STATE.exploreTab);
     window.scrollTo(0,0);
   }
+  updateBackBtn();
 }
 
 function toggleSidebar(){
@@ -1439,7 +1486,7 @@ function renderHome(){
 
 function renderChips(){
   const chips=['all','trending','shorts','music','films','venna','lofi','night'];
-  const labels={all:'Tudo',trending:'🔥 Trending',shorts:'⚡ Shorts',music:'🎵 Músicas',films:'🎬 Filmes',venna:'venna',lofi:'Lofi',night:'NightWave'};
+  const labels={all:'Tudo',trending:'Trending',shorts:'Shorts',music:'Músicas',films:'Filmes',venna:'venna',lofi:'Lofi',night:'NightWave'};
   document.getElementById('chips').innerHTML=chips.map(c=>`
     <button class="chip${c===STATE.currentChip?' active':''}" onclick="setChip('${c}')">${labels[c]||c}</button>
   `).join('');
@@ -1459,7 +1506,7 @@ function musicHomeCard(m){
           :`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center"><span style="font-size:13px;color:rgba(255,255,255,0.6)">${m.title}</span></div>`
         }
         <div class="duration-badge">${m.duration}</div>
-        <div class="type-badge music">🎵 MÚSICA</div>
+        <div class="type-badge music">MÚSICA</div>
       </div>
     </div>
     <div class="video-info">
@@ -1467,7 +1514,7 @@ function musicHomeCard(m){
       <div class="card-meta">
         <div class="card-title">${m.title}</div>
         <div class="card-channel">${m.artist||ch.name}</div>
-        <div class="card-stats">${fmtNum(m.views)} streams · ${m.genre}</div>
+        <div class="card-stats"><span data-vid-id="${m.id}">${fmtNum(m.views)} streams</span> · ${m.genre}</div>
       </div>
     </div>
   </div>`;
@@ -1485,7 +1532,7 @@ function filmHomeCard(f){
           :`<div style="background:${gradientCSS(f.gradient||['#111','#222'])};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center"><span style="font-size:13px;color:rgba(255,255,255,0.6)">${f.title}</span></div>`
         }
         <div class="duration-badge">${Math.floor(f.runtime_minutes/60)}h ${f.runtime_minutes%60}min</div>
-        <div class="type-badge film">🎬 FILME</div>
+        <div class="type-badge film">FILME</div>
       </div>
     </div>
     <div class="video-info">
@@ -1511,7 +1558,7 @@ function shortHomeCard(s){
           :`<div style="background:${gradientCSS(s.gradient||['#111','#222'])};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center"><span style="font-size:13px;color:rgba(255,255,255,0.6)">${s.title}</span></div>`
         }
         <div class="duration-badge">${s.duration}</div>
-        <div class="type-badge short">⚡ SHORT</div>
+        <div class="type-badge short">SHORT</div>
       </div>
     </div>
     <div class="video-info">
@@ -1541,7 +1588,7 @@ function videoCard(v){
       <div class="card-meta">
         <div class="card-title">${v.title}</div>
         <div class="card-channel">${ch.name}${ch.verified?verifiedSVG(14):''}</div>
-        <div class="card-stats">${fmtNum(v.views)} visualizações · ${fmtDate(v.upload_date)}</div>
+        <div class="card-stats"><span data-vid-id="${v.id}">${fmtNum(v.views)} visualizações</span> · ${fmtDate(v.upload_date)}</div>
       </div>
     </div>
   </div>`;
@@ -1842,7 +1889,7 @@ function renderChannel(chId){
 function switchTab(tab){
   STATE.currentTab=tab;
   document.querySelectorAll('.ch-tab').forEach((b,i)=>{
-    const tabs=['home','videos','shorts','playlists','live','community','monetize','about'];
+    const tabs=['home','videos','shorts','music','playlists','live','community','dados','about'];
     b.classList.toggle('active',tabs[i]===tab);
   });
   renderChannelTab(STATE.currentChannel,tab);
@@ -1861,36 +1908,29 @@ function renderChannelTab(chId,tab){
 
   if(tab==='home'){
     const featured=[...chVideos].sort((a,b)=>b.views-a.views)[0];
-    const popular=[...chVideos].sort((a,b)=>b.views-a.views).slice(0,4);
     el.innerHTML=`
       <div class="section-block">
         <div class="section-heading">Vídeo em destaque</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div style="cursor:pointer" onclick="navigate('player','${featured.id}')">
-            <div style="aspect-ratio:16/9;border-radius:12px;overflow:hidden;position:relative">
-              ${featured.thumbnail_url
-                ? `<img src="${featured.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`
-                : ''
-              }
-              <div style="${featured.thumbnail_url?'display:none;':'display:flex;'}position:absolute;inset:0;background:${gradientCSS(featured.gradient)};align-items:center;justify-content:center">
-                <span style="font-size:20px;font-weight:700;color:rgba(255,255,255,0.3);text-align:center;padding:24px">${featured.title}</span>
-              </div>
-              <div class="duration-badge">${featured.duration}</div>
+        <div style="max-width:640px;cursor:pointer" onclick="navigate('player','${featured.id}')">
+          <div style="aspect-ratio:16/9;border-radius:12px;overflow:hidden;position:relative">
+            ${featured.thumbnail_url
+              ? `<img src="${featured.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`
+              : ''
+            }
+            <div style="${featured.thumbnail_url?'display:none;':'display:flex;'}position:absolute;inset:0;background:${gradientCSS(featured.gradient)};align-items:center;justify-content:center">
+              <span style="font-size:20px;font-weight:700;color:rgba(255,255,255,0.3);text-align:center;padding:24px">${featured.title}</span>
             </div>
-            <div style="margin-top:10px;font-size:16px;font-weight:500">${featured.title}</div>
-            <div style="font-size:13px;color:var(--muted)">${fmtNum(featured.views)} visualizações · ${fmtDate(featured.upload_date)}</div>
+            <div class="duration-badge">${featured.duration}</div>
           </div>
-          <div>
-            <div class="section-heading" style="margin-bottom:12px">Populares</div>
-            ${popular.slice(1).map(v=>miniCard(v)).join('')}
-          </div>
+          <div style="margin-top:10px;font-size:16px;font-weight:500">${featured.title}</div>
+          <div style="font-size:13px;color:var(--muted)">${fmtNum(featured.views)} visualizações · ${fmtDate(featured.upload_date)}</div>
         </div>
       </div>
       <div class="section-block">
         <div class="section-heading">Shorts em destaque</div>
         <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">
           ${chShorts.map(s=>`
-            <div style="min-width:160px;cursor:pointer" onclick="showNotif('▶ Reproduzindo short: ${s.title}')">
+            <div style="min-width:160px;cursor:pointer" onclick="showNotif('Reproduzindo short: ${s.title}')">
               <div style="aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative;display:flex;align-items:center;justify-content:center">
                 ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6" onerror="this.remove()">`:''}
                 <span style="position:relative;font-size:12px;color:rgba(255,255,255,0.5);text-align:center;padding:12px">${s.title}</span>
@@ -1985,41 +2025,163 @@ function renderChannelTab(chId,tab){
         </div>
       </div>
     `;
-  } else if(tab==='monetize'){
-    el.innerHTML=`
-      <div class="monetize-card">
-        <div class="monetize-title">💰 Painel de Monetização — ${ch.name}</div>
-        <div class="earn-grid">
-          <div class="earn-item"><div class="earn-val">R$ ${mon.total_earnings?.toFixed(2)||'0.00'}</div><div class="earn-lbl">Total acumulado</div></div>
-          <div class="earn-item"><div class="earn-val">R$ ${mon.monthly_earnings?.toFixed(2)||'0.00'}</div><div class="earn-lbl">Este mês</div></div>
-          <div class="earn-item"><div class="earn-val">R$ ${mon.rpm_avg||0}/mil</div><div class="earn-lbl">RPM médio</div></div>
-          <div class="earn-item"><div class="earn-val">${fmtNum(stats.total_views||0)}</div><div class="earn-lbl">Visualizações totais</div></div>
+  } else if(tab==='music'){
+    const chMusic=(DB.music||[]).filter(m=>m.channel_id===chId);
+    if(!chMusic.length){
+      el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:40px;margin-bottom:16px;opacity:0.3">♪</div><div>Nenhuma música publicada</div></div>`;
+    } else {
+      el.innerHTML=`
+        <div class="section-block">
+          <div class="section-heading">Músicas</div>
+          <div class="music-list">
+            ${chMusic.map((m,i)=>`
+              <div class="music-row" onclick="navigate('player','${m.id}')">
+                <div class="music-rank">${i+1}</div>
+                <div class="music-thumb">
+                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+                </div>
+                <div class="music-info">
+                  <div class="music-title">${m.title}</div>
+                  <div class="music-artist">${m.album} · ${m.genre}</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.duration} · ${m.bpm} BPM</div>
+                </div>
+                <div class="music-stats">
+                  <div>${fmtNum(m.views)} streams</div>
+                  <div style="font-size:11px;margin-top:2px;color:var(--muted)">${fmtNum(m.likes)} curtidas</div>
+                </div>
+                ${m.engagement.trend==='viral'?`<div class="music-bars"><span></span><span></span><span></span><span></span></div>`:''}
+                <button class="music-play-btn" onclick="event.stopPropagation();showNotif('Reproduzindo: ${m.title.replace(/'/g,"&#39;")}')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+              </div>
+            `).join('')}
+          </div>
         </div>
-      </div>
+        <div class="section-block">
+          <div class="section-heading">Álbuns</div>
+          <div class="music-grid">
+            ${[...new Map(chMusic.map(m=>[m.album,m])).values()].map(m=>`
+              <div class="music-album-card" onclick="showNotif('Abrindo álbum: ${m.album}')">
+                <div class="music-album-art">
+                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+                </div>
+                <div class="music-album-name">${m.album}</div>
+                <div class="music-album-sub">${m.artist} · ${m.genre}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  } else if(tab==='dados'){
+    const viewsWeekly=analytics.subscriber_growth||[110000,114500,117200,120034];
+    const viewsData=[42000,58000,51000,73000,64000,81000,84200];
+    const days=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+    const maxViewsWeek=Math.max(...viewsData);
+    const topVids=[...chVideos,...(DB.music||[]).filter(m=>m.channel_id===chId)]
+      .sort((a,b)=>b.views-a.views).slice(0,10);
+    el.innerHTML=`
       <div class="section-block">
-        <div class="section-heading">📈 Analytics do Canal</div>
-        <div class="stats-row">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px">
+          <div class="stat-card"><div class="stat-value" style="color:#6fcf97">R$ ${mon.total_earnings?.toFixed(2)||'0.00'}</div><div class="stat-label">Receita total</div></div>
+          <div class="stat-card"><div class="stat-value" style="color:#6fcf97">R$ ${mon.monthly_earnings?.toFixed(2)||'0.00'}</div><div class="stat-label">Este mês</div></div>
           <div class="stat-card"><div class="stat-value">${fmtNum(analytics.views_last_7_days||0)}</div><div class="stat-label">Views (7 dias)</div></div>
           <div class="stat-card"><div class="stat-value">${fmtNum(analytics.watch_time_hours||0)}h</div><div class="stat-label">Horas assistidas</div></div>
           <div class="stat-card"><div class="stat-value">${fmtNum(ch.subscribers)}</div><div class="stat-label">Inscritos</div></div>
           <div class="stat-card"><div class="stat-value">${((stats.engagement_rate||0)*100).toFixed(1)}%</div><div class="stat-label">Engajamento</div></div>
+          <div class="stat-card"><div class="stat-value">R$ ${mon.rpm_avg||0}/mil</div><div class="stat-label">RPM médio</div></div>
+          <div class="stat-card"><div class="stat-value">${fmtNum(stats.total_likes||0)}</div><div class="stat-label">Curtidas totais</div></div>
         </div>
-        <div style="background:var(--surface);border-radius:12px;padding:20px">
-          <div style="font-size:14px;font-weight:500;margin-bottom:12px">Crescimento de Inscritos</div>
-          <div style="display:flex;align-items:flex-end;gap:8px;height:80px">
-            ${(analytics.subscriber_growth||[]).map((v,i,arr)=>{
-              const max=Math.max(...arr);const pct=Math.floor((v/max)*100);
-              return`<div style="flex:1;background:var(--accent);border-radius:4px 4px 0 0;height:${pct}%;min-height:4px;position:relative;cursor:default" title="${fmtNum(v)} inscritos">
-                <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);white-space:nowrap">${fmtNum(v)}</div>
+      </div>
+      <div class="section-block">
+        <div class="section-heading">Visualizações — últimos 7 dias</div>
+        <div style="background:var(--surface);border-radius:16px;padding:20px 24px">
+          <div style="display:flex;align-items:flex-end;gap:6px;height:120px;margin-bottom:8px">
+            ${viewsData.map((v,i)=>{
+              const pct=Math.max(6,Math.floor((v/maxViewsWeek)*100));
+              const isLast=i===viewsData.length-1;
+              return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <div style="font-size:10px;color:var(--muted)">${fmtNum(v)}</div>
+                <div style="width:100%;height:${pct}%;background:${isLast?'var(--accent)':'#3f3f3f'};border-radius:4px 4px 0 0;min-height:6px;transition:height 0.3s"></div>
               </div>`;
             }).join('')}
           </div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            ${(analytics.subscriber_growth||[]).map((_,i)=>`<div style="flex:1;font-size:10px;color:var(--muted);text-align:center">sem ${i+1}</div>`).join('')}
+          <div style="display:flex;gap:6px">
+            ${days.map(d=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--muted)">${d}</div>`).join('')}
           </div>
         </div>
-        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-          ${(analytics.top_regions||[]).map(r=>`<span style="background:var(--surface);padding:6px 14px;border-radius:20px;font-size:13px">🌎 ${r}</span>`).join('')}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
+        <div>
+          <div class="section-heading">Crescimento de inscritos</div>
+          <div style="background:var(--surface);border-radius:16px;padding:20px 24px">
+            <div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px">
+              ${viewsWeekly.map((v,i,arr)=>{
+                const max=Math.max(...arr);const pct=Math.max(6,Math.floor((v/max)*100));
+                return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div style="font-size:10px;color:var(--muted)">${fmtNum(v)}</div>
+                  <div style="width:100%;height:${pct}%;background:#3ea6ff;border-radius:4px 4px 0 0;min-height:4px"></div>
+                </div>`;
+              }).join('')}
+            </div>
+            <div style="display:flex;gap:6px">
+              ${viewsWeekly.map((_,i)=>`<div style="flex:1;text-align:center;font-size:10px;color:var(--muted)">S${i+1}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-heading">Engajamento</div>
+          <div style="background:var(--surface);border-radius:16px;padding:20px 24px">
+            ${[
+              {label:'Taxa de curtidas',val:((stats.engagement_rate||0.21)*100).toFixed(1)+'%',w:Math.min(100,Math.floor((stats.engagement_rate||0.21)*500)),color:'#4caf50'},
+              {label:'Comentários/view',val:'0.8%',w:8,color:'#3ea6ff'},
+              {label:'Compartilhamentos',val:'1.2%',w:12,color:'#f9ca24'},
+              {label:'Retenção média',val:'64%',w:64,color:'var(--accent)'},
+            ].map(r=>`
+              <div style="margin-bottom:14px">
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+                  <span style="color:var(--muted)">${r.label}</span>
+                  <span style="font-weight:500">${r.val}</span>
+                </div>
+                <div style="height:5px;background:#2a2a2a;border-radius:3px;overflow:hidden">
+                  <div style="height:100%;width:${r.w}%;background:${r.color};border-radius:3px"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="section-block">
+        <div class="section-heading">Top 10 — vídeos e músicas por visualizações</div>
+        <div style="background:var(--surface);border-radius:16px;padding:16px 24px">
+          ${topVids.map((v,i)=>{
+            const maxV=topVids[0].views;
+            const pct=Math.max(4,Math.floor((v.views/maxV)*100));
+            const earns=((v.views/1000)*(mon.rpm_avg||2.3)).toFixed(2);
+            const isMusic=!!(v.artist);
+            return`<div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:${i<9?'1px solid #2a2a2a':'none'};cursor:pointer" onclick="navigate('player','${v.id}')">
+              <div style="width:18px;text-align:right;font-size:13px;font-weight:600;color:var(--muted);flex-shrink:0">${i+1}</div>
+              <div style="width:44px;height:28px;border-radius:4px;overflow:hidden;flex-shrink:0;position:relative">
+                ${v.thumbnail_url?`<img src="${v.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(v.gradient)};width:100%;height:100%"></div>`}
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px">${v.title}${isMusic?` <span style="font-size:10px;background:#3f3f3f;padding:1px 6px;border-radius:3px;color:#aaa;vertical-align:middle">MÚSICA</span>`:''}</div>
+                <div style="height:4px;background:#2a2a2a;border-radius:2px;overflow:hidden">
+                  <div style="height:100%;width:${pct}%;background:${i===0?'var(--accent)':isMusic?'#8b5cf6':'#555'};border-radius:2px"></div>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;min-width:90px">
+                <div style="font-size:12px;font-weight:500">${fmtNum(v.views)}</div>
+                <div style="font-size:11px;color:#6fcf97">R$ ${earns}</div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="section-block">
+        <div class="section-heading">Regiões de origem</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${(analytics.top_regions||['BR','PT','US']).map((r,i)=>`<span style="background:var(--surface);border:1px solid #333;padding:6px 16px;border-radius:20px;font-size:13px;display:flex;align-items:center;gap:6px"><span style="font-size:16px">${['🇧🇷','🇵🇹','🇺🇸','🌍'][i]||'🌍'}</span> ${r} <span style="color:var(--muted);font-size:11px">${[64,18,9,9][i]||5}%</span></span>`).join('')}
         </div>
       </div>
     `;
@@ -2027,15 +2189,15 @@ function renderChannelTab(chId,tab){
     el.innerHTML=`
       <div class="about-content">
         <p class="about-desc">${ch.description}</p>
-        <div class="about-row"><span class="icon">📍</span><span>Rio de Janeiro, Brasil</span></div>
-        <div class="about-row"><span class="icon">📅</span><span>Canal criado em ${ch.creation_date||'—'}</span></div>
-        <div class="about-row"><span class="icon">👁</span><span>${fmtNum(stats.total_views||0)} visualizações totais</span></div>
-        <div class="about-row"><span class="icon">🎨</span><span>Estética: ${ch.identity?.aesthetic||'—'}</span></div>
-        <div class="about-row"><span class="icon">💫</span><span>Fãs: <strong>${ch.identity?.fanbase_name||'—'}</strong></span></div>
+        <div class="about-row"><span class="icon" style="font-size:18px">📍</span><span>Rio de Janeiro, Brasil</span></div>
+        <div class="about-row"><span class="icon" style="font-size:18px">📅</span><span>Canal criado em ${ch.creation_date||'—'}</span></div>
+        <div class="about-row"><span class="icon" style="font-size:18px">👁</span><span>${fmtNum(stats.total_views||0)} visualizações totais</span></div>
+        <div class="about-row"><span class="icon" style="font-size:18px">🎨</span><span>Estética: ${ch.identity?.aesthetic||'—'}</span></div>
+        <div class="about-row"><span class="icon" style="font-size:18px">💫</span><span>Fãs: <strong>${ch.identity?.fanbase_name||'—'}</strong></span></div>
         <div style="margin-top:24px">
           <div style="font-size:14px;font-weight:500;margin-bottom:12px">Links</div>
           ${(ch.about?.links||['instagram.com/venna','twitter.com/venna']).map(l=>`
-            <div class="about-row"><span class="icon">🔗</span><a href="#" style="color:#4e9fff;text-decoration:none">${l}</a></div>`).join('')}
+            <div class="about-row"><span class="icon" style="font-size:18px">🔗</span><a href="#" style="color:#4e9fff;text-decoration:none">${l}</a></div>`).join('')}
         </div>
       </div>
     `;
@@ -2175,7 +2337,7 @@ function renderExploreTrending(el){
   const tMusic=(DB.trending_music||[]).map(id=>(DB.music||[]).find(m=>m.id===id)).filter(Boolean);
   el.innerHTML=`
     <div class="trending-section">
-      <div class="trending-header"><h2>🔥 Vídeos em Alta</h2></div>
+      <div class="trending-header"><h2>Vídeos em Alta</h2></div>
       ${trending.map((v,i)=>{
         const ch=getChannel(v.channel_id);
         return`<div class="trending-video-row" onclick="navigate('player','${v.id}')">
@@ -2188,13 +2350,13 @@ function renderExploreTrending(el){
             <div class="trending-title">${v.title}</div>
             <div class="trending-channel">${ch?ch.name:''}${ch&&ch.verified?verifiedSVG(12):''}</div>
             <div class="trending-stats">${fmtNum(v.views)} visualizações · ${fmtDate(v.upload_date)}</div>
-            ${v.engagement.trend==='viral'?`<div style="color:#ff6b6b;font-size:12px;margin-top:4px">🔥 Viralizando agora</div>`:''}
+            ${v.engagement.trend==='viral'?`<div style="color:#ff6b6b;font-size:12px;margin-top:4px">Viralizando agora</div>`:''}
           </div>
         </div>`;
       }).join('')}
     </div>
     <div class="trending-section">
-      <div class="trending-header"><h2>🎵 Músicas em Alta</h2></div>
+      <div class="trending-header"><h2>Músicas em Alta</h2></div>
       <div class="music-list">
         ${tMusic.map((m,i)=>`
           <div class="music-row" onclick="navigate('explore','music')">
@@ -2213,7 +2375,7 @@ function renderExploreTrending(el){
       </div>
     </div>
     <div class="trending-section">
-      <div class="trending-header"><h2>⚡ Shorts em Alta</h2></div>
+      <div class="trending-header"><h2>Shorts em Alta</h2></div>
       <div class="shorts-explore-grid">
         ${(DB.shorts||[]).map(s=>{
           const ch=getChannel(s.channel_id);
@@ -2221,7 +2383,7 @@ function renderExploreTrending(el){
             <div class="short-thumb">
               ${s.thumbnail_url?`<img src="${s.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(s.gradient)};width:100%;height:100%"></div>`}
               <div class="duration-badge">${s.duration}</div>
-              <div class="type-badge short">⚡ SHORT</div>
+              <div class="type-badge short">SHORT</div>
             </div>
             <div class="short-info">
               <div class="short-title">${s.title}</div>
@@ -2236,7 +2398,7 @@ function renderExploreTrending(el){
 
 function renderExploreShorts(el){
   el.innerHTML=`
-    <div class="trending-header"><h2>⚡ Shorts</h2><span style="font-size:13px;color:var(--muted)">${(DB.shorts||[]).length} vídeos</span></div>
+    <div class="trending-header"><h2>Shorts</h2><span style="font-size:13px;color:var(--muted)">${(DB.shorts||[]).length} vídeos</span></div>
     <div class="shorts-explore-grid fade-in">
       ${(DB.shorts||[]).map(s=>{
         const ch=getChannel(s.channel_id);
@@ -2263,7 +2425,7 @@ function renderExploreMusic(el){
   const music=DB.music||[];
   el.innerHTML=`
     <div class="trending-section">
-      <div class="explore-section-title">🎵 Ranking de Músicas</div>
+      <div class="explore-section-title">Ranking de Músicas</div>
       <div class="music-list fade-in">
         ${music.map((m,i)=>`
           <div class="music-row" onclick="navigate('player','${m.id}')">
@@ -2289,7 +2451,7 @@ function renderExploreMusic(el){
       </div>
     </div>
     <div class="trending-section">
-      <div class="explore-section-title">💿 Álbuns em Destaque</div>
+      <div class="explore-section-title">Álbuns em Destaque</div>
       <div class="music-grid fade-in">
         ${[...new Map(music.map(m=>[m.album,m])).values()].map(m=>`
           <div class="music-album-card" onclick="navigate('explore','music')">
@@ -2309,7 +2471,7 @@ function renderExploreFilms(el){
   const films=DB.films||[];
   el.innerHTML=`
     <div class="trending-section">
-      <div class="explore-section-title">🎬 Filmes em Destaque</div>
+      <div class="explore-section-title">Filmes em Destaque</div>
       <div class="film-grid fade-in">
         ${films.map(f=>`
           <div class="film-card" onclick="navigate('player','${f.id}')">
@@ -2325,7 +2487,7 @@ function renderExploreFilms(el){
       </div>
     </div>
     <div class="trending-section">
-      <div class="explore-section-title">📈 Mais Assistidos</div>
+      <div class="explore-section-title">Mais Assistidos</div>
       ${[...films].sort((a,b)=>b.views-a.views).slice(0,4).map((f,i)=>{
         const ch=getChannel(f.channel_id);
         return`<div class="trending-video-row" onclick="navigate('player','${f.id}')">
