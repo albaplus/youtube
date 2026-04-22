@@ -300,7 +300,34 @@
       "engagement": { "velocity": 9.24, "like_ratio": 0.021, "trend": "viral" }
     }
   ],
-  "films": [],
+  "films": [
+    {
+      "id": "film_001",
+      "type": "film",
+      "title": "Diamond Life (Filme)",
+      "channel_id": "ch_002",
+      "director": "Sade Adu",
+      "cast": ["Sade", "Stuart Matthewman", "Paul S. Denman", "Andrew Hale"],
+      "year": 2026,
+      "runtime_minutes": 92,
+      "rating": 8.7,
+      "genre": ["Documentário", "Musical"],
+      "description": "Um documentário íntimo sobre a criação do álbum icônico 'Diamond Life' de Sade. Acompanhe os bastidores, entrevistas exclusivas e performances ao vivo que marcaram uma geração. Uma viagem pela alma do smooth jazz e soul britânico.",
+      "thumbnail_url": "https://i.pinimg.com/736x/3e/f2/57/3ef257b5f4f8932733c473aa04478134.jpg",
+      "gradient": ["#1a1a2e", "#16213e", "#0f3460"],
+      "views": 92394,
+      "likes": 4823,
+      "dislikes": 127,
+      "upload_date": "2026-04-10",
+      "age": "12 dias",
+      "duration": "1:32:00",
+      "embed_url": "https://www.youtube.com/embed/8heg7k0yVzA",
+      "liked": false,
+      "language": "English",
+      "subtitles": ["EN", "PT", "ES", "FR"],
+      "engagement": { "velocity": 0.42, "like_ratio": 0.052, "trend": "slow" }
+    }
+  ],
   "live_streams": [
     {
       "id": "live_001",
@@ -326,18 +353,21 @@
       { "user": "latinpopfan", "text": "390 MILHÕES! La Isla Bonita é simplesmente atemporal 💃🌺", "likes": 45231, "ts": "2 days ago" }
     ],
     "vid_004": [
-      { "user": "80sforever", "text": "Like a Virgin definiu uma geração. Madonna é rainha 👑", "likes": 28912, "ts": "2 weeks ago" },
-      { "user": "popculturefan", "text": "Esse vídeo é puro suco dos anos 80. Icônico!", "likes": 21456, "ts": "1 month ago" }
+      { "user": "80sforever", "text": "Like a Virgin definiu uma geração. Madonna é rainha 👑", "likes": 28912, "ts": "2 weeks ago" }
     ],
     "vid_005": [
-      { "user": "madonnafan4life", "text": "Papa Don't Preach é uma das músicas mais corajosas da carreira dela. Atemporal.", "likes": 18765, "ts": "3 weeks ago" },
-      { "user": "musiclover_80s", "text": "A mensagem dessa música continua relevante até hoje. Obra-prima!", "likes": 15234, "ts": "1 month ago" }
+      { "user": "madonnafan4life", "text": "Papa Don't Preach é uma das músicas mais corajosas da carreira dela. Atemporal.", "likes": 18765, "ts": "3 weeks ago" }
     ],
     "mus_003": [
       { "user": "rockfan_ny", "text": "4 meses e ainda não enjoei. Álbum do ano! 🔥", "likes": 3412, "ts": "1 month ago" }
     ],
     "mus_005": [
       { "user": "madonnafan4life", "text": "3 dias e já é o álbum mais ouvido da década! Material Girl é hino 👑", "likes": 12812, "ts": "2 hours ago" }
+    ],
+    "film_001": [
+      { "user": "sade_soldier", "text": "Que documentário lindo! Sade é simplesmente divina. Chorei do começo ao fim 💎", "likes": 892, "ts": "5 days ago" },
+      { "user": "jazzlover_uk", "text": "92k views só? Esse documentário merecia milhões. Obra-prima!", "likes": 634, "ts": "1 week ago" },
+      { "user": "retro_docs", "text": "A história por trás de Diamond Life é fascinante. Obrigado por esse presente, Sade!", "likes": 421, "ts": "3 days ago" }
     ]
   },
   "channel_stats": {
@@ -346,15 +376,17 @@
       "total_likes": 32612269,
       "videos_count": 4,
       "music_count": 1,
+      "films_count": 0,
       "singles_count": 0,
       "albums_count": 1,
       "engagement_rate": 0.024
     },
     "ch_002": {
-      "total_views": 708788685,
-      "total_likes": 10803579,
+      "total_views": 708880987,
+      "total_likes": 10808268,
       "videos_count": 1,
       "music_count": 1,
+      "films_count": 1,
       "albums_count": 1,
       "singles_count": 0,
       "engagement_rate": 0.015
@@ -364,12 +396,13 @@
       "total_likes": 32401234,
       "videos_count": 0,
       "music_count": 1,
+      "films_count": 0,
       "albums_count": 1,
       "singles_count": 0,
       "engagement_rate": 0.036
     }
   },
-  "trending": ["vid_003", "mus_005", "vid_004", "mus_003", "vid_005", "mus_002", "vid_002"],
+  "trending": ["vid_003", "mus_005", "vid_004", "mus_003", "vid_005", "mus_002", "film_001", "vid_002"],
   "trending_music": [
     "mus_005",
     "trk_035",
@@ -382,7 +415,7 @@
     "trk_001",
     "mus_003"
   ],
-  "trending_films": [],
+  "trending_films": ["film_001"],
   "trending_shorts": [],
   "algorithm": {
     "weights": { "retention": 0.40, "likes": 0.25, "subscribers": 0.20, "recent_engagement": 0.15 },
@@ -392,7 +425,7 @@
   },
   "tick_system": {
     "interval": "5s",
-    "update": ["views", "likes", "music_streams", "live_viewers"],
+    "update": ["views", "likes", "music_streams", "live_viewers", "film_views"],
     "persist": true
   },
   "live_simulation": {
