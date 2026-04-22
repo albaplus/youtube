@@ -99,17 +99,17 @@
       "type": "video",
       "title": "Sade - Smooth Operator - Official",
       "channel_id": "ch_002",
-      "views": 223678492,
-      "likes": 3801234,
-      "dislikes": 45231,
-      "upload_date": "2026-03-22",
+      "views": 3892,
+      "likes": 187,
+      "dislikes": 12,
+      "upload_date": "2026-04-21",
       "duration": "4:16",
       "description": "Official video for Smooth Operator by Sade. Digitally remastered and upscaled to Full HD.",
       "thumbnail_url": "https://i.ytimg.com/vi/4TYv2PhG89A/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/qQ_GNl667YE",
       "gradient": ["#8e44ad", "#9b59b6", "#6c3483"],
       "liked": false,
-      "engagement": { "velocity": 4.52, "like_ratio": 0.017, "trend": "viral" }
+      "engagement": { "velocity": 0.12, "like_ratio": 0.048, "trend": "slow" }
     },
     {
       "id": "vid_003",
@@ -281,6 +281,11 @@
     "vid_001": [
       { "user": "80smusiclover", "text": "This performance is pure joy!", "likes": 3412, "ts": "1 year ago" }
     ],
+    "vid_002": [
+      { "user": "smoothjazz_fan", "text": "Finally someone uploaded this! Such an underrated gem 💎", "likes": 42, "ts": "2 days ago" },
+      { "user": "retro_vibes", "text": "Why does this only have 3k views? This is a classic!", "likes": 28, "ts": "1 day ago" },
+      { "user": "sade_soldier", "text": "Sharing this everywhere. More people need to hear this masterpiece.", "likes": 15, "ts": "12 hours ago" }
+    ],
     "vid_003": [
       { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! 💃", "likes": 2812, "ts": "1 hour ago" }
     ],
@@ -288,8 +293,7 @@
       { "user": "rockfan_ny", "text": "4 meses e ainda não enjoei. Álbum do ano! 🔥", "likes": 3412, "ts": "1 month ago" }
     ],
     "mus_005": [
-      { "user": "madonnafan4life", "text": "3 dias e já é o álbum mais ouvido da década! Material Girl é hino 👑", "likes": 12812, "ts": "2 hours ago" },
-      { "user": "80sforever", "text": "590 milhões em 3 dias. Madonna é simplesmente inalcançável 💖", "likes": 9192, "ts": "1 hour ago" }
+      { "user": "madonnafan4life", "text": "3 dias e já é o álbum mais ouvido da década! Material Girl é hino 👑", "likes": 12812, "ts": "2 hours ago" }
     ]
   },
   "channel_stats": {
@@ -303,13 +307,13 @@
       "engagement_rate": 0.022
     },
     "ch_002": {
-      "total_views": 834072785,
-      "total_likes": 12712345,
+      "total_views": 610398185,
+      "total_likes": 8912532,
       "videos_count": 1,
       "music_count": 1,
       "albums_count": 1,
       "singles_count": 0,
-      "engagement_rate": 0.015
+      "engagement_rate": 0.014
     },
     "ch_003": {
       "total_views": 880283110,
@@ -321,7 +325,7 @@
       "engagement_rate": 0.036
     }
   },
-  "trending": ["mus_005", "mus_003", "vid_003", "vid_002", "mus_002"],
+  "trending": ["mus_005", "mus_003", "vid_003", "mus_002"],
   "trending_music": [
     "mus_005",
     "trk_029",
