@@ -917,14 +917,14 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
 .pulse-cat-btn.active{background:#272727;color:#fff;border-color:#3f3f3f}
 .pulse-table{width:100%;border-collapse:collapse}
 .pulse-table-header{
-  display:grid;grid-template-columns:48px 1fr 140px 58px 70px 52px;
+  display:grid;grid-template-columns:48px 1fr 140px 58px 60px 60px;
   gap:8px;padding:8px 12px 8px 20px;
   font-size:11px;font-weight:600;color:var(--muted);
   letter-spacing:0.8px;text-transform:uppercase;
   border-bottom:1px solid #272727;
 }
 .pulse-row{
-  display:grid;grid-template-columns:48px 1fr 140px 58px 70px 52px;
+  display:grid;grid-template-columns:48px 1fr 140px 58px 60px 60px;
   gap:8px;padding:8px 12px 8px 12px;border-radius:10px;
   align-items:center;cursor:pointer;transition:background 0.1s;
   position:relative;
@@ -965,6 +965,108 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
 .audio-play-anim span:nth-child(3){height:10px;animation-delay:0.2s}
 .audio-play-anim span:nth-child(4){height:16px;animation-delay:0.3s}
 .audio-play-anim span:nth-child(5){height:8px;animation-delay:0.15s}
+
+/* ── FULLSCREEN MUSIC PLAYER ── */
+#fullscreen-player{
+  position:fixed;inset:0;z-index:700;
+  display:none;flex-direction:column;
+  align-items:center;justify-content:flex-start;
+  overflow:hidden;
+}
+#fullscreen-player.open{display:flex}
+#fsp-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:blur(40px) brightness(0.25) saturate(1.4);
+  transform:scale(1.15);
+  transition:background-image 0.5s;
+}
+#fsp-bg-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.7));
+}
+#fsp-inner{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  align-items:center;width:100%;max-width:420px;
+  padding:0 32px;padding-top:max(env(safe-area-inset-top,0px),48px);
+  height:100%;justify-content:space-between;padding-bottom:40px;
+}
+.fsp-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;margin-bottom:20px;
+}
+.fsp-down-btn{
+  width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.12);
+  border:none;color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+.fsp-down-btn:hover{background:rgba(255,255,255,0.2)}
+.fsp-cover{
+  width:min(280px,70vw);height:min(280px,70vw);
+  border-radius:16px;overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,0.7);
+  flex-shrink:0;background:#111;
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.fsp-cover.playing{transform:scale(1.04)}
+.fsp-cover img{width:100%;height:100%;object-fit:cover}
+.fsp-meta{width:100%;text-align:center;margin-top:8px}
+.fsp-title{
+  font-size:22px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:#fff;margin-bottom:6px;
+}
+.fsp-artist{font-size:15px;color:rgba(255,255,255,0.7)}
+.fsp-progress-wrap{width:100%;margin-top:8px}
+.fsp-track{
+  width:100%;height:4px;background:rgba(255,255,255,0.2);
+  border-radius:2px;overflow:hidden;cursor:pointer;margin-bottom:6px;
+}
+.fsp-track-fill{
+  height:100%;background:#fff;border-radius:2px;
+  transition:width 0.5s linear;
+}
+.fsp-times{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:rgba(255,255,255,0.5);
+}
+.fsp-controls{
+  display:flex;align-items:center;justify-content:center;gap:24px;
+  width:100%;margin-top:8px;
+}
+.fsp-ctrl-btn{
+  width:48px;height:48px;border-radius:50%;background:none;
+  border:none;color:rgba(255,255,255,0.7);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.fsp-ctrl-btn:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.fsp-play-btn{
+  width:64px;height:64px;border-radius:50%;
+  background:#fff;border:none;color:#000;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(0,0,0,0.4);
+  transition:transform 0.15s;
+}
+.fsp-play-btn:hover{transform:scale(1.06)}
+.fsp-queue-hint{
+  font-size:12px;color:rgba(255,255,255,0.4);
+  text-align:center;margin-top:4px;
+}
+
+/* ── HEAT STRIP ── */
+.heat-strip{display:flex;gap:2px;align-items:center;flex-shrink:0}
+.heat-cell{width:5px;border-radius:2px;transition:height 0.4s ease,background 0.4s ease}
+
+/* ── FOOTER PLAYER UP ARROW ── */
+.fp-up-btn{
+  width:32px;height:32px;border:none;background:rgba(255,255,255,0.1);
+  color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  border-radius:8px;flex-shrink:0;margin-right:4px;
+  transition:background 0.15s,color 0.15s;
+}
+.fp-up-btn:hover{background:rgba(255,255,255,0.2);color:var(--text)}
 </style>
 </head>
 <body>
@@ -1321,6 +1423,9 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
     <iframe id="fp-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="fp-track-section">
+    <button class="fp-up-btn" onclick="openFullscreenPlayer()" title="Expandir player">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
     <div class="fp-thumb" id="fp-thumb"></div>
     <div class="fp-info">
       <div class="fp-title" id="fp-title">—</div>
@@ -1356,6 +1461,57 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
     <button class="fp-close-btn" onclick="closeFooterPlayer()" title="Fechar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
+  </div>
+</div>
+
+<!-- FULLSCREEN MUSIC PLAYER -->
+<div id="fullscreen-player">
+  <div id="fsp-bg"></div>
+  <div id="fsp-bg-overlay"></div>
+  <div id="fsp-inner">
+    <div class="fsp-topbar">
+      <button class="fsp-down-btn" onclick="closeFullscreenPlayer()" title="Minimizar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+      </button>
+      <div style="font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase" id="fsp-context">Reproduzindo</div>
+      <div style="width:40px"></div>
+    </div>
+
+    <div class="fsp-cover" id="fsp-cover">
+      <img id="fsp-cover-img" src="" onerror="this.style.display='none'">
+      <div id="fsp-cover-gradient" style="width:100%;height:100%;display:none"></div>
+    </div>
+
+    <div class="fsp-meta">
+      <div class="fsp-title" id="fsp-title">—</div>
+      <div class="fsp-artist" id="fsp-artist"></div>
+    </div>
+
+    <div class="fsp-progress-wrap">
+      <div class="fsp-track" id="fsp-track" onclick="fspSeek(event)">
+        <div class="fsp-track-fill" id="fsp-track-fill" style="width:0%"></div>
+      </div>
+      <div class="fsp-times">
+        <span id="fsp-elapsed">0:00</span>
+        <span id="fsp-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="fsp-controls">
+      <button class="fsp-ctrl-btn" onclick="fpPrev();updateFullscreenPlayer()" title="Anterior">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="fsp-play-btn" id="fsp-play-btn" onclick="fpPlayPause();updateFullscreenPlayer()">
+        <svg id="fsp-play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+      <button class="fsp-ctrl-btn" onclick="fpNext();updateFullscreenPlayer()" title="Próxima">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+    </div>
+
+    <div class="fsp-queue-hint" id="fsp-queue-hint"></div>
   </div>
 </div>
 
@@ -2183,10 +2339,18 @@ let playerState={playing:true,descExpanded:false};
 function renderPlayer(vid){
   const v=getVideo(vid);
   if(!v){
-    // Check if it's a live stream
     const ls=(DB.live_streams||[]).find(l=>l.id===vid);
     if(ls){renderLivePlayer(ls);return;}
     return;
+  }
+  // Para qualquer áudio/vídeo do footer player ao abrir o player de vídeo
+  if(fpState.active){
+    const iframe=document.getElementById('fp-iframe');
+    if(iframe) iframe.src='';
+    const audioSim=document.getElementById('fp-audio-sim');
+    if(audioSim) audioSim.remove();
+    if(window._autoAdvanceTimer){clearTimeout(window._autoAdvanceTimer);window._autoAdvanceTimer=null;}
+    closeFullscreenPlayer();
   }
   const ch=getChannel(v.channel_id);
   v.views+=Math.floor(10+Math.random()*20);
@@ -3266,9 +3430,28 @@ function renderExploreMusic(el){
 
   el.innerHTML=`
     <div class="trending-section">
-      <div class="explore-section-title">Ranking de Músicas</div>
+      <div class="explore-section-title">Álbuns em Destaque</div>
+      <div class="album-grid-explore fade-in">
+        ${albums.map(a=>`
+          <div class="music-album-card" onclick="navigate('album','${encodeAlbum(a.album)}')">
+            <div class="music-album-art" style="position:relative">
+              ${a.thumbnail_url?`<img src="${a.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(a.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;background:rgba(0,0,0,0.4)" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="music-album-name">${a.album}</div>
+            <div class="music-album-sub">${a.artist} · ${a.tracks.length} faixas</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="trending-section">
+      <div class="explore-section-title">Músicas Populares</div>
       <div class="music-list fade-in">
-        ${sortedTracks.map((m,i)=>`
+        ${sortedTracks.slice(0,100).map((m,i)=>`
           <div class="music-row" onclick="playTrack('${m.id}')">
             <div class="music-rank">${i+1}</div>
             <div class="music-thumb">
@@ -3287,25 +3470,6 @@ function renderExploreMusic(el){
             <button class="music-play-btn" onclick="event.stopPropagation();playTrack('${m.id}')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-    <div class="trending-section">
-      <div class="explore-section-title">Álbuns em Destaque</div>
-      <div class="album-grid-explore fade-in">
-        ${albums.map(a=>`
-          <div class="music-album-card" onclick="navigate('album','${encodeAlbum(a.album)}')">
-            <div class="music-album-art" style="position:relative">
-              ${a.thumbnail_url?`<img src="${a.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(a.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;background:rgba(0,0,0,0.4)" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
-                <div style="width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="music-album-name">${a.album}</div>
-            <div class="music-album-sub">${a.artist} · ${a.tracks.length} faixas</div>
           </div>
         `).join('')}
       </div>
@@ -3476,6 +3640,15 @@ const fpState={active:false,trackId:null,mode:'audio',playing:true,queue:[],queu
 function playTrack(trackId, queue){
   const track=getVideo(trackId);
   if(!track)return;
+
+  // ── Para qualquer mídia anterior imediatamente ──
+  const iframe=document.getElementById('fp-iframe');
+  if(iframe) iframe.src='';
+  const audioSim=document.getElementById('fp-audio-sim');
+  if(audioSim) audioSim.remove();
+  // Cancela auto-advance anterior
+  if(window._autoAdvanceTimer){clearTimeout(window._autoAdvanceTimer);window._autoAdvanceTimer=null;}
+
   fpState.trackId=trackId;
   fpState.active=true;
   fpState.playing=true;
@@ -3483,9 +3656,7 @@ function playTrack(trackId, queue){
     fpState.queue=queue;
     fpState.queueIndex=queue.indexOf(trackId);
   } else {
-    // Build queue from same album
     if(track._isNested){
-      // Nested track: queue all tracks from same album entry
       const albumEntry=(DB.music||[]).find(m=>m.id===track._albumMusicId);
       if(albumEntry&&albumEntry.tracks){
         fpState.queue=albumEntry.tracks.map((_,i)=>`${albumEntry.id}_t${i}`);
@@ -3499,12 +3670,11 @@ function playTrack(trackId, queue){
     }
     fpState.queueIndex=fpState.queue.indexOf(trackId);
   }
-  // Increment streams (for nested tracks, update plays on the parent album entry)
+  // Increment streams
   if(track._isNested){
     const albumEntry=(DB.music||[]).find(m=>m.id===track._albumMusicId);
     if(albumEntry&&albumEntry.tracks&&albumEntry.tracks[track._trackIndex]){
       albumEntry.tracks[track._trackIndex].plays=(albumEntry.tracks[track._trackIndex].plays||0)+1;
-      // Keep cache in sync
       _trackCache[trackId].views=(albumEntry.tracks[track._trackIndex].plays||0);
     }
   } else {
@@ -3514,9 +3684,163 @@ function playTrack(trackId, queue){
   renderFooterPlayer();
   showFooterPlayer();
   loadFpIframe(track);
-  // Update tracklist if on album view
   updateTracklistHighlight(trackId);
   showNotif(`▶ ${track.title} — ${track.artist||''}`);
+
+  // Atualiza fullscreen player se estiver aberto
+  if(document.getElementById('fullscreen-player').classList.contains('open')){
+    updateFullscreenPlayer();
+  }
+
+  // ── Agenda auto-advance para albums (se tem queue) ──
+  if(fpState.queue.length>1){
+    scheduleAutoAdvance(track);
+  }
+}
+
+// ── AUTO-ADVANCE ──
+function parseDurationSecs(str){
+  if(!str)return 0;
+  const p=str.split(':').map(Number);
+  if(p.length===2)return p[0]*60+(p[1]||0);
+  if(p.length===3)return p[0]*3600+p[1]*60+(p[2]||0);
+  return 0;
+}
+function scheduleAutoAdvance(track){
+  if(window._autoAdvanceTimer){clearTimeout(window._autoAdvanceTimer);window._autoAdvanceTimer=null;}
+  const secs=parseDurationSecs(track.duration);
+  if(secs>0&&fpState.queue.length>1){
+    window._autoAdvanceTimer=setTimeout(()=>{
+      if(fpState.active&&fpState.playing){
+        fpNext();
+      }
+    },secs*1000);
+  }
+}
+
+// ── FULLSCREEN PLAYER ──
+let _fspInterval=null;
+let _fspElapsed=0;
+let _fspDuration=0;
+
+function openFullscreenPlayer(){
+  if(!fpState.active||!fpState.trackId)return;
+  const fsp=document.getElementById('fullscreen-player');
+  fsp.classList.add('open');
+  document.body.style.overflow='hidden';
+  updateFullscreenPlayer();
+  startFspProgress();
+}
+
+function closeFullscreenPlayer(){
+  const fsp=document.getElementById('fullscreen-player');
+  fsp.classList.remove('open');
+  document.body.style.overflow='';
+  stopFspProgress();
+}
+
+function updateFullscreenPlayer(){
+  const track=getVideo(fpState.trackId);
+  if(!track)return;
+
+  // Capa (background borrado + imagem grande)
+  const bg=document.getElementById('fsp-bg');
+  const coverImg=document.getElementById('fsp-cover-img');
+  const coverGrad=document.getElementById('fsp-cover-gradient');
+  const coverEl=document.getElementById('fsp-cover');
+
+  if(track.thumbnail_url){
+    bg.style.backgroundImage=`url(${track.thumbnail_url})`;
+    coverImg.src=track.thumbnail_url;
+    coverImg.style.display='block';
+    coverGrad.style.display='none';
+  } else {
+    bg.style.backgroundImage='none';
+    bg.style.background=gradientCSS(track.gradient||['#111','#222']);
+    coverImg.style.display='none';
+    coverGrad.style.display='block';
+    coverGrad.style.background=gradientCSS(track.gradient||['#111','#222']);
+  }
+  coverEl.classList.toggle('playing',fpState.playing);
+
+  document.getElementById('fsp-title').textContent=track.title||'—';
+  document.getElementById('fsp-artist').textContent=(track.artist||'')+((track.album?' · '+track.album:''));
+
+  const playIcon=document.getElementById('fsp-play-icon');
+  if(playIcon){
+    playIcon.innerHTML=fpState.playing
+      ?'<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+      :'<path d="M8 5v14l11-7z"/>';
+  }
+
+  // Duração
+  _fspDuration=parseDurationSecs(track.duration);
+  document.getElementById('fsp-duration').textContent=track.duration||'0:00';
+
+  // Contexto (album ou queue)
+  const qLen=fpState.queue.length;
+  const qIdx=fpState.queueIndex+1;
+  const ctx=qLen>1?`${qIdx} de ${qLen} faixas`:'Reproduzindo';
+  document.getElementById('fsp-context').textContent=ctx;
+
+  // Queue hint
+  const qHint=document.getElementById('fsp-queue-hint');
+  if(qLen>1){
+    const nextIdx=(fpState.queueIndex+1)%qLen;
+    const nextTrack=getVideo(fpState.queue[nextIdx]);
+    qHint.textContent=nextTrack?`A seguir: ${nextTrack.title}`:'';
+  } else {
+    qHint.textContent='';
+  }
+}
+
+function startFspProgress(){
+  stopFspProgress();
+  const track=getVideo(fpState.trackId);
+  if(!track)return;
+  _fspElapsed=0;
+  _fspDuration=parseDurationSecs(track.duration);
+  if(!_fspDuration)return;
+
+  _fspInterval=setInterval(()=>{
+    if(!fpState.playing){return;}
+    _fspElapsed=Math.min(_fspElapsed+1,_fspDuration);
+    const pct=(_fspElapsed/_fspDuration)*100;
+    const fill=document.getElementById('fsp-track-fill');
+    const elapsed=document.getElementById('fsp-elapsed');
+    if(fill) fill.style.width=pct+'%';
+    if(elapsed) elapsed.textContent=secsToStr(_fspElapsed);
+    // Auto-avança ao fim
+    if(_fspElapsed>=_fspDuration){
+      stopFspProgress();
+      if(fpState.queue.length>1){
+        fpNext();
+        setTimeout(()=>{updateFullscreenPlayer();startFspProgress();},200);
+      }
+    }
+  },1000);
+}
+
+function stopFspProgress(){
+  if(_fspInterval){clearInterval(_fspInterval);_fspInterval=null;}
+}
+
+function secsToStr(s){
+  const m=Math.floor(s/60);
+  const sec=Math.floor(s%60);
+  return`${m}:${sec.toString().padStart(2,'0')}`;
+}
+
+function fspSeek(e){
+  const track=document.getElementById('fsp-track');
+  if(!track)return;
+  const rect=track.getBoundingClientRect();
+  const ratio=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+  _fspElapsed=Math.floor(ratio*_fspDuration);
+  const fill=document.getElementById('fsp-track-fill');
+  const elapsed=document.getElementById('fsp-elapsed');
+  if(fill) fill.style.width=(ratio*100)+'%';
+  if(elapsed) elapsed.textContent=secsToStr(_fspElapsed);
 }
 
 function loadFpIframe(track){
@@ -3597,6 +3921,10 @@ function closeFooterPlayer(){
   iw.classList.remove('clip-mode');
   document.getElementById('fp-iframe').src='';
   updateTracklistHighlight(null);
+  // Fecha fullscreen se aberto
+  closeFullscreenPlayer();
+  // Cancela auto-advance
+  if(window._autoAdvanceTimer){clearTimeout(window._autoAdvanceTimer);window._autoAdvanceTimer=null;}
 }
 
 function fpPlayPause(){
@@ -3604,6 +3932,11 @@ function fpPlayPause(){
   const track=getVideo(fpState.trackId);
   if(track) loadFpIframe(track);
   renderFooterPlayer();
+  if(document.getElementById('fullscreen-player').classList.contains('open')){
+    updateFullscreenPlayer();
+    if(fpState.playing) startFspProgress();
+    else stopFspProgress();
+  }
 }
 
 function fpNext(){
@@ -3615,6 +3948,12 @@ function fpNext(){
 
 function fpPrev(){
   if(!fpState.queue.length)return;
+  // Se já passou mais de 3s, volta para o início da faixa atual
+  if(_fspElapsed>3){
+    _fspElapsed=0;
+    startFspProgress();
+    return;
+  }
   fpState.queueIndex=(fpState.queueIndex-1+fpState.queue.length)%fpState.queue.length;
   const prevId=fpState.queue[fpState.queueIndex];
   playTrack(prevId,fpState.queue);
@@ -3964,7 +4303,7 @@ function renderPulseCharts(){
       <span style="text-align:right">Views / Streams</span>
       <span style="text-align:right">Var.</span>
       <span style="text-align:right">Peak</span>
-      <span style="text-align:right">Dur.</span>
+      <span style="text-align:center">Heat</span>
     </div>
     <div id="pulse-rows"></div>
   </div>`;
@@ -3994,17 +4333,13 @@ function renderPulseRows(){
   if(!el)return;
   let items=[..._pulseItems];
   if(_pulseCategory!=='TODOS') items=items.filter(i=>i.cat===_pulseCategory);
-  items.sort((a,b)=>b.views-a.views);
-  const top=items.slice(0,50);
 
-  // Helpers para calcular views do período com variação realista
+  // ── Helpers definidos ANTES do sort para serem usados nele ──
   function itemSeed(item){
-    // Seed determinístico baseado no id para que cada item tenha variações únicas
     let h=0;for(let c of (item.id||'x')){h=((h<<5)-h)+c.charCodeAt(0);h|=0;}
     return Math.abs(h);
   }
   function breakZeros(n){
-    // Evitar sequências de zeros: se o número tem 3+ zeros seguidos, quebra com dígito randômico seed
     let s=n.toString();
     s=s.replace(/0{2,}/g,m=>{
       let r='';
@@ -4019,7 +4354,6 @@ function renderPulseRows(){
     const factor=item.trend==='viral'?2.8+((seed%5)*0.12):item.trend==='growing'?1.4+((seed%8)*0.07):0.9+((seed%6)*0.05);
     switch(_pulsePeriod){
       case 'MINUTO':{
-        // Varia por item: base velocity * fator + ruído seed
         const base=Math.round(vel*factor*50*(1+(seed%17)*0.031));
         return breakZeros(base);
       }
@@ -4044,32 +4378,77 @@ function renderPulseRows(){
       case 'DIA':    return '/24h';
       case 'MÊS':   return '/mês';
       case 'ANO':   return '/ano';
-      default:       return ''; // TODOS: sem sufixo
+      default:       return '';
     }
   }
+
+  // ── SORT pelo valor do período (do maior para o menor) ──
+  const pvCache=new Map();
+  items.forEach(item=>pvCache.set(item.id,periodViews(item)));
+  items.sort((a,b)=>pvCache.get(b.id)-pvCache.get(a.id));
+
+  const top=items.slice(0,50);
+
+  // ── Atualiza peak e salva rank anterior por período ──
+  top.forEach((item,i)=>{
+    const curr=i+1;
+    // Peak: melhor posição já alcançada neste período
+    if(!item.peak||curr<item.peak) item.peak=curr;
+    // Guarda rank anterior para seta
+    item._prevPeriodRank=item._currPeriodRank!==undefined?item._currPeriodRank:curr;
+    item._currPeriodRank=curr;
+  });
+
+  // Heatmap strip
+  function heatStrip(item){
+    const seed=itemSeed(item);
+    const cells=7;
+    const heights=[];
+    const colors=[];
+    for(let i=0;i<cells;i++){
+      const phase=i/cells;
+      let h;
+      if(item.trend==='viral'){
+        h=Math.max(6,Math.round(8+phase*14+(seed%(3+i))*0.8));
+      } else if(item.trend==='growing'){
+        h=Math.max(6,Math.round(10+phase*8+(seed%(4+i))*0.5));
+      } else {
+        h=Math.max(6,Math.round(10+Math.sin(seed*0.3+i)*5+(seed%(3+i))*0.4));
+      }
+      heights.push(Math.min(22,h));
+      const ratio=h/22;
+      if(ratio>0.75) colors.push('#4caf50');
+      else if(ratio>0.5) colors.push('#8bc34a');
+      else if(ratio>0.35) colors.push('#ffc107');
+      else if(ratio>0.2) colors.push('#ff9800');
+      else colors.push('#f44336');
+    }
+    const lastH=item.trend==='viral'?22:item.trend==='growing'?18:12+(seed%6);
+    heights[cells-1]=lastH;
+    colors[cells-1]=item.trend==='viral'?'#4caf50':item.trend==='growing'?'#8bc34a':'#9e9e9e';
+    return`<div class="heat-strip">${heights.map((h,i)=>`<div class="heat-cell" style="height:${h}px;background:${colors[i]}"></div>`).join('')}</div>`;
+  }
+
   const suffix=periodSuffix();
   const isTotal=_pulsePeriod==='TODOS';
   const isStream=(item)=>item.cat==='MÚSICA'||item.cat==='ÁLBUM';
 
   el.innerHTML=top.map((item,i)=>{
-    const prev=item._prevRank||i+1;
+    const prev=item._prevPeriodRank!==undefined?item._prevPeriodRank:i+1;
     const curr=i+1;
     const diff=prev-curr;
     let arrowSym='●';let arrowClass='pulse-arrow-steady';
     if(diff>0){arrowSym='▲';arrowClass='pulse-arrow-up';}
     else if(diff<0){arrowSym='▼';arrowClass='pulse-arrow-down';}
 
-    // Cor da seta baseada na tendência do item
     let arrowColor='#aaa';
     if(item.trend==='viral') arrowColor='#4caf50';
     else if(item.trend==='growing') arrowColor='#4e9fff';
 
-    // Views do período — número completo formatado
-    const pv=periodViews(item);
-    const pvLabel=isTotal?fmtNumFull(item.views):fmtNumFull(pv);
+    const pvVal=pvCache.get(item.id);
+    const pvLabel=isTotal?fmtNumFull(item.views):fmtNumFull(pvVal);
     const unitLabel=(isStream(item)?'streams':'views')+suffix;
 
-    // % variação
     const prevV=item._prevViews||item.views;
     const pctChange=prevV>0?((item.views-prevV)/prevV*100):0;
     const pctStr=pctChange>0?`+${pctChange.toFixed(1)}%`:pctChange<0?`${pctChange.toFixed(1)}%`:'—';
@@ -4085,8 +4464,7 @@ function renderPulseRows(){
       </div>
       <div class="pulse-item-info">
         <div class="pulse-item-thumb">
-          ${item.thumbnail?`<img src="${item.thumbnail}" loading="lazy" onerror="this.style.display='none'">`:``}
-          <div style="position:absolute;inset:0;background:${gradientCSS(item.gradient||['#111','#222'])}${item.thumbnail?';opacity:0.3':''}"></div>
+          ${item.thumbnail?`<img src="${item.thumbnail}" loading="lazy" onerror="this.style.display='none'">`:`<div style="position:absolute;inset:0;background:${gradientCSS(item.gradient||['#111','#222'])}"></div>`}
         </div>
         <div class="pulse-item-meta">
           <div class="pulse-item-title">${item.title}</div>
@@ -4098,8 +4476,10 @@ function renderPulseRows(){
         <span style="font-size:10px;color:#555;margin-left:3px;font-weight:400">${unitLabel}</span>
       </div>
       <div style="font-size:12px;font-weight:600;text-align:right;color:${pctColor};white-space:nowrap">${pctStr}</div>
-      <div class="pulse-peak" style="text-align:right;font-size:12px;color:#666"><span style="font-weight:700;color:${item.peak===1?'#f9ca24':'#666'}">${peakLabel}</span></div>
-      <div class="pulse-duration" style="font-size:12px;color:#555;text-align:right;white-space:nowrap">${item.duration}</div>
+      <div class="pulse-peak" style="text-align:right;font-size:12px;color:#666">
+        <span style="font-weight:700;color:${item.peak===1?'#f9ca24':item.peak<=3?'#c0c0c0':'#666'}">${peakLabel}</span>
+      </div>
+      ${heatStrip(item)}
     </div>`;
   }).join('');
 }
@@ -4128,22 +4508,32 @@ function stopPulseInterval(){
 }
 
 function pulseTick(){
-  // Update views with viral simulation
-  const sorted0=[..._pulseItems].sort((a,b)=>b.views-a.views);
+  // Salva views anteriores antes de atualizar
   _pulseItems.forEach(item=>{
     item._prevViews=item.views;
-    item._prevRank=sorted0.findIndex(x=>x.id===item.id)+1;
-    const factor=item.trend==='viral'?3:item.trend==='growing'?1.5:1;
-    const microWave=Math.sin(Date.now()/60000+item.velocity)*0.15;
-    const add=Math.floor(item.velocity*factor*(1+microWave)*50*(0.8+Math.random()*0.4));
-    item.views+=add;
-    // Maybe new peak
-    const sorted=[..._pulseItems].sort((a,b)=>b.views-a.views);
-    const newPos=sorted.findIndex(x=>x.id===item.id)+1;
-    if(newPos<item.peak) item.peak=newPos;
   });
+
+  // Atualiza views com variação garantida por item
+  _pulseItems.forEach(item=>{
+    const factor=item.trend==='viral'?3:item.trend==='growing'?1.5:1;
+    const microWave=Math.sin(Date.now()/60000+item.velocity)*0.2;
+    const noise=Math.sin(Date.now()*0.001*(item.velocity+0.1))*0.15+Math.random()*0.3;
+    const add=Math.max(1,Math.floor(item.velocity*factor*(1+microWave+noise)*50));
+    item.views+=add;
+  });
+
+  // Surtos aleatórios para provocar mudanças de posição
+  const numSurtos=1+Math.floor(Math.random()*2);
+  for(let s=0;s<numSurtos;s++){
+    const idx=Math.floor(Math.random()*_pulseItems.length);
+    const surtoItem=_pulseItems[idx];
+    if(surtoItem){
+      surtoItem.views+=Math.floor(surtoItem.views*(0.005+Math.random()*0.015));
+    }
+  }
+
+  // Re-renderiza: renderPulseRows cuida do sort por período e atualiza peaks e _prevPeriodRank
   renderPulseRows();
-  // Flash updated rows
   document.querySelectorAll('.pulse-row').forEach(r=>{
     r.classList.add('updated');
     setTimeout(()=>r.classList.remove('updated'),600);
