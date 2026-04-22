@@ -121,7 +121,7 @@
       "dislikes": 12000,
       "upload_date": "2026-04-22",
       "duration": "4:02",
-      "description": "Official music video for 'La Isla Bonita' by Madonna. Remastered in HD.",
+      "description": "Official music video for 'La Isla Bonita' by Madonna. Originally released in 1987 from the album 'True Blue'. Remastered in HD.",
       "thumbnail_url": "https://i.ytimg.com/vi/zpzdgmqIHOQ/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ",
       "gradient": ["#e8a87c", "#d4845a", "#c06038"],
@@ -136,8 +136,7 @@
       "type": "music",
       "title": "Madonna - Holiday (official audio)",
       "artist": "Madonna",
-      "album": null,
-      "is_single": true,
+      "album": "",
       "channel_id": "ch_001",
       "views": 29938282,
       "likes": 1300000,
@@ -160,7 +159,6 @@
       "title": "Diamond Life",
       "artist": "Sade",
       "album": "Diamond Life",
-      "is_single": false,
       "channel_id": "ch_002",
       "views": 45000000,
       "likes": 620000,
@@ -177,15 +175,15 @@
         "studio": "Power Plant Studios, London"
       },
       "tracks": [
-        { "id": "trk_001", "title": "Smooth Operator", "duration": "4:58", "plays": 18500000, "likes": 420000, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
-        { "id": "trk_002", "title": "Your Love Is King", "duration": "3:39", "plays": 8200000, "likes": 210000, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
-        { "id": "trk_003", "title": "Hang on to Your Love", "duration": "5:58", "plays": 5400000, "likes": 150000, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
-        { "id": "trk_004", "title": "Frankie's First Affair", "duration": "4:38", "plays": 3100000, "likes": 89000, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
-        { "id": "trk_005", "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 2800000, "likes": 72000, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
-        { "id": "trk_006", "title": "Cherry Pie", "duration": "6:20", "plays": 1900000, "likes": 54000, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
-        { "id": "trk_007", "title": "Sally", "duration": "5:23", "plays": 1600000, "likes": 48000, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
-        { "id": "trk_008", "title": "I Will Be Your Friend", "duration": "4:45", "plays": 2200000, "likes": 61000, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
-        { "id": "trk_009", "title": "Why Can't We Live Together", "duration": "5:27", "plays": 1400000, "likes": 41000, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
+        { "title": "Smooth Operator", "duration": "4:58", "plays": 18500000, "likes": 420000, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
+        { "title": "Your Love Is King", "duration": "3:39", "plays": 8200000, "likes": 210000, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
+        { "title": "Hang on to Your Love", "duration": "5:58", "plays": 5400000, "likes": 150000, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
+        { "title": "Frankie's First Affair", "duration": "4:38", "plays": 3100000, "likes": 89000, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
+        { "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 2800000, "likes": 72000, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
+        { "title": "Cherry Pie", "duration": "6:20", "plays": 1900000, "likes": 54000, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
+        { "title": "Sally", "duration": "5:23", "plays": 1600000, "likes": 48000, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
+        { "title": "I Will Be Your Friend", "duration": "4:45", "plays": 2200000, "likes": 61000, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
+        { "title": "Why Can't We Live Together", "duration": "5:27", "plays": 1400000, "likes": 41000, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
       ],
       "liked": false,
       "engagement": { "velocity": 2.1, "like_ratio": 0.014, "trend": "steady" }
@@ -196,12 +194,11 @@
       "title": "Color of Pain",
       "artist": "Bronx",
       "album": "Color of Pain",
-      "is_single": false,
       "channel_id": "ch_003",
-      "views": 190283292,
-      "likes": 12400000,
-      "dislikes": 98000,
-      "duration": "52:14",
+      "views": 249928282,
+      "likes": 15500000,
+      "dislikes": 134000,
+      "duration": "51:02",
       "upload_date": "2026-04-22",
       "release_date": "2026-04-22",
       "release_status": "released",
@@ -209,7 +206,7 @@
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
       "subgenres": ["Post-Grunge", "Indie Rock", "Soul"],
-      "description": "The highly anticipated debut album from Bronx. A 14-track journey through love, loss, and redemption. Featuring collaborations with Stevie Wonder and Sade. Recorded at Electric Lady Studios and produced by Dave Sardy.",
+      "description": "The highly anticipated debut album from Bronx. Featuring collaborations with Stevie Wonder and Sade. The title track 'color of pain [feat. Stevie Wonder]' is currently #1 on the global charts.",
       "credits": {
         "label": "Dark Horse Records",
         "producer": "Dave Sardy, Bronx",
@@ -218,43 +215,42 @@
         "studio": "Electric Lady Studios, NYC"
       },
       "tracks": [
-        { "id": "trk_010", "title": "warm", "duration": "2:37", "plays": 18400000, "likes": 1200000 },
-        { "id": "trk_011", "title": "sweetheart", "duration": "3:31", "plays": 21200000, "likes": 1450000 },
-        { "id": "trk_012", "title": "off the couch", "duration": "3:42", "plays": 15600000, "likes": 980000 },
-        { "id": "trk_013", "title": "will you still love me?", "duration": "4:01", "plays": 19800000, "likes": 1320000 },
-        { "id": "trk_014", "title": "never meant to cause trouble", "duration": "3:12", "plays": 12300000, "likes": 780000 },
-        { "id": "trk_015", "title": "puzzle", "duration": "3:36", "plays": 10800000, "likes": 690000 },
-        { "id": "trk_016", "title": "clockwork", "duration": "3:22", "plays": 14200000, "likes": 910000 },
-        { "id": "trk_017", "title": "density", "duration": "4:06", "plays": 9600000, "likes": 620000 },
-        { "id": "trk_018", "title": "color of pain", "duration": "5:01", "plays": 24800000, "likes": 1680000, "feat": "Stevie Wonder" },
-        { "id": "trk_019", "title": "trophies aren't made of gold", "duration": "4:21", "plays": 8900000, "likes": 580000 },
-        { "id": "trk_020", "title": "daisies might die", "duration": "3:56", "plays": 11200000, "likes": 720000 },
-        { "id": "trk_021", "title": "that brightness in us", "duration": "3:57", "plays": 10400000, "likes": 670000 },
-        { "id": "trk_022", "title": "skyfall", "duration": "2:59", "plays": 13600000, "likes": 890000, "feat": "Sade" },
-        { "id": "trk_023", "title": "xoxo, goodbye", "duration": "1:56", "plays": 7800000, "likes": 510000 }
+        { "title": "warm", "duration": "2:37", "plays": 17470296, "likes": 1083000 },
+        { "title": "sweetheart", "duration": "3:31", "plays": 20803446, "likes": 1290000 },
+        { "title": "off the couch", "duration": "3:42", "plays": 15401445, "likes": 955000 },
+        { "title": "will you still love me?", "duration": "4:01", "plays": 24711274, "likes": 1534000 },
+        { "title": "never meant to cause trouble", "duration": "3:12", "plays": 11263744, "likes": 699000 },
+        { "title": "puzzle", "duration": "3:36", "plays": 12872850, "likes": 798000 },
+        { "title": "clockwork", "duration": "3:22", "plays": 14596892, "likes": 905000 },
+        { "title": "density", "duration": "4:06", "plays": 16435871, "likes": 1019000 },
+        { "title": "color of pain [feat. Stevie Wonder]", "duration": "5:01", "plays": 55800000, "likes": 3461000 },
+        { "title": "trophies aren't made of gold", "duration": "4:21", "plays": 11608552, "likes": 720000 },
+        { "title": "daisies might die", "duration": "3:56", "plays": 10114382, "likes": 627000 },
+        { "title": "that brightness in us", "duration": "3:57", "plays": 10689063, "likes": 663000 },
+        { "title": "skyfall [feat. Sade]", "duration": "2:59", "plays": 20000000, "likes": 1240000 },
+        { "title": "xoxo, goodbye", "duration": "1:56", "plays": 8160467, "likes": 506000 }
       ],
       "liked": false,
-      "engagement": { "velocity": 6.8, "like_ratio": 0.065, "trend": "viral" }
+      "engagement": { "velocity": 12.4, "like_ratio": 0.062, "trend": "viral" }
     },
     {
       "id": "mus_004",
       "type": "music",
       "title": "Madonna - La Isla Bonita (official audio)",
       "artist": "Madonna",
-      "album": null,
-      "is_single": true,
+      "album": "True Blue",
       "channel_id": "ch_001",
       "views": 15938282,
       "likes": 890000,
       "dislikes": 12000,
       "duration": "4:02",
       "upload_date": "2026-04-22",
-      "thumbnail_url": "https://cdn-images.dzcdn.net/images/cover/6b02ac3611609afa27ca24e54926a5ae/1900x1900-000000-80-0-0.jpg",
+      "thumbnail_url": "https://i.ytimg.com/vi/zpzdgmqIHOQ/maxresdefault.jpg",
       "gradient": ["#e8a87c", "#d4845a", "#c06038"],
       "genre": "Latin Pop",
       "bpm": 100,
       "key": "F#m",
-      "description": "Official audio for 'La Isla Bonita' by Madonna. Remastered in HD.",
+      "description": "Official audio for 'La Isla Bonita' by Madonna. From the album 'True Blue' (1986). Remastered in HD.",
       "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ",
       "liked": false,
       "engagement": { "velocity": 5.8, "like_ratio": 0.056, "trend": "viral" }
@@ -280,15 +276,21 @@
       { "user": "80smusiclover", "text": "This performance is pure joy!", "likes": 3400, "ts": "1 year ago" }
     ],
     "vid_003": [
-      { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! 💃", "likes": 2800, "ts": "1 hour ago" }
+      { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! This is the best day ever 💃", "likes": 2800, "ts": "1 hour ago" },
+      { "user": "80smemories", "text": "This song never gets old. Pure nostalgia 🌺", "likes": 1900, "ts": "45 minutes ago" },
+      { "user": "madonnaforever", "text": "Queen of Pop showing why she's the GOAT 👑", "likes": 1200, "ts": "30 minutes ago" }
     ],
     "mus_003": [
-      { "user": "rockfan_ny", "text": "14 tracks of pure genius. Stevie Wonder AND Sade on the same album? Bronx went crazy 🔥", "likes": 3400, "ts": "3 hours ago" },
-      { "user": "soulfulvibes", "text": "That Sade feature on 'skyfall' is everything I needed. Album of the year.", "likes": 2800, "ts": "2 hours ago" },
-      { "user": "altmusicjunkie", "text": "The production on this album is insane. Dave Sardy killed it.", "likes": 1900, "ts": "5 hours ago" }
+      { "user": "rockfan_ny", "text": "Finally! 'Broken Glass' is an instant classic 🔥", "likes": 1200, "ts": "2 hours ago" },
+      { "user": "altmusicjunkie", "text": "The production on this album is insane.", "likes": 980, "ts": "5 hours ago" },
+      { "user": "bronxwarrior", "text": "On repeat all day.", "likes": 750, "ts": "1 hour ago" },
+      { "user": "steviewonderfan", "text": "Stevie on 'color of pain' is pure magic ✨ #1 deserved", "likes": 3500, "ts": "30 minutes ago" },
+      { "user": "sade_legion", "text": "Sade and Bronx together?? 'skyfall' is perfection.", "likes": 1800, "ts": "4 hours ago" },
+      { "user": "chartwatcher", "text": "Number 1 on Billboard! History made 🏆", "likes": 2200, "ts": "15 minutes ago" }
     ],
     "mus_004": [
-      { "user": "spanishguitarlover", "text": "That guitar intro gives me chills 🎸", "likes": 1500, "ts": "1 hour ago" }
+      { "user": "spanishguitarlover", "text": "That guitar intro gives me chills every time 🎸", "likes": 1500, "ts": "1 hour ago" },
+      { "user": "tropicalvibes", "text": "Listening from Puerto Rico! La Isla Bonita forever 🇵🇷", "likes": 1100, "ts": "2 hours ago" }
     ]
   },
   "channel_stats": {
@@ -297,42 +299,37 @@
       "total_likes": 2290000,
       "videos_count": 2,
       "music_count": 2,
-      "singles_count": 2,
-      "albums_count": 0,
-      "engagement_rate": 0.048
+      "engagement_rate": 0.048,
+      "analytics": {
+        "subscriber_growth": [500000, 504000, 507000, 509000],
+        "views_last_7_days": 15938282,
+        "top_regions": ["US", "UK", "BR", "ES", "MX"],
+        "watch_time_hours": 5200
+      },
+      "monetization": {
+        "total_earnings": 2150.00,
+        "monthly_earnings": 430.00,
+        "top_video": "vid_003",
+        "rpm_avg": 2.4
+      }
     },
     "ch_002": {
       "total_views": 268678215,
       "total_likes": 4420000,
       "videos_count": 1,
       "music_count": 1,
-      "albums_count": 1,
-      "singles_count": 0,
       "engagement_rate": 0.016
     },
     "ch_003": {
-      "total_views": 190283292,
-      "total_likes": 12400000,
+      "total_views": 249928282,
+      "total_likes": 15500000,
       "videos_count": 0,
       "music_count": 1,
-      "albums_count": 1,
-      "singles_count": 0,
-      "engagement_rate": 0.065
+      "engagement_rate": 0.062
     }
   },
   "trending": ["mus_003", "vid_003", "mus_004", "vid_002", "mus_001"],
-  "trending_music": [
-    "mus_004",
-    "trk_018",
-    "trk_011",
-    "trk_013",
-    "mus_001",
-    "trk_010",
-    "trk_001",
-    "trk_022",
-    "trk_016",
-    "mus_003"
-  ],
+  "trending_music": ["mus_003", "mus_004", "mus_001", "mus_002"],
   "trending_films": [],
   "trending_shorts": [],
   "algorithm": {
