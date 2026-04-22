@@ -225,9 +225,9 @@
       "artist": "Bronx",
       "album": "Color of Pain",
       "channel_id": "ch_003",
-      "views": 900000,
-      "likes": 85000,
-      "dislikes": 1500,
+      "views": 28938283,
+      "likes": 1850000,
+      "dislikes": 28000,
       "duration": "38:22",
       "upload_date": "2026-04-22",
       "release_status": "released",
@@ -264,8 +264,8 @@
       ],
       "liked": false,
       "engagement": {
-        "velocity": 3.8,
-        "like_ratio": 0.094,
+        "velocity": 4.8,
+        "like_ratio": 0.064,
         "trend": "viral"
       }
     }
@@ -423,24 +423,24 @@
       }
     },
     "ch_003": {
-      "total_views": 900000,
-      "total_likes": 85000,
+      "total_views": 28938283,
+      "total_likes": 1850000,
       "videos_count": 0,
       "shorts_count": 0,
       "music_count": 1,
       "films_count": 0,
-      "engagement_rate": 0.094,
+      "engagement_rate": 0.064,
       "analytics": {
         "subscriber_growth": [1950000, 1970000, 1985000, 2000000],
-        "views_last_7_days": 900000,
-        "top_regions": ["US", "UK", "CA", "AU"],
-        "watch_time_hours": 5800
+        "views_last_7_days": 28938283,
+        "top_regions": ["US", "UK", "CA", "AU", "BR"],
+        "watch_time_hours": 185000
       },
       "monetization": {
-        "total_earnings": 4500.00,
-        "monthly_earnings": 4500.00,
+        "total_earnings": 115000.00,
+        "monthly_earnings": 115000.00,
         "top_video": "mus_003",
-        "rpm_avg": 2.5
+        "rpm_avg": 3.9
       }
     }
   },
