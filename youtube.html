@@ -851,6 +851,7 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
       <button class="ch-tab" onclick="switchTab('music')">Música</button>
       <button class="ch-tab" onclick="switchTab('playlists')">Playlists</button>
       <button class="ch-tab" onclick="switchTab('live')">Ao vivo</button>
+      <button class="ch-tab" onclick="switchTab('charts')">Charts</button>
       <button class="ch-tab" onclick="switchTab('community')">Comunidade</button>
       <button class="ch-tab" onclick="switchTab('dados')">Dados</button>
       <button class="ch-tab" onclick="switchTab('about')">Sobre</button>
@@ -1896,7 +1897,7 @@ function renderChannel(chId){
 function switchTab(tab){
   STATE.currentTab=tab;
   document.querySelectorAll('.ch-tab').forEach((b,i)=>{
-    const tabs=['home','videos','shorts','music','playlists','live','community','dados','about'];
+    const tabs=['home','videos','shorts','music','playlists','live','charts','community','dados','about'];
     b.classList.toggle('active',tabs[i]===tab);
   });
   renderChannelTab(STATE.currentChannel,tab);
@@ -2053,6 +2054,134 @@ function renderChannelTab(chId,tab){
         </div>
       `;
     }
+  } else if(tab==='charts'){
+    const allItems=[...DB.videos,...(DB.music||[]),...(DB.films||[])];
+    const top10Overall=[...allItems].sort((a,b)=>b.views-a.views).slice(0,10);
+    const top10Music=[...(DB.music||[])].sort((a,b)=>b.views-a.views).slice(0,10);
+    // Albums: aggregate streams by album
+    const albumMap={};
+    (DB.music||[]).forEach(m=>{
+      if(!m.album)return;
+      if(!albumMap[m.album]) albumMap[m.album]={album:m.album,artist:m.artist,streams:0,thumbnail_url:m.thumbnail_url,gradient:m.gradient,id:m.id};
+      albumMap[m.album].streams+=m.views;
+    });
+    const top10Albums=Object.values(albumMap).sort((a,b)=>b.streams-a.streams).slice(0,10);
+
+    const medalColors=['#f9ca24','#c0c0c0','#cd7f32'];
+    const rankBadge=(i)=>{
+      if(i===0) return`<span style="font-size:18px">🥇</span>`;
+      if(i===1) return`<span style="font-size:18px">🥈</span>`;
+      if(i===2) return`<span style="font-size:18px">🥉</span>`;
+      return`<span style="font-size:15px;font-weight:700;color:var(--muted);min-width:24px;text-align:center">${i+1}</span>`;
+    };
+    const trendArrow=(item)=>{
+      const t=(item.engagement||{}).trend;
+      if(t==='viral') return`<span style="color:#ff6b6b;font-size:11px;font-weight:700">▲ VIRAL</span>`;
+      if(t==='growing') return`<span style="color:#4caf50;font-size:11px">▲</span>`;
+      return`<span style="color:var(--muted);font-size:11px">—</span>`;
+    };
+
+    el.innerHTML=`
+      <div class="fade-in">
+
+        <!-- TOP 10 GERAL -->
+        <div class="section-block">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+            <div style="width:4px;height:28px;background:var(--accent);border-radius:2px"></div>
+            <div>
+              <div style="font-size:18px;font-weight:700">Top 10 Geral</div>
+              <div style="font-size:12px;color:var(--muted)">Mais visualizados de todos os tipos de conteúdo</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            ${top10Overall.map((item,i)=>{
+              const itemCh=getChannel(item.channel_id);
+              const isMusic=(DB.music||[]).find(m=>m.id===item.id);
+              const isFilm=(DB.films||[]).find(f=>f.id===item.id);
+              const badgeLabel=isMusic?'MÚSICA':isFilm?'FILME':'VÍDEO';
+              const badgeColor=isMusic?'rgba(139,92,246,0.85)':isFilm?'rgba(239,68,68,0.85)':'rgba(30,130,240,0.85)';
+              return`<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background 0.1s" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''" onclick="navigate('player','${item.id}')">
+                <div style="width:28px;display:flex;justify-content:center;flex-shrink:0">${rankBadge(i)}</div>
+                <div style="width:80px;min-width:80px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0">
+                  ${item.thumbnail_url?`<img src="${item.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.style.display='none'">`:''}
+                  <div style="position:absolute;inset:0;background:${gradientCSS(item.gradient||['#111','#222'])}${item.thumbnail_url?';opacity:0.3':''}"></div>
+                  <div style="position:absolute;bottom:3px;left:3px;background:${badgeColor};color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:0.3px">${badgeLabel}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title}</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:2px">${itemCh?itemCh.name:''}</div>
+                </div>
+                <div style="text-align:right;flex-shrink:0">
+                  <div style="font-size:13px;font-weight:600">${fmtNum(item.views)}</div>
+                  <div style="font-size:11px;color:var(--muted)">${isMusic?'streams':'views'}</div>
+                </div>
+                <div style="width:52px;text-align:right;flex-shrink:0">${trendArrow(item)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- TOP 10 MÚSICAS -->
+        <div class="section-block">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+            <div style="width:4px;height:28px;background:#8b5cf6;border-radius:2px"></div>
+            <div>
+              <div style="font-size:18px;font-weight:700">Top 10 Músicas</div>
+              <div style="font-size:12px;color:var(--muted)">Faixas mais transmitidas</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            ${top10Music.map((m,i)=>{
+              const mCh=getChannel(m.channel_id);
+              return`<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background 0.1s" onmouseover="this.style.background='rgba(139,92,246,0.08)'" onmouseout="this.style.background=''" onclick="navigate('player','${m.id}')">
+                <div style="width:28px;display:flex;justify-content:center;flex-shrink:0">${rankBadge(i)}</div>
+                <div style="width:52px;min-width:52px;height:52px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0">
+                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.style.display='none'">`:''}
+                  <div style="position:absolute;inset:0;background:${gradientCSS(m.gradient||['#111','#222'])}${m.thumbnail_url?';opacity:0.3':''}"></div>
+                  ${i===0?`<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><div class="music-bars"><span></span><span></span><span></span><span></span></div></div>`:''}
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.title}</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:2px">${m.artist||''} · ${m.genre}</div>
+                </div>
+                <div style="text-align:right;flex-shrink:0">
+                  <div style="font-size:13px;font-weight:600">${fmtNum(m.views)}</div>
+                  <div style="font-size:11px;color:var(--muted)">streams</div>
+                </div>
+                <div style="width:52px;text-align:right;flex-shrink:0">${trendArrow(m)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- TOP 10 ÁLBUNS -->
+        <div class="section-block">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+            <div style="width:4px;height:28px;background:#f9ca24;border-radius:2px"></div>
+            <div>
+              <div style="font-size:18px;font-weight:700">Top 10 Álbuns</div>
+              <div style="font-size:12px;color:var(--muted)">Álbuns mais transmitidos (soma de todas as faixas)</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+            ${top10Albums.map((alb,i)=>`
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--surface);cursor:pointer;transition:background 0.1s" onmouseover="this.style.background='#2a2a2a'" onmouseout="this.style.background='var(--surface)'" onclick="navigate('explore','music')">
+                <div style="position:relative;width:28px;flex-shrink:0;text-align:center">${rankBadge(i)}</div>
+                <div style="width:56px;min-width:56px;height:56px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0">
+                  ${alb.thumbnail_url?`<img src="${alb.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.style.display='none'">`:''}
+                  <div style="position:absolute;inset:0;background:${gradientCSS(alb.gradient||['#111','#222'])}${alb.thumbnail_url?';opacity:0.3':''}"></div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${alb.album}</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:2px">${alb.artist}</div>
+                  <div style="font-size:12px;color:#8b5cf6;margin-top:3px;font-weight:500">${fmtNum(alb.streams)} streams</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+
+      </div>
+    `;
   } else if(tab==='community'){
     el.innerHTML=`
       <div style="max-width:640px">
