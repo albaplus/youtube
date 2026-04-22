@@ -132,47 +132,41 @@
   "shorts": [],
   "music": [
     {
-      "id": "alb_001",
-      "type": "album",
-      "album_type": "single",
-      "title": "Holiday",
+      "id": "mus_001",
+      "type": "music",
+      "title": "Madonna - Holiday (official audio)",
       "artist": "Madonna",
+      "album": null,
+      "is_single": true,
       "channel_id": "ch_001",
       "views": 29938282,
       "likes": 1300000,
       "dislikes": 1200,
       "duration": "4:01",
       "upload_date": "2026-04-22",
-      "release_date": "2026-04-22",
       "thumbnail_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBej0BPezQHBU_TRBW73sE7jEB6Iton6Ooq8hCKaa15xtE5iGB0hp1ukk5wXtOMJvKTs3MkIfmYlJHIGFi6ShZSSpV4oP2cckY60nTJeb47YyTtWBpVKBFTQXG-Y3-P0YCdjinNhoREgi3hH-5t_FUjoJtIwF5iOA3IeIRgxI-_IV4dm5NVp8eZs0FsSN-/s1024/holiday.png",
       "gradient": ["#e84393", "#fd79a8", "#d63031"],
       "genre": "Pop",
-      "description": "Single: Holiday (7\" Version) [2022 Remaster]",
-      "tracks": [
-        {
-          "title": "Holiday (7\" Version)",
-          "duration": "4:01",
-          "plays": 29938282,
-          "likes": 1300000,
-          "embed_url": "https://www.youtube.com/embed/p7cjMjgPHzM"
-        }
-      ],
+      "bpm": 116,
+      "key": "D",
+      "description": "Official remastered audio for Madonna's iconic debut single 'Holiday' (7\" Version).",
+      "embed_url": "https://www.youtube.com/embed/p7cjMjgPHzM",
       "liked": false,
       "engagement": { "velocity": 3.4, "like_ratio": 0.043, "trend": "viral" }
     },
     {
-      "id": "alb_002",
+      "id": "mus_002",
       "type": "album",
-      "album_type": "album",
       "title": "Diamond Life",
       "artist": "Sade",
+      "album": "Diamond Life",
+      "is_single": false,
       "channel_id": "ch_002",
       "views": 45000000,
       "likes": 620000,
       "dislikes": 12000,
       "duration": "44:28",
       "upload_date": "1984-07-16",
-      "release_date": "1984-07-16",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ad27e16c5f844ea1ad6797cd",
       "gradient": ["#2c3e50", "#34495e", "#1a252f"],
       "genre": "Soul / Smooth Jazz",
@@ -197,11 +191,12 @@
       "engagement": { "velocity": 2.1, "like_ratio": 0.014, "trend": "steady" }
     },
     {
-      "id": "alb_003",
+      "id": "mus_003",
       "type": "album",
-      "album_type": "album",
       "title": "Color of Pain",
       "artist": "Bronx",
+      "album": "Color of Pain",
+      "is_single": false,
       "channel_id": "ch_003",
       "views": 65039283,
       "likes": 4100000,
@@ -209,6 +204,7 @@
       "duration": "38:22",
       "upload_date": "2026-04-22",
       "release_date": "2026-04-22",
+      "release_status": "released",
       "thumbnail_url": "https://m.media-amazon.com/images/I/61H4amLWTWL._AC_._SX500_SCLZZZZZZZ_.jpg",
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
@@ -232,31 +228,25 @@
       "engagement": { "velocity": 5.2, "like_ratio": 0.063, "trend": "viral" }
     },
     {
-      "id": "alb_004",
-      "type": "album",
-      "album_type": "single",
-      "title": "La Isla Bonita",
+      "id": "mus_004",
+      "type": "music",
+      "title": "Madonna - La Isla Bonita (official audio)",
       "artist": "Madonna",
+      "album": null,
+      "is_single": true,
       "channel_id": "ch_001",
       "views": 15938282,
       "likes": 890000,
       "dislikes": 12000,
       "duration": "4:02",
       "upload_date": "2026-04-22",
-      "release_date": "2026-04-22",
       "thumbnail_url": "https://cdn-images.dzcdn.net/images/cover/6b02ac3611609afa27ca24e54926a5ae/1900x1900-000000-80-0-0.jpg",
       "gradient": ["#e8a87c", "#d4845a", "#c06038"],
       "genre": "Latin Pop",
-      "description": "Single: La Isla Bonita (Remastered)",
-      "tracks": [
-        {
-          "title": "La Isla Bonita",
-          "duration": "4:02",
-          "plays": 15938282,
-          "likes": 890000,
-          "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ"
-        }
-      ],
+      "bpm": 100,
+      "key": "F#m",
+      "description": "Official audio for 'La Isla Bonita' by Madonna. Remastered in HD.",
+      "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ",
       "liked": false,
       "engagement": { "velocity": 5.8, "like_ratio": 0.056, "trend": "viral" }
     }
@@ -281,13 +271,16 @@
       { "user": "80smusiclover", "text": "This performance is pure joy!", "likes": 3400, "ts": "1 year ago" }
     ],
     "vid_003": [
-      { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! 💃", "likes": 2800, "ts": "1 hour ago" }
+      { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! This is the best day ever 💃", "likes": 2800, "ts": "1 hour ago" },
+      { "user": "80smemories", "text": "This song never gets old. Pure nostalgia 🌺", "likes": 1900, "ts": "45 minutes ago" },
+      { "user": "madonnaforever", "text": "Queen of Pop showing why she's the GOAT 👑", "likes": 1200, "ts": "30 minutes ago" }
     ],
-    "alb_003": [
+    "mus_003": [
       { "user": "rockfan_ny", "text": "Finally! 'Broken Glass' is an instant classic 🔥", "likes": 1200, "ts": "2 hours ago" }
     ],
-    "alb_004": [
-      { "user": "spanishguitarlover", "text": "That guitar intro gives me chills 🎸", "likes": 1500, "ts": "1 hour ago" }
+    "mus_004": [
+      { "user": "spanishguitarlover", "text": "That guitar intro gives me chills every time 🎸", "likes": 1500, "ts": "1 hour ago" },
+      { "user": "tropicalvibes", "text": "Listening from Puerto Rico! La Isla Bonita forever 🇵🇷", "likes": 1100, "ts": "2 hours ago" }
     ]
   },
   "channel_stats": {
@@ -295,29 +288,40 @@
       "total_views": 47814856,
       "total_likes": 2290000,
       "videos_count": 2,
-      "albums_count": 0,
+      "music_count": 2,
       "singles_count": 2,
-      "engagement_rate": 0.048
+      "albums_count": 0,
+      "engagement_rate": 0.048,
+      "analytics": {
+        "subscriber_growth": [500000, 504000, 507000, 509000],
+        "views_last_7_days": 15938282,
+        "top_regions": ["US", "UK", "BR", "ES", "MX"],
+        "watch_time_hours": 5200
+      },
+      "monetization": {
+        "total_earnings": 2150.00,
+        "monthly_earnings": 430.00,
+        "top_video": "vid_003",
+        "rpm_avg": 2.4
+      }
     },
     "ch_002": {
       "total_views": 268678215,
       "total_likes": 4420000,
       "videos_count": 1,
-      "albums_count": 1,
-      "singles_count": 0,
+      "music_count": 1,
       "engagement_rate": 0.016
     },
     "ch_003": {
       "total_views": 65039283,
       "total_likes": 4100000,
       "videos_count": 0,
-      "albums_count": 1,
-      "singles_count": 0,
+      "music_count": 1,
       "engagement_rate": 0.063
     }
   },
-  "trending": ["alb_004", "vid_003", "alb_003", "vid_002", "alb_001"],
-  "trending_music": ["alb_004", "alb_003", "alb_001", "alb_002"],
+  "trending": ["vid_003", "mus_004", "mus_003", "vid_002", "mus_001"],
+  "trending_music": ["mus_004", "mus_003", "mus_001", "mus_002"],
   "trending_films": [],
   "trending_shorts": [],
   "algorithm": {
