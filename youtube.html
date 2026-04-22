@@ -833,6 +833,138 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:20px;
 }
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  :root{--sidebar-w:0px;--sidebar-mini:0px}
+  #sidebar{
+    transform:translateX(-100%);width:260px!important;
+    transition:transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    z-index:500;background:var(--bg);
+  }
+  #sidebar.mobile-open{transform:translateX(0)!important}
+  #sidebar.mini{transform:translateX(-100%)!important}
+  #content{margin-left:0!important;padding-bottom:72px}
+  #content.has-player{padding-bottom:140px}
+  .player-layout{grid-template-columns:1fr;padding:12px}
+  .video-grid{grid-template-columns:1fr;padding:0 12px 12px}
+  .chips-bar{padding:8px 12px}
+  .ch-info-row{padding:12px}
+  .ch-banner{height:100px}
+  .album-hero{flex-direction:column;padding:20px 16px 16px;gap:16px;align-items:center;text-align:center}
+  .album-art-big{width:180px;height:180px;min-width:180px}
+  .album-hero-title{font-size:22px}
+  .album-hero-actions{justify-content:center}
+  .tracklist{padding:0 12px 120px}
+  .tracklist-header{grid-template-columns:36px 1fr 80px 60px}
+  .track-row{grid-template-columns:36px 1fr 80px 60px}
+  .track-album{display:none}
+  .topbar-left{min-width:auto}
+  .search-bar{max-width:none}
+  #footer-player{padding:0 10px;height:64px}
+  .fp-mode-section{display:none}
+  .fp-track-section{max-width:none;flex:1}
+  .sr-thumb{width:120px;min-width:120px}
+  .sr-title{font-size:15px}
+  /* Sidebar overlay */
+  #sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:499;display:none}
+  #sidebar-overlay.show{display:block}
+}
+
+@media(max-width:480px){
+  .video-grid{grid-template-columns:1fr;gap:12px;padding:0 8px 12px}
+  .player-title{font-size:16px}
+  .album-art-big{width:140px;height:140px;min-width:140px}
+  .album-hero-title{font-size:18px}
+  .chip{font-size:13px;padding:5px 10px;height:30px}
+  #topbar{padding:0 8px}
+  .search-bar{max-width:none}
+}
+
+/* ── PULSE CHARTS ── */
+.pulse-container{max-width:1200px;margin:0 auto;padding:24px}
+.pulse-header{
+  background:linear-gradient(135deg,#0a0a1a,#1a0a2e,#0a1a2e);
+  border-radius:20px;padding:24px 28px;margin-bottom:24px;
+  border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;
+}
+.pulse-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%,rgba(138,43,226,0.15),transparent 60%);
+}
+.pulse-title{font-size:28px;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;
+  background:linear-gradient(90deg,#fff,#a78bfa);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;position:relative}
+.pulse-subtitle{font-size:13px;color:var(--muted);position:relative}
+.pulse-countdown-bar{position:relative;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:16px;overflow:hidden}
+.pulse-countdown-fill{height:100%;background:linear-gradient(90deg,#ff0000,#8b5cf6);border-radius:2px;transition:width 1s linear}
+.pulse-countdown-txt{font-size:12px;color:#aaa;margin-top:6px;position:relative}
+.pulse-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pulse-filter-btn{
+  padding:6px 16px;border-radius:20px;border:1px solid #3f3f3f;
+  background:none;color:var(--muted);font-family:Roboto,sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all 0.15s;
+}
+.pulse-filter-btn:hover{border-color:#fff;color:#fff}
+.pulse-filter-btn.active{background:#fff;color:#000;border-color:#fff}
+.pulse-cat-filter{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.pulse-cat-btn{
+  padding:4px 12px;border-radius:6px;border:1px solid #272727;
+  background:none;color:#aaa;font-family:Roboto,sans-serif;font-size:12px;font-weight:600;
+  cursor:pointer;transition:all 0.15s;letter-spacing:0.3px;
+}
+.pulse-cat-btn:hover{background:#272727;color:#fff}
+.pulse-cat-btn.active{background:#272727;color:#fff;border-color:#3f3f3f}
+.pulse-table{width:100%;border-collapse:collapse}
+.pulse-table-header{
+  display:grid;grid-template-columns:48px 1fr 140px 58px 70px 52px;
+  gap:8px;padding:8px 12px 8px 20px;
+  font-size:11px;font-weight:600;color:var(--muted);
+  letter-spacing:0.8px;text-transform:uppercase;
+  border-bottom:1px solid #272727;
+}
+.pulse-row{
+  display:grid;grid-template-columns:48px 1fr 140px 58px 70px 52px;
+  gap:8px;padding:8px 12px 8px 12px;border-radius:10px;
+  align-items:center;cursor:pointer;transition:background 0.1s;
+  position:relative;
+}
+.pulse-row:hover{background:rgba(255,255,255,0.05)}
+@keyframes pulseFlash{0%{background:rgba(255,255,255,0.12)}100%{background:rgba(255,255,255,0)}}
+.pulse-row.updated{animation:pulseFlash 0.6s ease}
+@keyframes goldGlow{0%{box-shadow:0 0 0 0 rgba(249,202,36,0.6)}100%{box-shadow:0 0 0 12px rgba(249,202,36,0)}}
+.pulse-row.new-peak{animation:goldGlow 0.8s ease}
+.pulse-pos{display:flex;align-items:center;gap:4px;min-width:52px}
+.pulse-pos-num{font-size:16px;font-weight:700;min-width:24px;text-align:right}
+.pulse-pos-arrow{font-size:12px;font-weight:700;min-width:20px}
+.pulse-item-info{display:flex;align-items:center;gap:10px;min-width:0}
+.pulse-item-thumb{width:44px;height:44px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#111}
+.pulse-item-thumb img{width:100%;height:100%;object-fit:cover}
+.pulse-item-meta{min-width:0}
+.pulse-item-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pulse-item-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pulse-views{font-size:13px;font-weight:600;text-align:right}
+.pulse-peak{font-size:12px;text-align:right;color:#aaa}
+.pulse-peak .peak-val{color:#f9ca24;font-weight:700}
+.pulse-duration{font-size:12px;color:#aaa;text-align:right}
+@keyframes arrowUp{0%{transform:translateY(0);opacity:1}50%{transform:translateY(-4px);opacity:0.6}100%{transform:translateY(0);opacity:1}}
+@keyframes arrowDown{0%{transform:translateY(0);opacity:1}50%{transform:translateY(4px);opacity:0.6}100%{transform:translateY(0);opacity:1}}
+@keyframes arrowSteady{0%{opacity:0.5}50%{opacity:1}100%{opacity:0.5}}
+.pulse-arrow-up{color:#fff;font-size:13px;font-weight:700;animation:arrowUp 1.4s ease-in-out infinite}
+.pulse-arrow-down{color:#fff;font-size:13px;font-weight:700;animation:arrowDown 1.4s ease-in-out infinite}
+.pulse-arrow-steady{color:#555;font-size:11px;animation:arrowSteady 2s ease-in-out infinite}
+.audio-play-anim{
+  display:flex;align-items:flex-end;gap:2px;height:20px;
+}
+.audio-play-anim span{
+  width:3px;background:var(--accent);border-radius:2px;
+  animation:musicBar 0.7s ease infinite;
+}
+.audio-play-anim span:nth-child(1){height:6px;animation-delay:0s}
+.audio-play-anim span:nth-child(2){height:14px;animation-delay:0.1s}
+.audio-play-anim span:nth-child(3){height:10px;animation-delay:0.2s}
+.audio-play-anim span:nth-child(4){height:16px;animation-delay:0.3s}
+.audio-play-anim span:nth-child(5){height:8px;animation-delay:0.15s}
 </style>
 </head>
 <body>
@@ -887,7 +1019,7 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
       </svg>
       <span class="notif-dot"></span>
     </button>
-    <button class="avatar-btn" title="Sua conta" id="topbar-avatar-btn" onclick="navigate('channel','ch_001')">V</button>
+    <button class="avatar-btn" title="Sua conta" id="topbar-avatar-btn" onclick="openProfileModal()">U</button>
   </div>
 </header>
 
@@ -898,17 +1030,21 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
       <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
       <span class="sidebar-label">Início</span>
     </a>
-    <a class="sidebar-item" id="si-shorts" onclick="navigate('home')">
+    <a class="sidebar-item" id="si-shorts" onclick="navigate('shorts')">
       <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M17.77 10.32l-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.23-2.53-5.06-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25L7.4 14.2l-1.43.75c-1.84.96-2.53 3.23-1.56 5.06.96 1.84 3.23 2.53 5.06 1.56l8.5-4.5c1.29-.68 2.07-2.04 2-3.49-.07-1.42-.93-2.67-2.2-3.26zM10 14.65v-5.3L15 12l-5 2.65z"/></svg></span>
       <span class="sidebar-label">Shorts</span>
     </a>
-    <a class="sidebar-item" id="si-subs" onclick="showNotif('📺 Inscrições')">
+    <a class="sidebar-item" id="si-subs" onclick="navigate('subscriptions')">
       <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M10 18v-2h4v2h-4zm-4-4v-2h12v2H6zm-2-4V8h16v2H4z"/></svg></span>
       <span class="sidebar-label">Inscrições</span>
     </a>
     <a class="sidebar-item" id="si-live" onclick="navigate('live')">
       <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg></span>
       <span class="sidebar-label">Ao vivo</span>
+    </a>
+    <a class="sidebar-item" id="si-pulse" onclick="navigate('pulse')">
+      <span class="icon icon-svg"><svg class="yt-icon" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></span>
+      <span class="sidebar-label">PulseCharts</span>
     </a>
   </div>
   <hr class="sidebar-divider">
@@ -965,6 +1101,9 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
     </a>
   </div>
 </aside>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sidebar-overlay" onclick="closeSidebarMobile()"></div>
 
 <!-- MAIN CONTENT -->
 <main id="content">
@@ -1024,7 +1163,6 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
       <button class="ch-tab" onclick="switchTab('music')">Música</button>
       <button class="ch-tab" onclick="switchTab('playlists')">Playlists</button>
       <button class="ch-tab" onclick="switchTab('live')">Ao vivo</button>
-      <button class="ch-tab" onclick="switchTab('charts')">Charts</button>
       <button class="ch-tab" onclick="switchTab('community')">Comunidade</button>
       <button class="ch-tab" onclick="switchTab('dados')">Dados</button>
       <button class="ch-tab" onclick="switchTab('about')">Sobre</button>
@@ -1074,9 +1212,110 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
     <div class="explore-content" id="explore-content"></div>
   </div>
 
+  <!-- SUBSCRIPTIONS VIEW -->
+  <div id="subscriptions-view" style="display:none">
+    <div style="padding:24px">
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:16px">Inscrições</h2>
+      <div id="subs-grid" class="video-grid"></div>
+    </div>
+  </div>
+
+  <!-- SHORTS PLAYER VIEW -->
+  <div id="shorts-view" style="display:none">
+    <div id="shorts-player-wrap"></div>
+  </div>
+
+  <!-- PULSE CHARTS VIEW -->
+  <div id="pulse-view" style="display:none">
+    <div id="pulse-content"></div>
+  </div>
+
 </main>
 
-<!-- FOOTER PLAYER -->
+<!-- SHORT FULLSCREEN PLAYER OVERLAY -->
+<div id="short-overlay" style="display:none;position:fixed;inset:0;background:#000;z-index:800">
+  <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <!-- BG -->
+    <div id="short-bg" style="position:absolute;inset:0;background:#111;transition:background 0.3s"></div>
+    <!-- Thumb image full bg -->
+    <div id="short-bg-img" style="position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(24px) brightness(0.3);transition:all 0.3s"></div>
+    <!-- Video card centered -->
+    <div style="position:relative;z-index:2;width:min(100vw,400px);height:min(100vh,710px);border-radius:0;overflow:hidden;display:flex;flex-direction:column">
+      <div id="short-thumb-display" style="flex:1;position:relative;overflow:hidden;border-radius:12px;background:#111"></div>
+      <div id="short-info-bar" style="padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.9));position:absolute;bottom:0;left:0;right:0;border-radius:0 0 12px 12px">
+        <div id="short-title-txt" style="font-size:15px;font-weight:600;margin-bottom:4px"></div>
+        <div id="short-ch-txt" style="font-size:13px;color:rgba(255,255,255,0.7)"></div>
+        <div id="short-stats-txt" style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px"></div>
+      </div>
+    </div>
+    <!-- Right actions -->
+    <div style="position:absolute;right:16px;bottom:120px;display:flex;flex-direction:column;gap:20px;z-index:10" id="short-actions"></div>
+    <!-- Close btn -->
+    <button onclick="closeShortOverlay()" style="position:absolute;top:16px;left:16px;background:rgba(0,0,0,0.5);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px;z-index:10;display:flex;align-items:center;justify-content:center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+    <!-- Nav arrows -->
+    <button id="short-prev-btn" onclick="shortNav(-1)" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button id="short-next-btn" onclick="shortNav(1)" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+    <!-- Short progress bar -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.2);z-index:10">
+      <div id="short-progress" style="height:100%;background:#ff0000;width:0%;transition:width 0.1s linear"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE EDIT MODAL -->
+<div id="profile-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:900;align-items:center;justify-content:center">
+  <div style="background:#212121;border-radius:20px;padding:32px;width:min(480px,95vw);position:relative;max-height:90vh;overflow-y:auto">
+    <button onclick="closeProfileModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#aaa;cursor:pointer;font-size:20px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+    <h2 style="font-size:20px;font-weight:700;margin-bottom:24px">Editar perfil</h2>
+    <!-- Avatar picker -->
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:24px">
+      <div id="profile-avatar-preview" style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;color:#fff;cursor:pointer;position:relative;overflow:hidden;margin-bottom:12px" onclick="document.getElementById('avatar-file-input').click()">
+        <span id="profile-avatar-initials">U</span>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.15s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.background='rgba(0,0,0,0.4)'" onmouseout="this.style.background='rgba(0,0,0,0)'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" style="opacity:0" class="edit-pencil"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+      </div>
+      <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)">
+      <button onclick="document.getElementById('avatar-file-input').click()" style="background:none;border:1px solid #3f3f3f;color:#aaa;padding:6px 16px;border-radius:20px;cursor:pointer;font-size:13px">Alterar foto</button>
+    </div>
+    <!-- Color picker for gradient avatar -->
+    <div style="margin-bottom:20px">
+      <label style="font-size:13px;color:#aaa;display:block;margin-bottom:10px">Cor do avatar</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div onclick="setAvatarGradient('#6c63ff','#ff6584')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#ff0000','#ff6b35')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ff0000,#ff6b35);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#00c6ff','#0072ff')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00c6ff,#0072ff);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#43e97b','#38f9d7')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#43e97b,#38f9d7);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#f9ca24','#f0932b')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f9ca24,#f0932b);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#a29bfe','#fd79a8')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#a29bfe,#fd79a8);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#00b09b','#96c93d')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00b09b,#96c93d);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+        <div onclick="setAvatarGradient('#2d3436','#636e72')" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2d3436,#636e72);cursor:pointer;border:2px solid transparent" class="avatar-color-opt"></div>
+      </div>
+    </div>
+    <!-- Fields -->
+    <div style="margin-bottom:16px">
+      <label style="font-size:13px;color:#aaa;display:block;margin-bottom:6px">Nome</label>
+      <input id="profile-name-input" type="text" placeholder="Seu nome" style="width:100%;background:#2a2a2a;border:1px solid #3f3f3f;border-radius:8px;padding:10px 14px;color:#fff;font-size:15px;font-family:Roboto,sans-serif;outline:none" onfocus="this.style.borderColor='#fff'" onblur="this.style.borderColor='#3f3f3f'">
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-size:13px;color:#aaa;display:block;margin-bottom:6px">Handle (@usuário)</label>
+      <input id="profile-handle-input" type="text" placeholder="@seuusuario" style="width:100%;background:#2a2a2a;border:1px solid #3f3f3f;border-radius:8px;padding:10px 14px;color:#fff;font-size:15px;font-family:Roboto,sans-serif;outline:none" onfocus="this.style.borderColor='#fff'" onblur="this.style.borderColor='#3f3f3f'">
+    </div>
+    <div style="margin-bottom:24px">
+      <label style="font-size:13px;color:#aaa;display:block;margin-bottom:6px">Bio</label>
+      <textarea id="profile-bio-input" placeholder="Sobre você..." rows="3" style="width:100%;background:#2a2a2a;border:1px solid #3f3f3f;border-radius:8px;padding:10px 14px;color:#fff;font-size:14px;font-family:Roboto,sans-serif;outline:none;resize:none" onfocus="this.style.borderColor='#fff'" onblur="this.style.borderColor='#3f3f3f'"></textarea>
+    </div>
+    <button onclick="saveProfile()" style="width:100%;background:#fff;color:#000;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:Roboto,sans-serif">Salvar perfil</button>
+  </div>
+</div>
 <div id="footer-player">
   <div id="fp-iframe-wrap">
     <iframe id="fp-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -1130,26 +1369,14 @@ svg.yt-icon{fill:var(--text);width:24px;height:24px;flex-shrink:0}
 const DEFAULT_DB = {
   channels:[
     {
-      id:"ch_001",name:"venna",handle:"@venna",subscribers:120034,verified:true,
-      description:"noite, luxo e silêncio — artista visual e sonora",creation_date:"2025-12-01",
-      gradient:["#0d0d1a","#1a0a2e","#2a0a3e"],subscribed:true,
-      avatar_url:"https://picsum.photos/seed/venna_av/200/200",
-      banner_url:"https://picsum.photos/seed/venna_bn/1280/351",
-      identity:{aesthetic:"cinematic noir",tone:"misterioso",upload_pattern:"irregular",fanbase_name:"nocturnos"},
-      about:{bio:"artista visual e sonora",location:"Rio de Janeiro",
-             links:["instagram.com/venna","twitter.com/venna","open.spotify.com/artist/venna"],joined:"2025-12-01"}
-    },
-    {
-      id:"ch_002",name:"Lofi Dreams",handle:"@lofidreams",subscribers:834000,verified:true,
-      description:"beats for late nights",gradient:["#1a0a0a","#2e0a0a","#1a1a0a"],subscribed:false,
-      avatar_url:"https://picsum.photos/seed/lofidreams_av/200/200",
-      banner_url:"https://picsum.photos/seed/lofidreams_bn/1280/351"
-    },
-    {
-      id:"ch_003",name:"NightWave",handle:"@nightwave",subscribers:91200,verified:false,
-      description:"synthwave & nostalgia",gradient:["#0a0a1a","#0a1a2e","#001a2e"],subscribed:true,
-      avatar_url:"https://picsum.photos/seed/nightwave_av/200/200",
-      banner_url:"https://picsum.photos/seed/nightwave_bn/1280/351"
+      id:"ch_001",name:"Minha Conta",handle:"@usuario",subscribers:0,verified:false,
+      description:"",creation_date:"2026-01-01",
+      gradient:["#1a0a2e","#2a0a3e","#0d0d1a"],subscribed:false,
+      avatar_url:null,
+      banner_url:null,
+      identity:{aesthetic:"",tone:"",upload_pattern:"",fanbase_name:""},
+      about:{bio:"",location:"",links:[],joined:"2026-01-01"},
+      _isUserAccount:true
     },
     {
       id:"ch_004",name:"CineArt",handle:"@cineart",subscribers:210000,verified:true,
@@ -1215,20 +1442,6 @@ const DEFAULT_DB = {
      embed_url:null,
      gradient:["#000000","#050505","#020210"],liked:false,
      engagement:{velocity:0.9,like_ratio:0.229,trend:"steady"}},
-    {id:"vid_009",title:"2AM Study Session ☁",channel_id:"ch_002",views:2840000,likes:182000,dislikes:2100,
-     upload_date:"2026-02-10",duration:"3:02:45",
-     description:"lofi hip hop radio · beats to study/relax",
-     thumbnail_url:"https://picsum.photos/seed/vid009/480/270",
-     embed_url:"https://www.youtube.com/embed/jfKfPfyJRdk",
-     gradient:["#100a05","#1e1005","#150a00"],liked:false,
-     engagement:{velocity:4.5,like_ratio:0.064,trend:"growing"}},
-    {id:"vid_010",title:"BLADE RUNNER DREAMS",channel_id:"ch_003",views:380000,likes:42000,dislikes:820,
-     upload_date:"2026-03-01",duration:"1:08:22",
-     description:"synthwave mix · replicant vibes",
-     thumbnail_url:"https://picsum.photos/seed/vid010/480/270",
-     embed_url:"https://www.youtube.com/embed/G85bkBWPMBY",
-     gradient:["#050010","#0a0020","#050015"],liked:false,
-     engagement:{velocity:2.8,like_ratio:0.110,trend:"growing"}},
     {id:"vid_011",title:"Luz Dourada — Film Look Tutorial",channel_id:"ch_004",views:127000,likes:14800,dislikes:310,
      upload_date:"2026-03-18",duration:"18:44",
      description:"como criar looks cinematográficos no Premiere",
@@ -1263,15 +1476,6 @@ const DEFAULT_DB = {
      viewers:1842,thumbnail_url:"https://picsum.photos/seed/live001/480/270",
      embed_url:null,gradient:["#0d0a1a","#1a0a30","#0a0520"],
      category:"Música",started_ago:"há 2h"},
-    {id:"live_002",title:"lofi radio 24/7 — late night study",channel_id:"ch_002",
-     viewers:24830,thumbnail_url:"https://picsum.photos/seed/live002/480/270",
-     embed_url:"https://www.youtube.com/embed/jfKfPfyJRdk",
-     gradient:["#100a05","#1e1005","#150a00"],
-     category:"Música",started_ago:"há 14h"},
-    {id:"live_003",title:"SYNTHWAVE LIVE — full cyberpunk session",channel_id:"ch_003",
-     viewers:3291,thumbnail_url:"https://picsum.photos/seed/live003/480/270",
-     embed_url:null,gradient:["#050010","#0a0020","#050015"],
-     category:"Música",started_ago:"há 45min"},
     {id:"live_004",title:"color grading ao vivo — tutorial DaVinci",channel_id:"ch_004",
      viewers:812,thumbnail_url:"https://picsum.photos/seed/live004/480/270",
      embed_url:null,gradient:["#15100a","#251a00","#1a1000"],
@@ -1313,58 +1517,34 @@ const DEFAULT_DB = {
                        top_regions:["BR","PT","US"],watch_time_hours:127400},
             monetization:{total_earnings:4821.22,monthly_earnings:842.11,top_video:"vid_004",rpm_avg:2.3}},
   },
-  trending:["vid_002","vid_004","vid_012","vid_009","vid_010"],
-  trending_music:["mus_001","mus_002","mus_003","mus_004","mus_005"],
+  trending:["vid_001","vid_002","vid_004","vid_012","vid_011"],
+  trending_music:["mus_001","mus_002","mus_005","mus_007"],
   trending_films:["film_001","film_002","film_003"],
   music:[
-    {id:"mus_001",title:"Noite de Vidro (Extended Mix)",artist:"venna",album:"Era Diamante",
+    {id:"mus_001",title:"Noite de Vidro (Extended Mix)",artist:"Artista",album:"Era Diamante",
      channel_id:"ch_001",views:4820000,likes:312000,duration:"5:48",
      thumbnail_url:"https://picsum.photos/seed/mus001/480/480",
      gradient:["#050520","#1a0a3a","#2a0a5a"],
      genre:"Dark Pop",bpm:92,key:"Am",upload_date:"2026-01-15",
      engagement:{velocity:3.2,like_ratio:0.065,trend:"viral"},liked:false},
-    {id:"mus_002",title:"Espelho Partido (Acoustic)",artist:"venna",album:"Singles",
+    {id:"mus_002",title:"Espelho Partido (Acoustic)",artist:"Artista",album:"Singles",
      channel_id:"ch_001",views:1940000,likes:148000,duration:"4:12",
      thumbnail_url:"https://picsum.photos/seed/mus002/480/480",
      gradient:["#1a0505","#3a0a0a","#200010"],
      genre:"Alternative",bpm:78,key:"Dm",upload_date:"2026-02-20",
      engagement:{velocity:2.1,like_ratio:0.076,trend:"growing"},liked:false},
-    {id:"mus_003",title:"2AM Study Beats Vol.3",artist:"Lofi Dreams",album:"Late Night Sessions",
-     channel_id:"ch_002",views:28400000,likes:1820000,duration:"1:04:30",
-     thumbnail_url:"https://picsum.photos/seed/mus003/480/480",
-     gradient:["#100a05","#1e1005","#150a00"],
-     genre:"Lofi Hip Hop",bpm:85,key:"C",upload_date:"2025-11-10",
-     engagement:{velocity:5.0,like_ratio:0.064,trend:"growing"},liked:false},
-    {id:"mus_004",title:"Blade Runner Synthwave",artist:"NightWave",album:"Replicant Dreams",
-     channel_id:"ch_003",views:6300000,likes:420000,duration:"58:12",
-     thumbnail_url:"https://picsum.photos/seed/mus004/480/480",
-     gradient:["#050010","#0a0020","#050015"],
-     genre:"Synthwave",bpm:110,key:"Fm",upload_date:"2026-01-05",
-     engagement:{velocity:4.1,like_ratio:0.067,trend:"growing"},liked:false},
-    {id:"mus_005",title:"Diamante Bruto (Club Remix)",artist:"venna ft. DJ Noirx",album:"Remixes",
+    {id:"mus_005",title:"Diamante Bruto (Club Remix)",artist:"Artista ft. DJ Noirx",album:"Remixes",
      channel_id:"ch_001",views:2100000,likes:195000,duration:"6:22",
      thumbnail_url:"https://picsum.photos/seed/mus005/480/480",
      gradient:["#0a0a05","#1a1a00","#2a2500"],
      genre:"Electronic",bpm:128,key:"Am",upload_date:"2026-03-01",
      engagement:{velocity:3.8,like_ratio:0.093,trend:"viral"},liked:false},
-    {id:"mus_006",title:"Madrugada Chill Mix",artist:"Lofi Dreams",album:"Chill Sessions",
-     channel_id:"ch_002",views:9800000,likes:610000,duration:"2:32:00",
-     thumbnail_url:"https://picsum.photos/seed/mus006/480/480",
-     gradient:["#050510","#0a0a1a","#05051a"],
-     genre:"Lofi",bpm:72,key:"G",upload_date:"2025-12-20",
-     engagement:{velocity:4.2,like_ratio:0.062,trend:"growing"},liked:false},
-    {id:"mus_007",title:"Névoa (Piano Version)",artist:"venna",album:"Acoustic Collection",
+    {id:"mus_007",title:"Névoa (Piano Version)",artist:"Artista",album:"Acoustic Collection",
      channel_id:"ch_001",views:890000,likes:78000,duration:"3:41",
      thumbnail_url:"https://picsum.photos/seed/mus007/480/480",
      gradient:["#050a15","#0a1a25","#051520"],
      genre:"Ambient",bpm:60,key:"Em",upload_date:"2026-04-05",
      engagement:{velocity:2.5,like_ratio:0.088,trend:"growing"},liked:false},
-    {id:"mus_008",title:"Neon City Nights",artist:"NightWave",album:"Cyberpunk Sessions",
-     channel_id:"ch_003",views:3400000,likes:245000,duration:"45:18",
-     thumbnail_url:"https://picsum.photos/seed/mus008/480/480",
-     gradient:["#0a0a1a","#0a1a2e","#001a2e"],
-     genre:"Synthwave",bpm:120,key:"Cm",upload_date:"2026-02-14",
-     engagement:{velocity:3.3,like_ratio:0.072,trend:"steady"},liked:false},
   ],
   films:[
     {id:"film_001",title:"Noturno",channel_id:"ch_004",
@@ -1470,6 +1650,7 @@ async function loadDB(){
     saveDB();
   }
   buildTrackCache();
+  loadUserProfile();
   navigate('home');
 }
 function saveDB(){
@@ -1665,6 +1846,8 @@ function goBack(){
 }
 
 function navigate(view,id){
+  // Stop pulse interval if leaving pulse view
+  if(STATE.view==='pulse'&&view!=='pulse') stopPulseInterval();
   // Push current state to history before leaving (skip if already home→home)
   if(STATE.view!==view || STATE.currentVideo!==id){
     STATE.history.push({
@@ -1679,7 +1862,7 @@ function navigate(view,id){
 }
 
 function _navigateTo(view,id,tab,updateHist){
-  ['home-view','player-view','channel-view','search-view','live-view','explore-view','album-view'].forEach(v=>{
+  ['home-view','player-view','channel-view','search-view','live-view','explore-view','album-view','subscriptions-view','shorts-view','pulse-view'].forEach(v=>{
     document.getElementById(v).style.display='none';
   });
   // Close clip mode if switching away
@@ -1728,6 +1911,21 @@ function _navigateTo(view,id,tab,updateHist){
     document.getElementById('album-view').style.display='block';
     renderAlbum(id);
     window.scrollTo(0,0);
+  } else if(view==='subscriptions'){
+    document.getElementById('subscriptions-view').style.display='block';
+    document.getElementById('si-subs').classList.add('active');
+    renderSubscriptions();
+    window.scrollTo(0,0);
+  } else if(view==='shorts'){
+    document.getElementById('shorts-view').style.display='block';
+    document.getElementById('si-shorts').classList.add('active');
+    renderShortsPage();
+    window.scrollTo(0,0);
+  } else if(view==='pulse'){
+    document.getElementById('pulse-view').style.display='block';
+    document.getElementById('si-pulse').classList.add('active');
+    renderPulseCharts();
+    window.scrollTo(0,0);
   }
   updateBackBtn();
 }
@@ -1735,7 +1933,20 @@ function _navigateTo(view,id,tab,updateHist){
 function toggleSidebar(){
   const s=document.getElementById('sidebar');
   const c=document.getElementById('content');
-  // Cycle: full → mini → full
+  const overlay=document.getElementById('sidebar-overlay');
+  const isMobile=window.innerWidth<=768;
+  if(isMobile){
+    if(s.classList.contains('mobile-open')){
+      s.classList.remove('mobile-open');
+      overlay.classList.remove('show');
+    } else {
+      s.classList.add('mobile-open');
+      s.classList.remove('mini');
+      overlay.classList.add('show');
+    }
+    return;
+  }
+  // Desktop: Cycle: full → mini → full
   if(s.classList.contains('mini')){
     s.classList.remove('mini');
     c.classList.remove('mini-content');
@@ -1747,6 +1958,11 @@ function toggleSidebar(){
     c.classList.remove('expanded');
     STATE.sidebarOpen=false;
   }
+}
+
+function closeSidebarMobile(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
 }
 
 // ══════════════════════════════════════════════
@@ -1781,16 +1997,12 @@ function renderHome(){
   }).join('');
   grid.className='video-grid fade-in';
   renderSidebarChannels();
-  const ch1=getChannel('ch_001');
-  const ab=document.getElementById('topbar-avatar-btn');
-  if(ch1&&ch1.avatar_url){
-    ab.innerHTML=`<img src="${ch1.avatar_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentNode.textContent='V'">`;
-  }
+  updateTopbarAvatar();
 }
 
 function renderChips(){
-  const chips=['all','trending','shorts','music','films','venna','lofi','night'];
-  const labels={all:'Tudo',trending:'Trending',shorts:'Shorts',music:'Músicas',films:'Filmes',venna:'venna',lofi:'Lofi',night:'NightWave'};
+  const chips=['all','trending','shorts','music','films'];
+  const labels={all:'Tudo',trending:'Trending',shorts:'Shorts',music:'Músicas',films:'Filmes'};
   document.getElementById('chips').innerHTML=chips.map(c=>`
     <button class="chip${c===STATE.currentChip?' active':''}" onclick="setChip('${c}')">${labels[c]||c}</button>
   `).join('');
@@ -1860,11 +2072,10 @@ function filmHomeCard(f){
   </div>`;
 }
 
-// ── SHORT HOME CARD ──
 function shortHomeCard(s){
   const ch=getChannel(s.channel_id);
   if(!ch)return'';
-  return`<div class="video-card" onclick="navigate('explore','shorts')">
+  return`<div class="video-card" onclick="openShortOverlay('${s.id}')">
     <div class="video-thumbnail" style="position:relative">
       <div class="vthumb-inner">
         ${s.thumbnail_url
@@ -1910,7 +2121,7 @@ function videoCard(v){
 
 function renderSidebarChannels(){
   const el=document.getElementById('sidebar-channels');
-  const subChans=DB.channels.filter(c=>c.subscribed);
+  const subChans=DB.channels.filter(c=>c.subscribed&&!c._isUserAccount);
   el.innerHTML=subChans.map(c=>`
     <div class="sidebar-channel" onclick="navigate('channel','${c.id}')">
       ${c.avatar_url
@@ -2203,7 +2414,7 @@ function renderChannel(chId){
 function switchTab(tab){
   STATE.currentTab=tab;
   document.querySelectorAll('.ch-tab').forEach((b,i)=>{
-    const tabs=['home','videos','shorts','music','playlists','live','charts','community','dados','about'];
+    const tabs=['home','videos','shorts','music','playlists','live','community','dados','about'];
     b.classList.toggle('active',tabs[i]===tab);
   });
   renderChannelTab(STATE.currentChannel,tab);
@@ -2298,7 +2509,7 @@ function renderChannelTab(chId,tab){
         <div class="section-heading">Shorts em destaque</div>
         <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">
           ${chShorts.map(s=>`
-            <div style="min-width:160px;cursor:pointer" onclick="showNotif('Reproduzindo short: ${s.title}')">
+            <div style="min-width:160px;cursor:pointer" onclick="openShortOverlay('${s.id}')">
               <div style="aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative;display:flex;align-items:center;justify-content:center">
                 ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6" onerror="this.remove()">`:''}
                 <span style="position:relative;font-size:12px;color:rgba(255,255,255,0.5);text-align:center;padding:12px">${s.title}</span>
@@ -2324,7 +2535,7 @@ function renderChannelTab(chId,tab){
     el.innerHTML=`
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px">
         ${chShorts.map(s=>`
-          <div style="cursor:pointer" onclick="showNotif('▶ Reproduzindo: ${s.title}')">
+          <div style="cursor:pointer" onclick="openShortOverlay('${s.id}')">
             <div style="aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative;display:flex;align-items:center;justify-content:center">
               ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6" onerror="this.remove()">`:''}
               <span style="position:relative;font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);text-align:center;padding:16px">${s.title}</span>
@@ -3008,7 +3219,7 @@ function renderExploreShorts(el){
     <div class="shorts-explore-grid fade-in">
       ${(DB.shorts||[]).map(s=>{
         const ch=getChannel(s.channel_id);
-        return`<div class="short-card" onclick="showNotif('▶ Reproduzindo: ${s.title}')">
+        return`<div class="short-card" onclick="openShortOverlay('${s.id}')">
           <div class="short-thumb">
             ${s.thumbnail_url?`<img src="${s.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(s.gradient)};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center"><span style="font-size:13px;color:rgba(255,255,255,0.7)">${s.title}</span></div>`}
             <div class="duration-badge">${s.duration}</div>
@@ -3018,7 +3229,7 @@ function renderExploreShorts(el){
               <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px">${fmtNum(s.views)} · ${fmtNum(s.likes)} ❤</div>
             </div>
             <div style="position:absolute;top:10px;right:10px">
-              <button onclick="event.stopPropagation();showNotif('❤ Curtido!')" style="background:rgba(0,0,0,0.6);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px">❤</button>
+              <button onclick="event.stopPropagation();shortLike('${s.id}');showNotif('❤ Curtido!')" style="background:rgba(0,0,0,0.6);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px">❤</button>
             </div>
           </div>
         </div>`;
@@ -3206,11 +3417,11 @@ function renderAlbum(albumEncoded){
       ${albumEntry&&albumEntry.credits?`<div style="font-size:12px;color:var(--muted);margin-top:4px">Produzido por ${albumEntry.credits.producer||'—'} · ${albumEntry.credits.label||''}</div>`:''}
       <div class="album-hero-meta">${tracks.length} faixas · ${fmtDurFull(totalDuration)} · ${fmtNum(totalStreams)} streams</div>
       <div class="album-hero-actions">
-        <button class="album-play-btn" onclick="playAlbumTracks(${JSON.stringify(tracks.map(t=>t.id))},0)">
+        <button class="album-play-btn" onclick="playAlbumTracks(window._currentAlbumQueue,0)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           Reproduzir
         </button>
-        <button class="album-shuffle-btn" onclick="playAlbumTracksShuffle(${JSON.stringify(tracks.map(t=>t.id))})">
+        <button class="album-shuffle-btn" onclick="playAlbumTracksShuffle(window._currentAlbumQueue)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
           Aleatório
         </button>
@@ -3220,10 +3431,11 @@ function renderAlbum(albumEncoded){
 
   // Tracklist
   const queueIds=tracks.map(t=>t.id);
+  window._currentAlbumQueue=queueIds;
   document.getElementById('tracklist-rows').innerHTML=tracks.map((t,i)=>{
     const isPlaying=fpState.trackId===t.id&&fpState.active;
     const hasEmbed=!!(t.embed_url);
-    return`<div class="track-row${isPlaying?' playing':''}" id="track-row-${t.id}" onclick="playTrack('${t.id}',${JSON.stringify(queueIds)})">
+    return`<div class="track-row${isPlaying?' playing':''}" id="track-row-${t.id}" onclick="playTrack('${t.id}', window._currentAlbumQueue)">
       <div class="track-num">
         <span class="track-num-val">${isPlaying?'':i+1}</span>
         <div class="track-bars"><span></span><span></span><span></span></div>
@@ -3312,10 +3524,30 @@ function loadFpIframe(track){
   if(!iframe)return;
   const url=track.embed_url||null;
   if(url){
+    // Always load the iframe (audio plays hidden; video shows only in clip mode)
     const autoplay=fpState.playing?'1':'0';
     iframe.src=`${url}?autoplay=${autoplay}&modestbranding=1&rel=0`;
+    // Remove audio simulation if showing real embed
+    const existing=document.getElementById('fp-audio-sim');
+    if(existing)existing.remove();
   } else {
     iframe.src='';
+    // Show audio simulation animation in footer player thumb when no embed
+    const thumb=document.getElementById('fp-thumb');
+    if(thumb&&fpState.playing){
+      const existing=document.getElementById('fp-audio-sim');
+      if(!existing){
+        const sim=document.createElement('div');
+        sim.id='fp-audio-sim';
+        sim.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);border-radius:4px';
+        sim.innerHTML='<div class="audio-play-anim"><span></span><span></span><span></span><span></span><span></span></div>';
+        thumb.style.position='relative';
+        thumb.appendChild(sim);
+      }
+    } else {
+      const existing=document.getElementById('fp-audio-sim');
+      if(existing)existing.remove();
+    }
   }
 }
 
@@ -3405,16 +3637,18 @@ function setFpMode(mode){
   if(mode==='clip'){
     if(track&&track.embed_url){
       iw.classList.add('clip-mode');
-      loadFpIframe(track);
+      // If iframe not loaded yet, load it now
+      const iframe=document.getElementById('fp-iframe');
+      if(iframe&&!iframe.src){
+        iframe.src=`${track.embed_url}?autoplay=1&modestbranding=1&rel=0`;
+      }
     } else {
-      // No embed_url: navigate to player view as fallback
-      showNotif('📹 Sem clipe disponível — abrindo no player');
-      if(track) navigate('player',track.id);
+      showNotif('Sem clipe disponível para esta faixa');
       fpState.mode='audio';
     }
   } else {
     iw.classList.remove('clip-mode');
-    loadFpIframe(track);
+    // Audio keeps playing from hidden iframe — no reload needed
   }
   renderFooterPlayer();
 }
@@ -3425,6 +3659,509 @@ function updateTracklistHighlight(activeId){
     row.classList.toggle('playing',id===activeId);
   });
 }
+
+// ══════════════════════════════════════════════
+// USER PROFILE SYSTEM
+// ══════════════════════════════════════════════
+let USER_PROFILE = {
+  name:'Usuário',handle:'@usuario',bio:'',
+  avatarGradient:'linear-gradient(135deg,#6c63ff,#ff6584)',
+  avatarUrl:null,avatarInitials:'U'
+};
+let _pendingAvatarUrl=null;
+let _pendingGradient=null;
+
+function loadUserProfile(){
+  try{
+    const s=localStorage.getItem('user_profile');
+    if(s) USER_PROFILE=JSON.parse(s);
+  }catch(_){}
+  // Perfil da conta (avatar/topbar) é independente do canal ch_001
+  updateTopbarAvatar();
+}
+
+function saveUserProfile(){
+  try{localStorage.setItem('user_profile',JSON.stringify(USER_PROFILE));}catch(_){}
+  // Canal ch_001 tem seus próprios dados no DB — não sobrescreve
+  updateTopbarAvatar();
+}
+
+function updateTopbarAvatar(){
+  const btn=document.getElementById('topbar-avatar-btn');
+  if(!btn)return;
+  if(USER_PROFILE.avatarUrl){
+    btn.innerHTML=`<img src="${USER_PROFILE.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.remove()">`;
+    btn.style.background=USER_PROFILE.avatarGradient||'linear-gradient(135deg,#6c63ff,#ff6584)';
+  } else {
+    btn.innerHTML=USER_PROFILE.avatarInitials||USER_PROFILE.name[0]||'U';
+    btn.style.background=USER_PROFILE.avatarGradient||'linear-gradient(135deg,#6c63ff,#ff6584)';
+  }
+}
+
+function openProfileModal(){
+  _pendingAvatarUrl=USER_PROFILE.avatarUrl;
+  _pendingGradient=USER_PROFILE.avatarGradient;
+  document.getElementById('profile-name-input').value=USER_PROFILE.name||'';
+  document.getElementById('profile-handle-input').value=USER_PROFILE.handle||'';
+  document.getElementById('profile-bio-input').value=USER_PROFILE.bio||'';
+  updateProfilePreview();
+  const m=document.getElementById('profile-modal');
+  m.style.display='flex';
+}
+
+function closeProfileModal(){
+  document.getElementById('profile-modal').style.display='none';
+}
+
+function updateProfilePreview(){
+  const preview=document.getElementById('profile-avatar-preview');
+  const initials=document.getElementById('profile-avatar-initials');
+  const nameVal=document.getElementById('profile-name-input').value||'U';
+  const initial=nameVal[0].toUpperCase();
+  if(_pendingAvatarUrl){
+    preview.innerHTML=`<img src="${_pendingAvatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"><div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.15s;display:flex;align-items:center;justify-content:center;border-radius:50%" onmouseover="this.style.background='rgba(0,0,0,0.4)'" onmouseout="this.style.background='rgba(0,0,0,0)'"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" style="opacity:0.8"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>`;
+    preview.style.background='none';
+  } else {
+    preview.style.background=_pendingGradient||'linear-gradient(135deg,#6c63ff,#ff6584)';
+    preview.innerHTML=`<span style="font-size:36px;font-weight:700">${initial}</span>`;
+  }
+}
+
+function setAvatarGradient(c1,c2){
+  _pendingGradient=`linear-gradient(135deg,${c1},${c2})`;
+  _pendingAvatarUrl=null;
+  // Highlight selected
+  document.querySelectorAll('.avatar-color-opt').forEach(o=>{
+    o.style.borderColor=o.style.background===_pendingGradient?'#fff':'transparent';
+  });
+  updateProfilePreview();
+}
+
+function handleAvatarUpload(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    _pendingAvatarUrl=e.target.result;
+    updateProfilePreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfile(){
+  USER_PROFILE.name=document.getElementById('profile-name-input').value||'Usuário';
+  USER_PROFILE.handle=document.getElementById('profile-handle-input').value||'@usuario';
+  USER_PROFILE.bio=document.getElementById('profile-bio-input').value||'';
+  if(_pendingAvatarUrl) USER_PROFILE.avatarUrl=_pendingAvatarUrl;
+  if(_pendingGradient) USER_PROFILE.avatarGradient=_pendingGradient;
+  USER_PROFILE.avatarInitials=USER_PROFILE.name[0].toUpperCase();
+  saveUserProfile();
+  closeProfileModal();
+  showNotif(`✅ Perfil atualizado!`);
+}
+
+// ══════════════════════════════════════════════
+// SUBSCRIPTIONS VIEW
+// ══════════════════════════════════════════════
+function renderSubscriptions(){
+  const subbed=DB.channels.filter(c=>c.subscribed&&!c._isUserAccount);
+  const el=document.getElementById('subs-grid');
+  if(!subbed.length){
+    el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted);grid-column:1/-1"><div style="font-size:48px;margin-bottom:16px">📺</div><div style="font-size:16px;font-weight:500;margin-bottom:8px">Nenhuma inscrição ainda</div><div>Explore canais e se inscreva para ver conteúdo aqui.</div></div>`;
+    return;
+  }
+  const items=[];
+  subbed.forEach(ch=>{
+    const chVideos=getChannelVideos(ch.id);
+    chVideos.forEach(v=>items.push(v));
+  });
+  items.sort((a,b)=>b.upload_date.localeCompare(a.upload_date));
+  el.innerHTML=items.map(v=>videoCard(v)).join('');
+}
+
+// ══════════════════════════════════════════════
+// SHORTS PAGE & PLAYER
+// ══════════════════════════════════════════════
+function renderShortsPage(){
+  const el=document.getElementById('shorts-player-wrap');
+  const shorts=DB.shorts||[];
+  el.innerHTML=`
+    <div style="padding:24px">
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:16px">Shorts</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+        ${shorts.map(s=>{
+          const ch=getChannel(s.channel_id);
+          return`<div onclick="openShortOverlay('${s.id}')" style="cursor:pointer">
+            <div style="aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:${gradientCSS(s.gradient)};position:relative">
+              ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">`:``}
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.85));border-radius:12px"></div>
+              <div style="position:absolute;bottom:10px;left:10px;right:10px">
+                <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;line-height:1.3">${s.title}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6)">${fmtNum(s.views)} views</div>
+              </div>
+              <div class="duration-badge">${s.duration}</div>
+              <div class="type-badge short">SHORT</div>
+            </div>
+            <div style="margin-top:8px;font-size:13px;font-weight:500">${s.title}</div>
+            <div style="font-size:12px;color:var(--muted)">${ch?ch.name:''}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+let _shortQueue=[];
+let _shortIdx=0;
+let _shortTimer=null;
+let _shortProgress=0;
+
+function openShortOverlay(shortId){
+  const shorts=DB.shorts||[];
+  _shortQueue=shorts.map(s=>s.id);
+  _shortIdx=_shortQueue.indexOf(shortId);
+  if(_shortIdx<0)_shortIdx=0;
+  const overlay=document.getElementById('short-overlay');
+  overlay.style.display='block';
+  document.body.style.overflow='hidden';
+  renderShortOverlay();
+  startShortTimer();
+}
+
+function renderShortOverlay(){
+  const shorts=DB.shorts||[];
+  const shortId=_shortQueue[_shortIdx];
+  const s=shorts.find(x=>x.id===shortId);
+  if(!s)return;
+  const ch=getChannel(s.channel_id);
+
+  // BG
+  const bg=document.getElementById('short-bg-img');
+  if(s.thumbnail_url) bg.style.backgroundImage=`url(${s.thumbnail_url})`;
+  else{bg.style.backgroundImage='none';document.getElementById('short-bg').style.background=gradientCSS(s.gradient);}
+
+  // Thumb display
+  const td=document.getElementById('short-thumb-display');
+  td.innerHTML=`
+    <div style="width:100%;height:100%;position:relative">
+      ${s.thumbnail_url?`<img src="${s.thumbnail_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:''}
+      <div style="position:absolute;inset:0;background:${gradientCSS(s.gradient||['#111','#222'])};${s.thumbnail_url?'opacity:0.4':'opacity:1'}"></div>
+      <div class="audio-play-anim" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>`;
+
+  // Info
+  document.getElementById('short-title-txt').textContent=s.title;
+  document.getElementById('short-ch-txt').textContent=ch?`@${ch.handle||ch.name}`:'';
+  document.getElementById('short-stats-txt').textContent=`${fmtNum(s.views)} views · ${fmtNum(s.likes)} curtidas`;
+
+  // Actions
+  const actions=document.getElementById('short-actions');
+  actions.innerHTML=`
+    <button onclick="shortLike('${s.id}')" style="background:none;border:none;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px" title="Curtir">
+      <div style="width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>
+      </div>
+      <span>${fmtNum(s.likes)}</span>
+    </button>
+    <button onclick="showNotif('🔗 Link copiado!')" style="background:none;border:none;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px">
+      <div style="width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+      </div>
+      <span>Compartilhar</span>
+    </button>
+    <div style="color:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px">
+      <div style="font-size:12px;color:rgba(255,255,255,0.6)">${_shortIdx+1}/${_shortQueue.length}</div>
+    </div>
+  `;
+
+  // Update nav buttons
+  document.getElementById('short-prev-btn').style.opacity=_shortIdx>0?'1':'0.3';
+  document.getElementById('short-next-btn').style.opacity=_shortIdx<_shortQueue.length-1?'1':'0.3';
+}
+
+function startShortTimer(){
+  clearShortTimer();
+  _shortProgress=0;
+  const bar=document.getElementById('short-progress');
+  const dur=15000; // 15s per short
+  const interval=100;
+  let elapsed=0;
+  _shortTimer=setInterval(()=>{
+    elapsed+=interval;
+    _shortProgress=Math.min(100,(elapsed/dur)*100);
+    if(bar) bar.style.width=_shortProgress+'%';
+    if(elapsed>=dur){
+      // Auto next
+      if(_shortIdx<_shortQueue.length-1){
+        shortNav(1);
+      } else {
+        clearShortTimer();
+        if(bar) bar.style.width='100%';
+      }
+    }
+  },interval);
+}
+
+function clearShortTimer(){
+  if(_shortTimer){clearInterval(_shortTimer);_shortTimer=null;}
+}
+
+function shortNav(dir){
+  const next=_shortIdx+dir;
+  if(next<0||next>=_shortQueue.length)return;
+  _shortIdx=next;
+  renderShortOverlay();
+  startShortTimer();
+}
+
+function closeShortOverlay(){
+  document.getElementById('short-overlay').style.display='none';
+  document.body.style.overflow='';
+  clearShortTimer();
+}
+
+function shortLike(shortId){
+  const s=(DB.shorts||[]).find(x=>x.id===shortId);
+  if(!s)return;
+  s.likes+=1;
+  s.views+=1;
+  saveDB();
+  renderShortOverlay();
+  showNotif('❤ Curtido!');
+}
+
+// ══════════════════════════════════════════════
+// PULSE CHARTS
+// ══════════════════════════════════════════════
+let _pulseInterval=null;
+let _pulseCountdown=60;
+let _pulseItems=[];
+let _pulsePeriod='DIA';
+let _pulseCategory='TODOS';
+
+function renderPulseCharts(){
+  const el=document.getElementById('pulse-content');
+  el.innerHTML=`<div class="pulse-container">
+    <div class="pulse-header">
+      <div class="pulse-title">PULSE CHART</div>
+      <div class="pulse-subtitle">RAINKING TOP 100 · Atualização em tempo real</div>
+      <div class="pulse-countdown-bar"><div class="pulse-countdown-fill" id="pulse-bar"></div></div>
+      <div class="pulse-countdown-txt" id="pulse-cdtxt">Próximo pulso em: 60s</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+      <div class="pulse-filters">
+        ${['MINUTO','DIA','MÊS','ANO','TODOS'].map(p=>`<button class="pulse-filter-btn${p===_pulsePeriod?' active':''}" onclick="setPulsePeriod('${p}')">${p}</button>`).join('')}
+      </div>
+      <div class="pulse-cat-filter">
+        ${['TODOS','VIDEO','MÚSICA','ÁLBUM','SHORT'].map(c=>`<button class="pulse-cat-btn${c===_pulseCategory?' active':''}" onclick="setPulseCategory('${c}')">${c}</button>`).join('')}
+      </div>
+    </div>
+    <div class="pulse-table-header">
+      <span>#</span>
+      <span>Título</span>
+      <span style="text-align:right">Views / Streams</span>
+      <span style="text-align:right">Var.</span>
+      <span style="text-align:right">Peak</span>
+      <span style="text-align:right">Dur.</span>
+    </div>
+    <div id="pulse-rows"></div>
+  </div>`;
+  buildPulseItems();
+  renderPulseRows();
+  startPulseInterval();
+}
+
+function buildPulseItems(){
+  const all=[];
+  (DB.videos||[]).forEach(v=>{const ch=getChannel(v.channel_id);all.push({id:v.id,title:v.title,channel:ch?ch.name:'',cat:'VIDEO',views:v.views,likes:v.likes,duration:v.duration,thumbnail:v.thumbnail_url,gradient:v.gradient,peak:null,trend:v.engagement.trend,velocity:v.engagement.velocity});});
+  // Standalone music (singles)
+  (DB.music||[]).filter(m=>m.type!=='album').forEach(m=>{const ch=getChannel(m.channel_id);all.push({id:m.id,title:m.title,channel:m.artist||(ch?ch.name:''),cat:'MÚSICA',views:m.views,likes:m.likes,duration:m.duration,thumbnail:m.thumbnail_url,gradient:m.gradient,peak:null,trend:m.engagement.trend,velocity:m.engagement.velocity});});
+  // Album entries
+  (DB.music||[]).filter(m=>m.type==='album').forEach(m=>{const ch=getChannel(m.channel_id);const totalStreams=m.tracks?m.tracks.reduce((a,t)=>a+(t.plays||0),0):(m.views||0);all.push({id:m.id,title:m.album||m.title,channel:m.artist||(ch?ch.name:''),cat:'ÁLBUM',views:m.views||totalStreams,likes:m.likes||0,duration:m.tracks?(m.tracks.length+' faixas'):'—',thumbnail:m.thumbnail_url,gradient:m.gradient,peak:null,trend:(m.engagement||{}).trend||'steady',velocity:(m.engagement||{}).velocity||1});});
+  // Album tracks (nested)
+  Object.values(_trackCache).forEach(t=>{const ch=getChannel(t.channel_id);all.push({id:t.id,title:t.title,channel:t.artist||(ch?ch.name:''),cat:'MÚSICA',views:t.views||0,likes:t.likes||0,duration:t.duration,thumbnail:t.thumbnail_url,gradient:t.gradient,peak:null,trend:(t.engagement||{}).trend||'steady',velocity:(t.engagement||{}).velocity||1});});
+  (DB.shorts||[]).forEach(s=>{const ch=getChannel(s.channel_id);all.push({id:s.id,title:s.title,channel:ch?ch.name:'',cat:'SHORT',views:s.views,likes:s.likes||0,duration:s.duration,thumbnail:s.thumbnail_url,gradient:s.gradient,peak:null,trend:'steady',velocity:2});});
+  // Compute peaks
+  all.sort((a,b)=>b.views-a.views);
+  all.forEach((item,i)=>{item.peak=i+1;item._prevViews=item._prevViews||item.views;item._prevRank=item._prevRank||i+1;});
+  _pulseItems=all;
+}
+
+function renderPulseRows(){
+  const el=document.getElementById('pulse-rows');
+  if(!el)return;
+  let items=[..._pulseItems];
+  if(_pulseCategory!=='TODOS') items=items.filter(i=>i.cat===_pulseCategory);
+  items.sort((a,b)=>b.views-a.views);
+  const top=items.slice(0,50);
+
+  // Helpers para calcular views do período com variação realista
+  function itemSeed(item){
+    // Seed determinístico baseado no id para que cada item tenha variações únicas
+    let h=0;for(let c of (item.id||'x')){h=((h<<5)-h)+c.charCodeAt(0);h|=0;}
+    return Math.abs(h);
+  }
+  function breakZeros(n){
+    // Evitar sequências de zeros: se o número tem 3+ zeros seguidos, quebra com dígito randômico seed
+    let s=n.toString();
+    s=s.replace(/0{2,}/g,m=>{
+      let r='';
+      for(let i=0;i<m.length;i++) r+=i===Math.floor(m.length/2)?String(1+Math.floor(n%7)):m[i];
+      return r;
+    });
+    return parseInt(s)||n;
+  }
+  function periodViews(item){
+    const seed=itemSeed(item);
+    const vel=item.velocity||1;
+    const factor=item.trend==='viral'?2.8+((seed%5)*0.12):item.trend==='growing'?1.4+((seed%8)*0.07):0.9+((seed%6)*0.05);
+    switch(_pulsePeriod){
+      case 'MINUTO':{
+        // Varia por item: base velocity * fator + ruído seed
+        const base=Math.round(vel*factor*50*(1+(seed%17)*0.031));
+        return breakZeros(base);
+      }
+      case 'DIA':{
+        const base=Math.round(item.views*(0.037+((seed%11)*0.002))*(1+(seed%13)*0.021));
+        return breakZeros(base);
+      }
+      case 'MÊS':{
+        const base=Math.round(item.views*(0.16+((seed%9)*0.008))*(1+(seed%7)*0.019));
+        return breakZeros(base);
+      }
+      case 'ANO':{
+        const base=Math.round(item.views*(0.68+((seed%11)*0.018))*(1+(seed%5)*0.011));
+        return breakZeros(base);
+      }
+      default: return item.views; // TODOS = total real
+    }
+  }
+  function periodSuffix(){
+    switch(_pulsePeriod){
+      case 'MINUTO': return '/min';
+      case 'DIA':    return '/24h';
+      case 'MÊS':   return '/mês';
+      case 'ANO':   return '/ano';
+      default:       return ''; // TODOS: sem sufixo
+    }
+  }
+  const suffix=periodSuffix();
+  const isTotal=_pulsePeriod==='TODOS';
+  const isStream=(item)=>item.cat==='MÚSICA'||item.cat==='ÁLBUM';
+
+  el.innerHTML=top.map((item,i)=>{
+    const prev=item._prevRank||i+1;
+    const curr=i+1;
+    const diff=prev-curr;
+    let arrowSym='●';let arrowClass='pulse-arrow-steady';
+    if(diff>0){arrowSym='▲';arrowClass='pulse-arrow-up';}
+    else if(diff<0){arrowSym='▼';arrowClass='pulse-arrow-down';}
+
+    // Cor da seta baseada na tendência do item
+    let arrowColor='#aaa';
+    if(item.trend==='viral') arrowColor='#4caf50';
+    else if(item.trend==='growing') arrowColor='#4e9fff';
+
+    // Views do período — número completo formatado
+    const pv=periodViews(item);
+    const pvLabel=isTotal?fmtNumFull(item.views):fmtNumFull(pv);
+    const unitLabel=(isStream(item)?'streams':'views')+suffix;
+
+    // % variação
+    const prevV=item._prevViews||item.views;
+    const pctChange=prevV>0?((item.views-prevV)/prevV*100):0;
+    const pctStr=pctChange>0?`+${pctChange.toFixed(1)}%`:pctChange<0?`${pctChange.toFixed(1)}%`:'—';
+    const pctColor=pctChange>0?'#4caf50':pctChange<0?'#ff5555':'#555';
+
+    const peakLabel=item.peak===1?'#1':`#${item.peak}`;
+    const clickAction=item.cat==='SHORT'?`openShortOverlay('${item.id}')`:item.cat==='ÁLBUM'?`navigate('album','${encodeAlbum(item.title)}')`:item.cat==='MÚSICA'||item._isNested?`playTrack('${item.id}')`:`navigate('player','${item.id}')`;
+
+    return`<div class="pulse-row" id="pulse-row-${item.id}" onclick="${clickAction}">
+      <div class="pulse-pos">
+        <span class="pulse-pos-num">${curr}</span>
+        <span class="${arrowClass}" style="color:${arrowColor}">${arrowSym}</span>
+      </div>
+      <div class="pulse-item-info">
+        <div class="pulse-item-thumb">
+          ${item.thumbnail?`<img src="${item.thumbnail}" loading="lazy" onerror="this.style.display='none'">`:``}
+          <div style="position:absolute;inset:0;background:${gradientCSS(item.gradient||['#111','#222'])}${item.thumbnail?';opacity:0.3':''}"></div>
+        </div>
+        <div class="pulse-item-meta">
+          <div class="pulse-item-title">${item.title}</div>
+          <div class="pulse-item-sub">${item.channel} <span style="background:#1e1e1e;padding:1px 5px;border-radius:3px;font-size:10px">${item.cat}</span></div>
+        </div>
+      </div>
+      <div class="pulse-views" style="font-size:13px;font-weight:600;white-space:nowrap;text-align:right;line-height:1.2">
+        <span>${pvLabel}</span>
+        <span style="font-size:10px;color:#555;margin-left:3px;font-weight:400">${unitLabel}</span>
+      </div>
+      <div style="font-size:12px;font-weight:600;text-align:right;color:${pctColor};white-space:nowrap">${pctStr}</div>
+      <div class="pulse-peak" style="text-align:right;font-size:12px;color:#666"><span style="font-weight:700;color:${item.peak===1?'#f9ca24':'#666'}">${peakLabel}</span></div>
+      <div class="pulse-duration" style="font-size:12px;color:#555;text-align:right;white-space:nowrap">${item.duration}</div>
+    </div>`;
+  }).join('');
+}
+
+function startPulseInterval(){
+  stopPulseInterval();
+  _pulseCountdown=60;
+  let elapsed=0;
+  _pulseInterval=setInterval(()=>{
+    elapsed+=1;
+    _pulseCountdown=Math.max(0,60-elapsed);
+    const bar=document.getElementById('pulse-bar');
+    const txt=document.getElementById('pulse-cdtxt');
+    if(bar) bar.style.width=((elapsed/60)*100)+'%';
+    if(txt) txt.textContent=`Próximo pulso em: ${_pulseCountdown}s`;
+    if(elapsed>=60){
+      // Pulse!
+      elapsed=0;
+      pulseTick();
+    }
+  },1000);
+}
+
+function stopPulseInterval(){
+  if(_pulseInterval){clearInterval(_pulseInterval);_pulseInterval=null;}
+}
+
+function pulseTick(){
+  // Update views with viral simulation
+  const sorted0=[..._pulseItems].sort((a,b)=>b.views-a.views);
+  _pulseItems.forEach(item=>{
+    item._prevViews=item.views;
+    item._prevRank=sorted0.findIndex(x=>x.id===item.id)+1;
+    const factor=item.trend==='viral'?3:item.trend==='growing'?1.5:1;
+    const microWave=Math.sin(Date.now()/60000+item.velocity)*0.15;
+    const add=Math.floor(item.velocity*factor*(1+microWave)*50*(0.8+Math.random()*0.4));
+    item.views+=add;
+    // Maybe new peak
+    const sorted=[..._pulseItems].sort((a,b)=>b.views-a.views);
+    const newPos=sorted.findIndex(x=>x.id===item.id)+1;
+    if(newPos<item.peak) item.peak=newPos;
+  });
+  renderPulseRows();
+  // Flash updated rows
+  document.querySelectorAll('.pulse-row').forEach(r=>{
+    r.classList.add('updated');
+    setTimeout(()=>r.classList.remove('updated'),600);
+  });
+}
+
+function setPulsePeriod(p){
+  _pulsePeriod=p;
+  renderPulseCharts();
+}
+
+function setPulseCategory(c){
+  _pulseCategory=c;
+  renderPulseCharts();
+}
+
+// Stop pulse when leaving view (navigation)
+const _origNavigate=navigate;
 
 // ══════════════════════════════════════════════
 // INIT
