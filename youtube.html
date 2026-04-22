@@ -1463,12 +1463,13 @@ async function loadDB(){
     // Fallback: localStorage
     try{
       const s=localStorage.getItem('vidstream_db2');
-      if(s){DB=JSON.parse(s);navigate('home');return;}
+      if(s){DB=JSON.parse(s);buildTrackCache();navigate('home');return;}
     }catch(_){}
     // Último recurso: DEFAULT_DB embutido
     DB=JSON.parse(JSON.stringify(DEFAULT_DB));
     saveDB();
   }
+  buildTrackCache();
   navigate('home');
 }
 function saveDB(){
@@ -1555,10 +1556,38 @@ setInterval(tick,5000);
 // ══════════════════════════════════════════════
 // HELPERS
 // ══════════════════════════════════════════════
+// Cache for virtual nested-track objects (album tracks stored inside album entry)
+const _trackCache={};
+
+function buildTrackCache(){
+  (DB.music||[]).forEach(m=>{
+    if(m.type==='album'&&m.tracks&&m.tracks.length){
+      m.tracks.forEach((t,i)=>{
+        const tid=`${m.id}_t${i}`;
+        _trackCache[tid]={
+          id:tid,_isNested:true,_albumMusicId:m.id,_trackIndex:i,
+          title:t.title,artist:m.artist,album:m.album||m.title,
+          channel_id:m.channel_id,
+          views:t.plays||0,likes:t.likes||0,
+          duration:t.duration,
+          thumbnail_url:m.thumbnail_url,gradient:m.gradient,
+          embed_url:t.embed_url||null,
+          genre:m.genre||'',bpm:m.bpm||0,key:m.key||'',
+          engagement:m.engagement||{velocity:1,like_ratio:0.01,trend:'steady'},
+          upload_date:m.upload_date||m.release_date||'2024-01-01',
+          liked:false,
+          description:t.description||m.description||''
+        };
+      });
+    }
+  });
+}
+
 function getVideo(id){
   let v=DB.videos.find(v=>v.id===id);
   if(!v) v=(DB.music||[]).find(m=>m.id===id);
   if(!v) v=(DB.films||[]).find(f=>f.id===id);
+  if(!v) v=_trackCache[id]||null;
   return v;
 }
 function getChannel(id){return DB.channels.find(c=>c.id===id)}
@@ -1773,7 +1802,9 @@ function setChip(c){STATE.currentChip=c;renderHome();}
 function musicHomeCard(m){
   const ch=getChannel(m.channel_id);
   if(!ch)return'';
-  return`<div class="video-card" onclick="navigate('album','${encodeAlbum(m.album)}')">
+  const albumKey=m.type==='album'?(m.album||m.title):(m.album||m.title);
+  const isAlbum=m.type==='album'&&m.tracks&&m.tracks.length>0;
+  return`<div class="video-card" onclick="navigate('album','${encodeAlbum(albumKey)}')">
     <div class="video-thumbnail" style="position:relative">
       <div class="vthumb-inner">
         ${m.thumbnail_url
@@ -1781,10 +1812,11 @@ function musicHomeCard(m){
           :`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center"><span style="font-size:13px;color:rgba(255,255,255,0.6)">${m.title}</span></div>`
         }
         <div class="duration-badge">${m.duration}</div>
-        <div class="type-badge music">MÚSICA</div>
+        <div class="type-badge music">${isAlbum?'ÁLBUM':'MÚSICA'}</div>
+        ${isAlbum?`<div style="position:absolute;bottom:32px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px">${m.tracks.length} faixas</div>`:''}
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;background:rgba(0,0,0,0.3)"
              onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0"
-             onclick="event.stopPropagation();playTrack('${m.id}')">
+             onclick="event.stopPropagation();${isAlbum?`navigate('album','${encodeAlbum(albumKey)}')`:`playTrack('${m.id}')`}">
           <div style="width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.5)">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
           </div>
@@ -1795,7 +1827,7 @@ function musicHomeCard(m){
       ${makeAvatar(m.channel_id,36)}
       <div class="card-meta">
         <div class="card-title">${m.title}</div>
-        <div class="card-channel">${m.artist||ch.name} · ${m.album||''}</div>
+        <div class="card-channel">${m.artist||ch.name} · ${albumKey}</div>
         <div class="card-stats"><span data-vid-id="${m.id}">${fmtNum(m.views)} streams</span> · ${m.genre}</div>
       </div>
     </div>
@@ -2494,27 +2526,35 @@ function renderChannelTab(chId,tab){
     if(!chMusic.length){
       el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:40px;margin-bottom:16px;opacity:0.3">♪</div><div>Nenhuma música publicada</div></div>`;
     } else {
+      // Build all playable tracks for this channel (singles + nested album tracks)
+      const allChTracks=[];
+      chMusic.forEach(m=>{
+        if(m.type==='album'&&m.tracks){
+          m.tracks.forEach((_,i)=>{const obj=_trackCache[`${m.id}_t${i}`];if(obj)allChTracks.push(obj);});
+        } else if(m.type!=='album'){
+          allChTracks.push(m);
+        }
+      });
+      const albums=[...new Map(chMusic.map(m=>[(m.album||m.title),m])).values()];
       el.innerHTML=`
         <div class="section-block">
           <div class="section-heading">Músicas</div>
           <div class="music-list">
-            ${chMusic.map((m,i)=>`
-              <div class="music-row" onclick="navigate('player','${m.id}')">
+            ${allChTracks.map((m,i)=>`
+              <div class="music-row" onclick="playTrack('${m.id}')">
                 <div class="music-rank">${i+1}</div>
                 <div class="music-thumb">
-                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
                 </div>
                 <div class="music-info">
                   <div class="music-title">${m.title}</div>
-                  <div class="music-artist">${m.album} · ${m.genre}</div>
-                  <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.duration} · ${m.bpm} BPM</div>
+                  <div class="music-artist">${m.album||'Single'} · ${m.genre||''}</div>
                 </div>
                 <div class="music-stats">
-                  <div>${fmtNum(m.views)} streams</div>
-                  <div style="font-size:11px;margin-top:2px;color:var(--muted)">${fmtNum(m.likes)} curtidas</div>
+                  <div>${fmtNum(m.views||m.plays||0)} streams</div>
+                  <div style="font-size:11px;margin-top:2px;color:var(--muted)">${fmtNum(m.likes||0)} curtidas</div>
                 </div>
-                ${m.engagement.trend==='viral'?`<div class="music-bars"><span></span><span></span><span></span><span></span></div>`:''}
-                <button class="music-play-btn" onclick="event.stopPropagation();showNotif('Reproduzindo: ${m.title.replace(/'/g,"&#39;")}')">
+                <button class="music-play-btn" onclick="event.stopPropagation();playTrack('${m.id}')">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 </button>
               </div>
@@ -2524,13 +2564,13 @@ function renderChannelTab(chId,tab){
         <div class="section-block">
           <div class="section-heading">Álbuns</div>
           <div class="music-grid">
-            ${[...new Map(chMusic.map(m=>[m.album,m])).values()].map(m=>`
-              <div class="music-album-card" onclick="showNotif('Abrindo álbum: ${m.album}')">
+            ${albums.map(m=>`
+              <div class="music-album-card" onclick="navigate('album','${encodeAlbum(m.album||m.title)}')">
                 <div class="music-album-art">
-                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+                  ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
                 </div>
-                <div class="music-album-name">${m.album}</div>
-                <div class="music-album-sub">${m.artist} · ${m.genre}</div>
+                <div class="music-album-name">${m.album||m.title}</div>
+                <div class="music-album-sub">${m.artist} · ${m.type==='album'&&m.tracks?m.tracks.length+' faixas':m.genre}</div>
               </div>
             `).join('')}
           </div>
@@ -2714,17 +2754,76 @@ function doSearch(){
 }
 
 function renderSearch(q){
-  const results=DB.videos.filter(v=>
+  const el=document.getElementById('search-results');
+
+  // Search channels
+  const matchedChannels=(DB.channels||[]).filter(c=>
+    c.name.toLowerCase().includes(q)||
+    (c.handle||'').toLowerCase().includes(q)||
+    (c.description||'').toLowerCase().includes(q)
+  );
+
+  // Search videos
+  const matchedVideos=DB.videos.filter(v=>
     v.title.toLowerCase().includes(q)||
     (getChannel(v.channel_id)?.name.toLowerCase().includes(q))
   );
-  const el=document.getElementById('search-results');
-  if(!results.length){
+
+  // Search music (flat + nested)
+  const allMusicFlat=[];
+  (DB.music||[]).forEach(m=>{
+    if(m.type==='album'&&m.tracks){
+      m.tracks.forEach((_,i)=>{const obj=_trackCache[`${m.id}_t${i}`];if(obj)allMusicFlat.push(obj);});
+    } else {
+      allMusicFlat.push(m);
+    }
+  });
+  const matchedMusic=allMusicFlat.filter(m=>
+    m.title.toLowerCase().includes(q)||
+    (m.artist||'').toLowerCase().includes(q)||
+    (m.album||'').toLowerCase().includes(q)
+  );
+
+  if(!matchedChannels.length&&!matchedVideos.length&&!matchedMusic.length){
     el.innerHTML=`<div style="text-align:center;padding:60px;color:var(--muted)">Nenhum resultado para "<strong>${q}</strong>"</div>`;
     return;
   }
-  el.innerHTML=`<div style="margin-bottom:16px;font-size:16px;color:var(--muted)">Resultados para "<strong style="color:var(--text)">${q}</strong>"</div>`+
-    results.map(v=>{
+
+  let html=`<div style="margin-bottom:20px;font-size:16px;color:var(--muted)">Resultados para "<strong style="color:var(--text)">${q}</strong>"</div>`;
+
+  // Channel results
+  if(matchedChannels.length){
+    html+=`<div style="margin-bottom:24px">`;
+    html+=matchedChannels.map(c=>`
+      <div style="display:flex;align-items:center;gap:20px;padding:16px;border-radius:12px;cursor:pointer;transition:background 0.1s;margin-bottom:8px;background:var(--surface)"
+           onmouseover="this.style.background='#2a2a2a'" onmouseout="this.style.background='var(--surface)'"
+           onclick="navigate('channel','${c.id}')">
+        <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;flex-shrink:0">
+          ${c.avatar_url
+            ?`<img src="${c.avatar_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`
+            :`<div style="width:100%;height:100%;background:${gradientCSS(c.gradient||['#333','#555'])};display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff">${c.name[0]}</div>`
+          }
+        </div>
+        <div style="flex:1">
+          <div style="font-size:17px;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            ${c.name}${c.verified?verifiedSVG(16):''}
+          </div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:4px">${c.handle||''} · ${fmtNum(c.subscribers)} inscritos</div>
+          <div style="font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${c.description||''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <button class="btn-sub${c.subscribed?' subbed':''}" onclick="event.stopPropagation();toggleSub('${c.id}');this.textContent=((DB.channels.find(x=>x.id==='${c.id}')||{}).subscribed?'Inscrito ✓':'Inscrever-se');this.className='btn-sub'+((DB.channels.find(x=>x.id==='${c.id}')||{}).subscribed?' subbed':'')">${c.subscribed?'Inscrito ✓':'Inscrever-se'}</button>
+          <span style="font-size:12px;color:#4e9fff;cursor:pointer" onclick="navigate('channel','${c.id}')">Ver canal →</span>
+        </div>
+      </div>
+    `).join('');
+    html+=`</div>`;
+  }
+
+  // Video results
+  if(matchedVideos.length){
+    if(matchedChannels.length) html+=`<div style="font-size:15px;font-weight:500;margin-bottom:12px;color:var(--muted)">Vídeos</div>`;
+    html+=matchedVideos.map(v=>{
       const ch=getChannel(v.channel_id);
       return`<div class="search-result" onclick="navigate('player','${v.id}')">
         <div class="sr-thumb">
@@ -2737,11 +2836,37 @@ function renderSearch(q){
         <div class="sr-meta">
           <div class="sr-title">${v.title}</div>
           <div class="sr-stats">${fmtNum(v.views)} visualizações · ${fmtDate(v.upload_date)}</div>
-          <div class="sr-channel-row">${makeAvatar(v.channel_id,24)}<span class="sr-channel-name">${ch?.name||''}</span></div>
+          <div class="sr-channel-row">${makeAvatar(v.channel_id,24)}<span class="sr-channel-name" style="cursor:pointer" onclick="event.stopPropagation();navigate('channel','${v.channel_id}')">${ch?.name||''}</span></div>
           <div class="sr-desc">${v.description}</div>
         </div>
       </div>`;
     }).join('');
+  }
+
+  // Music results
+  if(matchedMusic.length){
+    html+=`<div style="font-size:15px;font-weight:500;margin:20px 0 12px;color:var(--muted)">Músicas</div>`;
+    html+=`<div class="music-list">`;
+    html+=matchedMusic.slice(0,8).map((m,i)=>`
+      <div class="music-row" onclick="playTrack('${m.id}')">
+        <div class="music-rank">${i+1}</div>
+        <div class="music-thumb">
+          ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
+        </div>
+        <div class="music-info">
+          <div class="music-title">${m.title}</div>
+          <div class="music-artist">${m.artist||''} · ${m.album||'Single'}</div>
+        </div>
+        <div class="music-stats">${fmtNum(m.views||m.plays||0)} streams</div>
+        <button class="music-play-btn" onclick="event.stopPropagation();playTrack('${m.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    `).join('');
+    html+=`</div>`;
+  }
+
+  el.innerHTML=html;
 }
 
 // ══════════════════════════════════════════════
@@ -2822,20 +2947,37 @@ function renderExploreTrending(el){
     <div class="trending-section">
       <div class="trending-header"><h2>Músicas em Alta</h2></div>
       <div class="music-list">
-        ${tMusic.map((m,i)=>`
+        ${(()=>{
+          // Build full list: standalone music + nested tracks from albums
+          const allTracks=[];
+          (DB.music||[]).forEach(m=>{
+            if(m.type==='album'&&m.tracks&&m.tracks.length){
+              m.tracks.forEach((t,i)=>{
+                const tid=`${m.id}_t${i}`;
+                const obj=_trackCache[tid];
+                if(obj) allTracks.push(obj);
+              });
+            } else if(m.type!=='album'){
+              allTracks.push(m);
+            }
+          });
+          // Sort by views desc, take top 10
+          const sorted=[...allTracks].sort((a,b)=>(b.views||b.plays||0)-(a.views||a.plays||0)).slice(0,10);
+          return sorted.map((m,i)=>`
           <div class="music-row" onclick="playTrack('${m.id}')">
             <div class="music-rank">${i+1}</div>
             <div class="music-thumb">
-              ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+              ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
             </div>
             <div class="music-info">
               <div class="music-title">${m.title}</div>
-              <div class="music-artist">${m.artist} · ${m.genre}</div>
+              <div class="music-artist">${m.artist||''} · ${m.album||'Single'}</div>
             </div>
-            <div class="music-stats">${fmtNum(m.views)} streams</div>
+            <div class="music-stats">${fmtNum(m.views||m.plays||0)} streams</div>
             <div class="music-bars"><span></span><span></span><span></span><span></span></div>
           </div>
-        `).join('')}
+        `).join('');
+        })()}
       </div>
     </div>
     <div class="trending-section">
@@ -2890,32 +3032,48 @@ function renderExploreMusic(el){
   // Build album map
   const albumMap={};
   music.forEach(m=>{
-    const a=m.album||'Singles';
+    const a=m.album||m.title||'Singles';
     if(!albumMap[a]) albumMap[a]={album:a,artist:m.artist,thumbnail_url:m.thumbnail_url,gradient:m.gradient,tracks:[]};
-    albumMap[a].tracks.push(m);
+    if(m.type==='album'&&m.tracks){
+      albumMap[a].tracks.push(...m.tracks.map((_,i)=>_trackCache[`${m.id}_t${i}`]).filter(Boolean));
+    } else {
+      albumMap[a].tracks.push(m);
+    }
   });
   const albums=Object.values(albumMap);
+
+  // All playable tracks
+  const allTracks=[];
+  music.forEach(m=>{
+    if(m.type==='album'&&m.tracks){
+      m.tracks.forEach((_,i)=>{const obj=_trackCache[`${m.id}_t${i}`];if(obj)allTracks.push(obj);});
+    } else if(m.type!=='album'){
+      allTracks.push(m);
+    }
+  });
+  const sortedTracks=[...allTracks].sort((a,b)=>(b.views||b.plays||0)-(a.views||a.plays||0));
+
   el.innerHTML=`
     <div class="trending-section">
       <div class="explore-section-title">Ranking de Músicas</div>
       <div class="music-list fade-in">
-        ${music.map((m,i)=>`
+        ${sortedTracks.map((m,i)=>`
           <div class="music-row" onclick="playTrack('${m.id}')">
             <div class="music-rank">${i+1}</div>
             <div class="music-thumb">
-              ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient)};width:100%;height:100%"></div>`}
+              ${m.thumbnail_url?`<img src="${m.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(m.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
             </div>
             <div class="music-info">
               <div class="music-title">${m.title}</div>
-              <div class="music-artist">${m.artist} · <span style="cursor:pointer;text-decoration:underline;color:var(--muted)" onclick="event.stopPropagation();navigate('album','${encodeAlbum(m.album)}')">${m.album}</span></div>
-              <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.genre} · ${m.bpm} BPM · ${m.key}</div>
+              <div class="music-artist">${m.artist||''} · <span style="cursor:pointer;text-decoration:underline;color:var(--muted)" onclick="event.stopPropagation();navigate('album','${encodeAlbum(m.album||m.title)}')">${m.album||'Single'}</span></div>
+              ${m.genre?`<div style="font-size:11px;color:var(--muted);margin-top:2px">${m.genre}${m.bpm?' · '+m.bpm+' BPM':''}${m.key?' · '+m.key:''}</div>`:''}
             </div>
             <div class="music-stats">
-              <div>${fmtNum(m.views)} streams</div>
-              <div style="font-size:11px;margin-top:2px">${fmtNum(m.likes)} ❤</div>
+              <div>${fmtNum(m.views||m.plays||0)} streams</div>
+              <div style="font-size:11px;margin-top:2px">${fmtNum(m.likes||0)} ❤</div>
             </div>
-            ${m.engagement.trend==='viral'?`<div class="music-bars"><span></span><span></span><span></span><span></span></div>`:''}
-            <button class="music-play-btn" onclick="event.stopPropagation();playTrack('${m.id.replace(/'/g,'&#39;')}')">
+            ${(m.engagement||{}).trend==='viral'?`<div class="music-bars"><span></span><span></span><span></span><span></span></div>`:''}
+            <button class="music-play-btn" onclick="event.stopPropagation();playTrack('${m.id}')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
@@ -2928,7 +3086,7 @@ function renderExploreMusic(el){
         ${albums.map(a=>`
           <div class="music-album-card" onclick="navigate('album','${encodeAlbum(a.album)}')">
             <div class="music-album-art" style="position:relative">
-              ${a.thumbnail_url?`<img src="${a.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(a.gradient)};width:100%;height:100%"></div>`}
+              ${a.thumbnail_url?`<img src="${a.thumbnail_url}" loading="lazy" onerror="this.style.display='none'">`:`<div style="background:${gradientCSS(a.gradient||['#111','#222'])};width:100%;height:100%"></div>`}
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;background:rgba(0,0,0,0.4)" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
                 <div style="width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
@@ -2992,7 +3150,32 @@ function decodeAlbum(name){return decodeURIComponent(name||'Singles')}
 function renderAlbum(albumEncoded){
   const albumName=decodeAlbum(albumEncoded);
   const music=DB.music||[];
-  const tracks=music.filter(m=>(m.album||'Singles')===albumName);
+
+  // Check if there's an album-type entry with nested tracks
+  const albumEntry=music.find(m=>m.type==='album'&&(m.album||m.title)===albumName);
+
+  let tracks=[];
+  if(albumEntry&&albumEntry.tracks&&albumEntry.tracks.length){
+    // Build virtual track objects from nested tracks
+    // If album not fully released, only show tracks that are released as singles OR all if release_status=released
+    const fullyReleased=!albumEntry.release_status||albumEntry.release_status==='released';
+    albumEntry.tracks.forEach((t,i)=>{
+      const tid=`${albumEntry.id}_t${i}`;
+      // Ensure cache is populated
+      if(!_trackCache[tid]) buildTrackCache();
+      const trackObj=_trackCache[tid];
+      if(!trackObj)return;
+      // If album not fully released, only show tracks marked as single or with a release_date <= today
+      if(!fullyReleased){
+        if(t.released===false)return; // skip unreleased tracks
+      }
+      tracks.push(trackObj);
+    });
+  } else {
+    // Fallback: find standalone music items that belong to this album
+    tracks=music.filter(m=>(m.album||'Singles')===albumName&&m.type!=='album');
+  }
+
   if(!tracks.length){
     document.getElementById('album-hero').innerHTML=`<div style="padding:40px;color:var(--muted)">Álbum não encontrado.</div>`;
     document.getElementById('tracklist-rows').innerHTML='';
@@ -3005,27 +3188,29 @@ function renderAlbum(albumEncoded){
     return acc+(p.length===3?p[0]*3600+p[1]*60+p[2]:p[0]*60+(p[1]||0));
   },0);
   const fmtDurFull=s=>{const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h?`${h}h ${m}min`:`${m} min`};
-  const totalStreams=tracks.reduce((a,t)=>a+t.views,0);
+  const totalStreams=tracks.reduce((a,t)=>a+(t.views||0),0);
 
-  // Hero background color from first track
-  document.getElementById('album-hero').style.background=`linear-gradient(to bottom,${first.gradient[0]||'#111'}dd,var(--bg))`;
-  document.getElementById('album-hero').innerHTML=`
-    <div class="album-art-big" style="background:${gradientCSS(first.gradient)}">
-      ${first.thumbnail_url?`<img src="${first.thumbnail_url}" onerror="this.style.display='none'">`:''}
+  // Hero
+  const heroEl=document.getElementById('album-hero');
+  heroEl.style.background=`linear-gradient(to bottom,${(albumEntry||first).gradient[0]||'#111'}dd,var(--bg))`;
+  heroEl.innerHTML=`
+    <div class="album-art-big" style="background:${gradientCSS((albumEntry||first).gradient)}">
+      ${(albumEntry||first).thumbnail_url?`<img src="${(albumEntry||first).thumbnail_url}" onerror="this.style.display='none'">`: ''}
     </div>
     <div class="album-hero-info">
-      <div class="album-hero-type">Álbum</div>
+      <div class="album-hero-type">${albumEntry?'Álbum':'Single'}</div>
       <div class="album-hero-title">${albumName}</div>
       <div class="album-hero-artist" onclick="navigate('channel','${first.channel_id}')">
         ${ch?`${makeAvatar(first.channel_id,24)} <span>${first.artist||ch.name}</span>`:`<span>${first.artist}</span>`}
       </div>
+      ${albumEntry&&albumEntry.credits?`<div style="font-size:12px;color:var(--muted);margin-top:4px">Produzido por ${albumEntry.credits.producer||'—'} · ${albumEntry.credits.label||''}</div>`:''}
       <div class="album-hero-meta">${tracks.length} faixas · ${fmtDurFull(totalDuration)} · ${fmtNum(totalStreams)} streams</div>
       <div class="album-hero-actions">
-        <button class="album-play-btn" onclick="playAlbum('${albumEncoded}',0)">
+        <button class="album-play-btn" onclick="playAlbumTracks(${JSON.stringify(tracks.map(t=>t.id))},0)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           Reproduzir
         </button>
-        <button class="album-shuffle-btn" onclick="playAlbumShuffle('${albumEncoded}')">
+        <button class="album-shuffle-btn" onclick="playAlbumTracksShuffle(${JSON.stringify(tracks.map(t=>t.id))})">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
           Aleatório
         </button>
@@ -3034,9 +3219,11 @@ function renderAlbum(albumEncoded){
   `;
 
   // Tracklist
+  const queueIds=tracks.map(t=>t.id);
   document.getElementById('tracklist-rows').innerHTML=tracks.map((t,i)=>{
     const isPlaying=fpState.trackId===t.id&&fpState.active;
-    return`<div class="track-row${isPlaying?' playing':''}" id="track-row-${t.id}" onclick="playTrack('${t.id}',tracks_${albumEncoded.replace(/[^a-z0-9]/gi,'_')})">
+    const hasEmbed=!!(t.embed_url);
+    return`<div class="track-row${isPlaying?' playing':''}" id="track-row-${t.id}" onclick="playTrack('${t.id}',${JSON.stringify(queueIds)})">
       <div class="track-num">
         <span class="track-num-val">${isPlaying?'':i+1}</span>
         <div class="track-bars"><span></span><span></span><span></span></div>
@@ -3048,33 +3235,25 @@ function renderAlbum(albumEncoded){
         </div>
         <div class="track-details">
           <div class="track-title">${t.title}</div>
-          <div class="track-artist">${t.artist||'—'}</div>
+          <div class="track-artist">${t.artist||'—'} ${hasEmbed?'<span style="font-size:10px;color:#8b5cf6;margin-left:6px;font-weight:500">▶ CLIPE</span>':''}</div>
         </div>
       </div>
-      <div class="track-streams">${fmtNum(t.views)}</div>
+      <div class="track-streams">${fmtNum(t.views||t.plays||0)}</div>
       <div></div>
       <div class="track-duration">${t.duration}</div>
     </div>`;
   }).join('');
-
-  // Expose tracks array for queue
-  window['tracks_'+albumEncoded.replace(/[^a-z0-9]/gi,'_')]=tracks.map(t=>t.id);
 }
 
-function playAlbum(albumEncoded,startIndex=0){
-  const albumName=decodeAlbum(albumEncoded);
-  const tracks=(DB.music||[]).filter(m=>(m.album||'Singles')===albumName);
-  if(!tracks.length)return;
-  const queue=tracks.map(t=>t.id);
-  playTrack(queue[startIndex],queue);
+function playAlbumTracks(queueIds, startIndex=0){
+  if(!queueIds||!queueIds.length)return;
+  playTrack(queueIds[startIndex],queueIds);
 }
 
-function playAlbumShuffle(albumEncoded){
-  const albumName=decodeAlbum(albumEncoded);
-  const tracks=(DB.music||[]).filter(m=>(m.album||'Singles')===albumName);
-  if(!tracks.length)return;
-  const queue=[...tracks.map(t=>t.id)].sort(()=>Math.random()-0.5);
-  playTrack(queue[0],queue);
+function playAlbumTracksShuffle(queueIds){
+  if(!queueIds||!queueIds.length)return;
+  const shuffled=[...queueIds].sort(()=>Math.random()-0.5);
+  playTrack(shuffled[0],shuffled);
 }
 
 // ══════════════════════════════════════════════
@@ -3093,13 +3272,32 @@ function playTrack(trackId, queue){
     fpState.queueIndex=queue.indexOf(trackId);
   } else {
     // Build queue from same album
-    const albumName=track.album||'Singles';
-    const albumTracks=(DB.music||[]).filter(m=>(m.album||'Singles')===albumName);
-    fpState.queue=albumTracks.map(m=>m.id);
+    if(track._isNested){
+      // Nested track: queue all tracks from same album entry
+      const albumEntry=(DB.music||[]).find(m=>m.id===track._albumMusicId);
+      if(albumEntry&&albumEntry.tracks){
+        fpState.queue=albumEntry.tracks.map((_,i)=>`${albumEntry.id}_t${i}`);
+      } else {
+        fpState.queue=[trackId];
+      }
+    } else {
+      const albumName=track.album||'Singles';
+      const albumTracks=(DB.music||[]).filter(m=>(m.album||'Singles')===albumName&&m.type!=='album');
+      fpState.queue=albumTracks.length?albumTracks.map(m=>m.id):[trackId];
+    }
     fpState.queueIndex=fpState.queue.indexOf(trackId);
   }
-  // Increment streams
-  track.views+=1;
+  // Increment streams (for nested tracks, update plays on the parent album entry)
+  if(track._isNested){
+    const albumEntry=(DB.music||[]).find(m=>m.id===track._albumMusicId);
+    if(albumEntry&&albumEntry.tracks&&albumEntry.tracks[track._trackIndex]){
+      albumEntry.tracks[track._trackIndex].plays=(albumEntry.tracks[track._trackIndex].plays||0)+1;
+      // Keep cache in sync
+      _trackCache[trackId].views=(albumEntry.tracks[track._trackIndex].plays||0);
+    }
+  } else {
+    track.views+=1;
+  }
   saveDB();
   renderFooterPlayer();
   showFooterPlayer();
