@@ -156,6 +156,7 @@
     {
       "id": "vid_004",
       "type": "video",
+      "category": "news",
       "title": "Tucker Carlson apologizes for endorsing Trump for president",
       "channel_id": "ch_004",
       "views": 1250000,
@@ -173,6 +174,7 @@
     {
       "id": "vid_005",
       "type": "video",
+      "category": "news",
       "title": "Retired generals break down Iran war strategy after week 7",
       "channel_id": "ch_004",
       "views": 890000,
@@ -190,6 +192,7 @@
     {
       "id": "vid_006",
       "type": "video",
+      "category": "news",
       "title": "Vance tells Pope 'stick to matters of morality' as Iran rift grows",
       "channel_id": "ch_004",
       "views": 2100000,
@@ -351,6 +354,62 @@
     }
   ],
   "films": [],
+  "news": [
+    {
+      "id": "vid_004",
+      "type": "video",
+      "category": "news",
+      "title": "Tucker Carlson apologizes for endorsing Trump for president",
+      "channel_id": "ch_004",
+      "views": 1250000,
+      "likes": 34000,
+      "dislikes": 18000,
+      "upload_date": "2026-04-20",
+      "duration": "6:42",
+      "description": "Former Fox News host Tucker Carlson issues a public apology regarding his previous endorsement of Donald Trump for the 2028 presidential race, citing new revelations.",
+      "thumbnail_url": "https://i.ytimg.com/vi/QGvEA9tWLGs/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/QGvEA9tWLGs",
+      "gradient": ["#cc0000", "#b30000", "#800000"],
+      "liked": false,
+      "engagement": { "velocity": 7.2, "like_ratio": 0.027, "trend": "viral" }
+    },
+    {
+      "id": "vid_005",
+      "type": "video",
+      "category": "news",
+      "title": "Retired generals break down Iran war strategy after week 7",
+      "channel_id": "ch_004",
+      "views": 890000,
+      "likes": 22000,
+      "dislikes": 9500,
+      "upload_date": "2026-04-18",
+      "duration": "11:23",
+      "description": "CNN military analysts and retired generals provide an in-depth assessment of the ongoing conflict with Iran, now entering its seventh week.",
+      "thumbnail_url": "https://i.ytimg.com/vi/b6m0jrcK1zQ/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/b6m0jrcK1zQ",
+      "gradient": ["#1a1a2e", "#16213e", "#0f3460"],
+      "liked": false,
+      "engagement": { "velocity": 4.5, "like_ratio": 0.025, "trend": "steady" }
+    },
+    {
+      "id": "vid_006",
+      "type": "video",
+      "category": "news",
+      "title": "Vance tells Pope 'stick to matters of morality' as Iran rift grows",
+      "channel_id": "ch_004",
+      "views": 2100000,
+      "likes": 68000,
+      "dislikes": 29000,
+      "upload_date": "2026-04-21",
+      "duration": "5:18",
+      "description": "Vice President JD Vance sharply criticizes Pope Francis's recent remarks on the Iran crisis, urging the Vatican to focus on spiritual matters.",
+      "thumbnail_url": "https://i.ytimg.com/vi/a8m28Q4TUHk/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/a8m28Q4TUHk",
+      "gradient": ["#4a0000", "#660000", "#330000"],
+      "liked": false,
+      "engagement": { "velocity": 12.5, "like_ratio": 0.032, "trend": "viral" }
+    }
+  ],
   "live_streams": [
     {
       "id": "live_001",
@@ -465,6 +524,7 @@
   },
   "trending": ["mus_003", "vid_006", "vid_004", "vid_003", "mus_004", "short_001", "vid_002", "mus_001"],
   "trending_music": ["mus_003", "mus_004", "mus_001", "mus_002"],
+  "trending_news": ["vid_006", "vid_004", "vid_005"],
   "trending_films": [],
   "trending_shorts": ["short_001"],
   "algorithm": {
