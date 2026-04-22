@@ -44,20 +44,21 @@
       "id": "vid_013",
       "title": "Madonna - Holiday live on American Bandstand + Interview",
       "channel_id": "ch_005",
-      "views": 45039,
-      "likes": 3847,
-      "dislikes": 112,
+      "views": 1847,
+      "likes": 412,
+      "dislikes": 8,
       "liked": false,
-      "upload_date": "2026-01-14",
+      "upload_date": "2026-04-21",
+      "published_ago": "há 30 minutos",
       "duration": "5:48",
       "description": "Madonna performs 'Holiday' live on American Bandstand, followed by a short interview with Dick Clark. January 14, 1984.",
       "thumbnail_url": "https://i.ytimg.com/vi/pu_sZHl_XuY/maxresdefault.jpg",
       "embed_url": "https://www.youtube.com/embed/xbSTzlzoUi4",
       "gradient": ["#5e2c8a", "#9b4d96", "#c55ba0"],
       "engagement": {
-        "velocity": 1.1,
-        "like_ratio": 0.085,
-        "trend": "steady"
+        "velocity": 6.2,
+        "like_ratio": 0.223,
+        "trend": "viral"
       }
     }
   ],
@@ -99,20 +100,20 @@
 
   "channel_stats": {
     "ch_005": {
-      "total_views": 45039,
-      "total_likes": 3847,
+      "total_views": 1847,
+      "total_likes": 412,
       "videos_count": 1,
       "shorts_count": 0,
-      "engagement_rate": 0.085,
+      "engagement_rate": 0.223,
       "analytics": {
         "subscriber_growth": [12400000, 12450000, 12480000, 12500000],
-        "views_last_7_days": 12400,
+        "views_last_7_days": 1847,
         "top_regions": ["US", "UK", "CA"],
-        "watch_time_hours": 4350
+        "watch_time_hours": 178
       },
       "monetization": {
-        "total_earnings": 312.78,
-        "monthly_earnings": 92.44,
+        "total_earnings": 12.93,
+        "monthly_earnings": 12.93,
         "top_video": "vid_013",
         "rpm_avg": 2.1
       }
