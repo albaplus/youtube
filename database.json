@@ -1,131 +1,112 @@
-{
-  "meta": {
-    "version": "2.0",
-    "platform": "VidStream",
-    "locale": "pt-BR",
-    "created_at": "2026-04-21",
-    "description": "Base de dados completa do VidStream — canais, vídeos, shorts, lives, playlists, comentários, analytics, monetização"
-  },
-  "channels": [
-    {
-      "id": "ch_005",
-      "name": "NBC",
-      "handle": "@nbc",
-      "subscribers": 12500000,
-      "verified": true,
-      "subscribed": false,
-      "description": "Welcome to NBC on VidStream — classic moments and full episodes.",
-      "creation_date": "2005-03-01",
-      "gradient": ["#091c3d", "#1e3a6e", "#2b5797"],
-      "avatar_url": "https://yt3.googleusercontent.com/Lh3IR3_DCVkvF5xsFkGk6KhQcYmp0gplmeQR145r0rcu2VdrAPhIMef3yvgqZ4QIaldVSou53o4=s900-c-k-c0x00ffffff-no-rj",
-      "banner_url": "https://yt3.googleusercontent.com/2r-usLE4ZqU0H8q00BGaPbHp3fS6TGfsaSlhoVta_kyN3vDf_Th7OuCPfggM0gK73ym3rFTcdFY=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-      "identity": {
-        "aesthetic": "classic television",
-        "tone": "nostalgic",
-        "upload_pattern": "regular",
-        "fanbase_name": "viewers"
-      },
-      "about": {
-        "bio": "Official NBC channel on VidStream. Broadcasting iconic moments and full episodes.",
-        "location": "New York, NY, USA",
-        "links": ["nbc.com", "twitter.com/nbc", "instagram.com/nbc"],
-        "joined": "2005-03-01"
+// vidstream-simulator.js
+(function() {
+  const STORAGE_KEY = 'vidstream_db_nbc';
+  const TICK_INTERVAL_MS = 2000; // 2 segundos
+
+  // Dados iniciais (caso não exista nada salvo)
+  const INITIAL_DATA = { ... }; // cole o JSON acima aqui
+
+  // --- Funções auxiliares ---
+  function loadData() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        console.error('Erro ao parsear dados salvos, usando fallback.');
       }
     }
-  ],
-  "videos": [
-    {
-      "id": "vid_013",
-      "title": "Madonna - Holiday live on American Bandstand + Interview",
-      "channel_id": "ch_005",
-      "views": 100392,
-      "likes": 12450,
-      "dislikes": 87,
-      "liked": false,
-      "upload_date": "2026-04-21T10:00:00Z",
-      "duration": "5:48",
-      "description": "Madonna performs 'Holiday' live on American Bandstand, followed by a short interview with Dick Clark. January 14, 1984.",
-      "thumbnail_url": "https://i.ytimg.com/vi/pu_sZHl_XuY/maxresdefault.jpg",
-      "embed_url": "https://www.youtube.com/embed/xbSTzlzoUi4",
-      "gradient": ["#5e2c8a", "#9b4d96", "#c55ba0"],
-      "engagement": {
-        "velocity": 8.7,
-        "like_ratio": 0.124,
-        "trend": "viral"
-      }
-    }
-  ],
-  "shorts": [],
-  "live_streams": [],
-  "playlists": [],
-  "comments": {
-    "vid_013": [
-      {
-        "user": "80sforever",
-        "text": "This performance is iconic. Madonna was just getting started!",
-        "likes": 1254,
-        "ts": "há 5 minutos"
-      },
-      {
-        "user": "popculturefan",
-        "text": "Dick Clark was such a great interviewer. And Holiday is still a banger.",
-        "likes": 890,
-        "ts": "há 3 minutos"
-      },
-      {
-        "user": "vinylcollector",
-        "text": "The energy is unmatched. 1984 was a special year.",
-        "likes": 672,
-        "ts": "há 2 minutos"
-      },
-      {
-        "user": "madgefan",
-        "text": "Holiday! Celebrate! 🎉 Still celebrating 40+ years later.",
-        "likes": 541,
-        "ts": "agora mesmo"
-      }
-    ]
-  },
-  "channel_stats": {
-    "ch_005": {
-      "total_views": 100392,
-      "total_likes": 12450,
-      "videos_count": 1,
-      "shorts_count": 0,
-      "engagement_rate": 0.124,
-      "analytics": {
-        "subscriber_growth": [12450000, 12470000, 12485000, 12500000],
-        "views_last_7_days": 100392,
-        "top_regions": ["US", "UK", "CA", "BR"],
-        "watch_time_hours": 970
-      },
-      "monetization": {
-        "total_earnings": 210.82,
-        "monthly_earnings": 210.82,
-        "top_video": "vid_013",
-        "rpm_avg": 2.1
-      }
-    }
-  },
-  "trending": ["vid_013"],
-  "home_chips": [
-    { "id": "all", "label": "Tudo" },
-    { "id": "trending", "label": "🔥 Trending" },
-    { "id": "nbc", "label": "NBC" }
-  ],
-  "community_posts": [],
-  "system": {
-    "tick_system": {
-      "interval_ms": 5000,
-      "update_fields": ["views", "likes"],
-      "persist": true
-    },
-    "live_simulation": {
-      "active": true,
-      "boost_multiplier": 2.5
-    },
-    "storage_key": "vidstream_db2",
-    "log_max_entries": 500,
-    "log_trim_to": 200
+    // Se não houver dados salvos, clona o INITIAL_DATA
+    return JSON.parse(JSON.stringify(INITIAL_DATA));
   }
-}
+
+  function saveData(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // --- Lógica de incremento ---
+  function applyTick(data) {
+    // Atualiza apenas se o sistema de tick estiver ativo
+    if (!data.system?.tick_system) return data;
+
+    const fields = data.system.tick_system.update_fields || ['views', 'likes'];
+    const boost = data.system.live_simulation?.active 
+      ? data.system.live_simulation.boost_multiplier || 1.0 
+      : 1.0;
+
+    // Atualiza vídeos
+    if (data.videos) {
+      data.videos.forEach(video => {
+        if (fields.includes('views')) {
+          // Incremento base: ~30 views por tick (ajuste conforme desejar)
+          const baseIncrement = Math.floor(25 + Math.random() * 15);
+          video.views += Math.floor(baseIncrement * boost);
+        }
+        if (fields.includes('likes')) {
+          const likeIncrement = Math.floor(video.views * (video.engagement?.like_ratio || 0.01) * 0.05);
+          video.likes += Math.max(1, likeIncrement);
+        }
+        // Atualiza engagement velocity (apenas para referência)
+        if (video.engagement) {
+          video.engagement.velocity = (video.views / 10000).toFixed(1);
+        }
+      });
+    }
+
+    // Atualiza channel_stats
+    if (data.channel_stats) {
+      Object.keys(data.channel_stats).forEach(chId => {
+        const stats = data.channel_stats[chId];
+        const channelVideos = data.videos.filter(v => v.channel_id === chId);
+        stats.total_views = channelVideos.reduce((sum, v) => sum + v.views, 0);
+        stats.total_likes = channelVideos.reduce((sum, v) => sum + v.likes, 0);
+        if (stats.analytics) {
+          stats.analytics.views_last_7_days = stats.total_views;
+          stats.analytics.watch_time_hours = Math.floor(stats.total_views * 0.008);
+        }
+        if (stats.monetization) {
+          stats.monetization.total_earnings = parseFloat((stats.total_views * 0.0021).toFixed(2));
+          stats.monetization.monthly_earnings = parseFloat((stats.monetization.total_earnings / 4).toFixed(2));
+        }
+      });
+    }
+
+    return data;
+  }
+
+  // --- Inicialização ---
+  let appData = loadData();
+
+  // Função de renderização (você deve adaptar ao seu HTML)
+  function render() {
+    const video = appData.videos[0];
+    if (!video) return;
+
+    // Exemplo: atualizar elementos com ids
+    document.getElementById('views-count').textContent = video.views.toLocaleString();
+    document.getElementById('likes-count').textContent = video.likes.toLocaleString();
+    document.getElementById('subs-count').textContent = appData.channels[0].subscribers.toLocaleString();
+
+    // Atualiza channel stats se necessário
+    const stats = appData.channel_stats.ch_005;
+    document.getElementById('total-channel-views').textContent = stats.total_views.toLocaleString();
+  }
+
+  // Tick loop
+  function tick() {
+    appData = applyTick(appData);
+    if (appData.system.tick_system.persist) {
+      saveData(appData);
+    }
+    render();
+  }
+
+  // Inicia o intervalo
+  setInterval(tick, TICK_INTERVAL_MS);
+
+  // Render inicial
+  render();
+
+  // Opcional: expor dados para debug
+  window.vidstreamData = appData;
+})();
