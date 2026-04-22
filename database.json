@@ -257,33 +257,33 @@
       "artist": "Sade",
       "album": "Diamond Life",
       "channel_id": "ch_002",
-      "views": 45000000,
-      "likes": 620000,
-      "dislikes": 12000,
+      "views": 280938280,
+      "likes": 3870000,
+      "dislikes": 74800,
       "duration": "44:28",
       "upload_date": "1984-07-16",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ad27e16c5f844ea1ad6797cd",
       "gradient": ["#2c3e50", "#34495e", "#1a252f"],
       "genre": "Soul / Smooth Jazz",
-      "description": "Debut studio album by Sade, released in 1984. Featuring timeless classics.",
+      "description": "Debut studio album by Sade, released in 1984. Featuring timeless classics. Over 280 million streams worldwide.",
       "credits": {
         "label": "Epic Records",
         "producer": "Robin Millar",
         "studio": "Power Plant Studios, London"
       },
       "tracks": [
-        { "title": "Smooth Operator", "duration": "4:58", "plays": 18500000, "likes": 420000, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
-        { "title": "Your Love Is King", "duration": "3:39", "plays": 8200000, "likes": 210000, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
-        { "title": "Hang on to Your Love", "duration": "5:58", "plays": 5400000, "likes": 150000, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
-        { "title": "Frankie's First Affair", "duration": "4:38", "plays": 3100000, "likes": 89000, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
-        { "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 2800000, "likes": 72000, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
-        { "title": "Cherry Pie", "duration": "6:20", "plays": 1900000, "likes": 54000, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
-        { "title": "Sally", "duration": "5:23", "plays": 1600000, "likes": 48000, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
-        { "title": "I Will Be Your Friend", "duration": "4:45", "plays": 2200000, "likes": 61000, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
-        { "title": "Why Can't We Live Together", "duration": "5:27", "plays": 1400000, "likes": 41000, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
+        { "title": "Smooth Operator", "duration": "4:58", "plays": 115500000, "likes": 2620000, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
+        { "title": "Your Love Is King", "duration": "3:39", "plays": 51200000, "likes": 1310000, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
+        { "title": "Hang on to Your Love", "duration": "5:58", "plays": 33700000, "likes": 936000, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
+        { "title": "Frankie's First Affair", "duration": "4:38", "plays": 19300000, "likes": 555000, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
+        { "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 17500000, "likes": 449000, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
+        { "title": "Cherry Pie", "duration": "6:20", "plays": 11900000, "likes": 337000, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
+        { "title": "Sally", "duration": "5:23", "plays": 10000000, "likes": 299000, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
+        { "title": "I Will Be Your Friend", "duration": "4:45", "plays": 13700000, "likes": 381000, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
+        { "title": "Why Can't We Live Together", "duration": "5:27", "plays": 8738280, "likes": 256000, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
       ],
       "liked": false,
-      "engagement": { "velocity": 2.1, "like_ratio": 0.014, "trend": "steady" }
+      "engagement": { "velocity": 3.8, "like_ratio": 0.014, "trend": "viral" }
     },
     {
       "id": "mus_003",
@@ -292,9 +292,9 @@
       "artist": "Bronx",
       "album": "Color of Pain",
       "channel_id": "ch_003",
-      "views": 249928282,
-      "likes": 15500000,
-      "dislikes": 134000,
+      "views": 504292182,
+      "likes": 31300000,
+      "dislikes": 270000,
       "duration": "51:02",
       "upload_date": "2026-04-22",
       "release_date": "2026-04-22",
@@ -303,7 +303,7 @@
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
       "subgenres": ["Post-Grunge", "Indie Rock", "Soul"],
-      "description": "The highly anticipated debut album from Bronx. Featuring collaborations with Stevie Wonder and Sade. The title track 'color of pain [feat. Stevie Wonder]' is currently #1 on the global charts.",
+      "description": "The highly anticipated debut album from Bronx. Featuring collaborations with Stevie Wonder and Sade. The title track 'color of pain [feat. Stevie Wonder]' is currently #1 on the global charts. Surpassed 500 million streams!",
       "credits": {
         "label": "Dark Horse Records",
         "producer": "Dave Sardy, Bronx",
@@ -312,23 +312,23 @@
         "studio": "Electric Lady Studios, NYC"
       },
       "tracks": [
-        { "title": "warm", "duration": "2:37", "plays": 17470296, "likes": 1083000 },
-        { "title": "sweetheart", "duration": "3:31", "plays": 20803446, "likes": 1290000 },
-        { "title": "off the couch", "duration": "3:42", "plays": 15401445, "likes": 955000 },
-        { "title": "will you still love me?", "duration": "4:01", "plays": 24711274, "likes": 1534000 },
-        { "title": "never meant to cause trouble", "duration": "3:12", "plays": 11263744, "likes": 699000 },
-        { "title": "puzzle", "duration": "3:36", "plays": 12872850, "likes": 798000 },
-        { "title": "clockwork", "duration": "3:22", "plays": 14596892, "likes": 905000 },
-        { "title": "density", "duration": "4:06", "plays": 16435871, "likes": 1019000 },
-        { "title": "color of pain [feat. Stevie Wonder]", "duration": "5:01", "plays": 55800000, "likes": 3461000 },
-        { "title": "trophies aren't made of gold", "duration": "4:21", "plays": 11608552, "likes": 720000 },
-        { "title": "daisies might die", "duration": "3:56", "plays": 10114382, "likes": 627000 },
-        { "title": "that brightness in us", "duration": "3:57", "plays": 10689063, "likes": 663000 },
-        { "title": "skyfall [feat. Sade]", "duration": "2:59", "plays": 20000000, "likes": 1240000 },
-        { "title": "xoxo, goodbye", "duration": "1:56", "plays": 8160467, "likes": 506000 }
+        { "title": "warm", "duration": "2:37", "plays": 35250452, "likes": 2185000 },
+        { "title": "sweetheart", "duration": "3:31", "plays": 41974453, "likes": 2604000 },
+        { "title": "off the couch", "duration": "3:42", "plays": 31075451, "likes": 1927000 },
+        { "title": "will you still love me?", "duration": "4:01", "plays": 49860045, "likes": 3096000 },
+        { "title": "never meant to cause trouble", "duration": "3:12", "plays": 22726896, "likes": 1410000 },
+        { "title": "puzzle", "duration": "3:36", "plays": 25973841, "likes": 1610000 },
+        { "title": "clockwork", "duration": "3:22", "plays": 29452252, "likes": 1826000 },
+        { "title": "density", "duration": "4:06", "plays": 33163235, "likes": 2056000 },
+        { "title": "color of pain [feat. Stevie Wonder]", "duration": "5:01", "plays": 112600000, "likes": 6980000 },
+        { "title": "trophies aren't made of gold", "duration": "4:21", "plays": 23422559, "likes": 1453000 },
+        { "title": "daisies might die", "duration": "3:56", "plays": 20408000, "likes": 1265000 },
+        { "title": "that brightness in us", "duration": "3:57", "plays": 21568000, "likes": 1338000 },
+        { "title": "skyfall [feat. Sade]", "duration": "2:59", "plays": 40350000, "likes": 2502000 },
+        { "title": "xoxo, goodbye", "duration": "1:56", "plays": 16465498, "likes": 1021000 }
       ],
       "liked": false,
-      "engagement": { "velocity": 12.4, "like_ratio": 0.062, "trend": "viral" }
+      "engagement": { "velocity": 25.0, "like_ratio": 0.062, "trend": "viral" }
     },
     {
       "id": "mus_004",
@@ -459,7 +459,8 @@
       { "user": "bronxwarrior", "text": "On repeat all day.", "likes": 750, "ts": "1 hour ago" },
       { "user": "steviewonderfan", "text": "Stevie on 'color of pain' is pure magic ✨ #1 deserved", "likes": 3500, "ts": "30 minutes ago" },
       { "user": "sade_legion", "text": "Sade and Bronx together?? 'skyfall' is perfection.", "likes": 1800, "ts": "4 hours ago" },
-      { "user": "chartwatcher", "text": "Number 1 on Billboard! History made 🏆", "likes": 2200, "ts": "15 minutes ago" }
+      { "user": "chartwatcher", "text": "Number 1 on Billboard! History made 🏆", "likes": 2200, "ts": "15 minutes ago" },
+      { "user": "newfan2026", "text": "500 MILLION STREAMS! 🚀 This album defines 2026!", "likes": 4100, "ts": "5 minutes ago" }
     ],
     "mus_004": [
       { "user": "spanishguitarlover", "text": "That guitar intro gives me chills every time 🎸", "likes": 1500, "ts": "1 hour ago" },
@@ -488,18 +489,42 @@
       }
     },
     "ch_002": {
-      "total_views": 268678215,
-      "total_likes": 4420000,
+      "total_views": 504616495,
+      "total_likes": 7670000,
       "videos_count": 1,
       "music_count": 1,
-      "engagement_rate": 0.016
+      "engagement_rate": 0.015,
+      "analytics": {
+        "subscriber_growth": [980000, 990000, 995000, 1000000],
+        "views_last_7_days": 235938280,
+        "top_regions": ["US", "UK", "NG", "ZA", "FR"],
+        "watch_time_hours": 17200
+      },
+      "monetization": {
+        "total_earnings": 16840.00,
+        "monthly_earnings": 3368.00,
+        "top_video": "mus_002",
+        "rpm_avg": 3.0
+      }
     },
     "ch_003": {
-      "total_views": 249928282,
-      "total_likes": 15500000,
+      "total_views": 504292182,
+      "total_likes": 31300000,
       "videos_count": 0,
       "music_count": 1,
-      "engagement_rate": 0.062
+      "engagement_rate": 0.062,
+      "analytics": {
+        "subscriber_growth": [1800000, 1900000, 1950000, 2000000],
+        "views_last_7_days": 254363900,
+        "top_regions": ["US", "BR", "MX", "DE", "JP"],
+        "watch_time_hours": 18500
+      },
+      "monetization": {
+        "total_earnings": 201716.00,
+        "monthly_earnings": 40343.00,
+        "top_video": "mus_003",
+        "rpm_avg": 4.0
+      }
     },
     "ch_004": {
       "total_views": 4240000,
@@ -522,8 +547,8 @@
       }
     }
   },
-  "trending": ["mus_003", "vid_006", "vid_004", "vid_003", "mus_004", "short_001", "vid_002", "mus_001"],
-  "trending_music": ["mus_003", "mus_004", "mus_001", "mus_002"],
+  "trending": ["mus_003", "mus_002", "vid_006", "vid_004", "vid_003", "mus_004", "short_001", "vid_002", "mus_001"],
+  "trending_music": ["mus_003", "mus_002", "mus_004", "mus_001"],
   "trending_news": ["vid_006", "vid_004", "vid_005"],
   "trending_films": [],
   "trending_shorts": ["short_001"],
