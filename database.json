@@ -215,9 +215,9 @@
       "album": "Color of Pain",
       "is_single": false,
       "channel_id": "ch_003",
-      "views": 880283110,
-      "likes": 32401234,
-      "dislikes": 298123,
+      "views": 1304304009,
+      "likes": 48912345,
+      "dislikes": 412389,
       "duration": "52:14",
       "upload_date": "2025-12-22",
       "release_date": "2025-12-22",
@@ -227,7 +227,7 @@
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
       "subgenres": ["Post-Grunge", "Indie Rock", "Soul"],
-      "description": "The highly anticipated debut album from Bronx. A 14-track journey through love, loss, and redemption. Featuring collaborations with Stevie Wonder and Sade.",
+      "description": "The highly anticipated debut album from Bronx. A 14-track journey through love, loss, and redemption. Featuring collaborations with Stevie Wonder and Sade. AGORA COM MAIS DE 1.3 BILHÃO DE STREAMS!",
       "credits": {
         "label": "Dark Horse Records",
         "producer": "Dave Sardy, Bronx",
@@ -236,23 +236,23 @@
         "studio": "Electric Lady Studios, NYC"
       },
       "tracks": [
-        { "id": "trk_010", "title": "warm", "duration": "2:37", "plays": 84123890, "likes": 3201345 },
-        { "id": "trk_011", "title": "sweetheart", "duration": "3:31", "plays": 112345678, "likes": 4452367 },
-        { "id": "trk_012", "title": "off the couch", "duration": "3:42", "plays": 56123456, "likes": 1981234 },
-        { "id": "trk_013", "title": "will you still love me?", "duration": "4:01", "plays": 98234567, "likes": 3321456 },
-        { "id": "trk_014", "title": "never meant to cause trouble", "duration": "3:12", "plays": 43123456, "likes": 1781234 },
-        { "id": "trk_015", "title": "puzzle", "duration": "3:36", "plays": 38234567, "likes": 1691234 },
-        { "id": "trk_016", "title": "clockwork", "duration": "3:22", "plays": 62123456, "likes": 2911234 },
-        { "id": "trk_017", "title": "density", "duration": "4:06", "plays": 36123456, "likes": 1621345 },
-        { "id": "trk_018", "title": "color of pain", "duration": "5:01", "plays": 148123456, "likes": 4682345, "feat": "Stevie Wonder" },
-        { "id": "trk_019", "title": "trophies aren't made of gold", "duration": "4:21", "plays": 39123456, "likes": 1581234 },
-        { "id": "trk_020", "title": "daisies might die", "duration": "3:56", "plays": 51234567, "likes": 1721345 },
-        { "id": "trk_021", "title": "that brightness in us", "duration": "3:57", "plays": 44123456, "likes": 1671234 },
-        { "id": "trk_022", "title": "skyfall", "duration": "2:59", "plays": 86123456, "likes": 2891234, "feat": "Sade" },
-        { "id": "trk_023", "title": "xoxo, goodbye", "duration": "1:56", "plays": 38123456, "likes": 1511234 }
+        { "id": "trk_010", "title": "warm", "duration": "2:37", "plays": 124123890, "likes": 5201345 },
+        { "id": "trk_011", "title": "sweetheart", "duration": "3:31", "plays": 168345678, "likes": 6452367 },
+        { "id": "trk_012", "title": "off the couch", "duration": "3:42", "plays": 82123456, "likes": 2981234 },
+        { "id": "trk_013", "title": "will you still love me?", "duration": "4:01", "plays": 148234567, "likes": 5321456 },
+        { "id": "trk_014", "title": "never meant to cause trouble", "duration": "3:12", "plays": 63123456, "likes": 2781234 },
+        { "id": "trk_015", "title": "puzzle", "duration": "3:36", "plays": 58234567, "likes": 2691234 },
+        { "id": "trk_016", "title": "clockwork", "duration": "3:22", "plays": 92123456, "likes": 3911234 },
+        { "id": "trk_017", "title": "density", "duration": "4:06", "plays": 56123456, "likes": 2621345 },
+        { "id": "trk_018", "title": "color of pain", "duration": "5:01", "plays": 218123456, "likes": 6682345, "feat": "Stevie Wonder" },
+        { "id": "trk_019", "title": "trophies aren't made of gold", "duration": "4:21", "plays": 59123456, "likes": 2581234 },
+        { "id": "trk_020", "title": "daisies might die", "duration": "3:56", "plays": 81234567, "likes": 2721345 },
+        { "id": "trk_021", "title": "that brightness in us", "duration": "3:57", "plays": 64123456, "likes": 2671234 },
+        { "id": "trk_022", "title": "skyfall", "duration": "2:59", "plays": 128123456, "likes": 3891234, "feat": "Sade" },
+        { "id": "trk_023", "title": "xoxo, goodbye", "duration": "1:56", "plays": 58123456, "likes": 2511234 }
       ],
       "liked": false,
-      "engagement": { "velocity": 6.82, "like_ratio": 0.036, "trend": "viral" }
+      "engagement": { "velocity": 8.94, "like_ratio": 0.037, "trend": "viral" }
     },
     {
       "id": "mus_005",
@@ -312,7 +312,7 @@
       "runtime_minutes": 92,
       "rating": 8.7,
       "genre": ["Documentário", "Musical"],
-      "description": "Um documentário íntimo sobre a criação do álbum icônico 'Diamond Life' de Sade. Acompanhe os bastidores, entrevistas exclusivas e performances ao vivo que marcaram uma geração. Uma viagem pela alma do smooth jazz e soul britânico.",
+      "description": "Um documentário íntimo sobre a criação do álbum icônico 'Diamond Life' de Sade. Acompanhe os bastidores, entrevistas exclusivas e performances ao vivo que marcaram uma geração.",
       "thumbnail_url": "https://i.pinimg.com/736x/3e/f2/57/3ef257b5f4f8932733c473aa04478134.jpg",
       "gradient": ["#1a1a2e", "#16213e", "#0f3460"],
       "views": 92394,
@@ -359,15 +359,14 @@
       { "user": "madonnafan4life", "text": "Papa Don't Preach é uma das músicas mais corajosas da carreira dela. Atemporal.", "likes": 18765, "ts": "3 weeks ago" }
     ],
     "mus_003": [
-      { "user": "rockfan_ny", "text": "4 meses e ainda não enjoei. Álbum do ano! 🔥", "likes": 3412, "ts": "1 month ago" }
+      { "user": "rockfan_ny", "text": "1.3 BILHÃO! Color of Pain é simplesmente histórico. Álbum da década! 🔥👑", "likes": 89412, "ts": "2 days ago" },
+      { "user": "musiccritic_global", "text": "O Bronx redefiniu o rock alternativo com esse álbum. 1.3B é totalmente merecido.", "likes": 67234, "ts": "1 week ago" }
     ],
     "mus_005": [
       { "user": "madonnafan4life", "text": "3 dias e já é o álbum mais ouvido da década! Material Girl é hino 👑", "likes": 12812, "ts": "2 hours ago" }
     ],
     "film_001": [
-      { "user": "sade_soldier", "text": "Que documentário lindo! Sade é simplesmente divina. Chorei do começo ao fim 💎", "likes": 892, "ts": "5 days ago" },
-      { "user": "jazzlover_uk", "text": "92k views só? Esse documentário merecia milhões. Obra-prima!", "likes": 634, "ts": "1 week ago" },
-      { "user": "retro_docs", "text": "A história por trás de Diamond Life é fascinante. Obrigado por esse presente, Sade!", "likes": 421, "ts": "3 days ago" }
+      { "user": "sade_soldier", "text": "Que documentário lindo! Sade é simplesmente divina 💎", "likes": 892, "ts": "5 days ago" }
     ]
   },
   "channel_stats": {
@@ -392,28 +391,28 @@
       "engagement_rate": 0.015
     },
     "ch_003": {
-      "total_views": 880283110,
-      "total_likes": 32401234,
+      "total_views": 1304304009,
+      "total_likes": 48912345,
       "videos_count": 0,
       "music_count": 1,
       "films_count": 0,
       "albums_count": 1,
       "singles_count": 0,
-      "engagement_rate": 0.036
+      "engagement_rate": 0.037
     }
   },
-  "trending": ["vid_003", "mus_005", "vid_004", "mus_003", "vid_005", "mus_002", "film_001", "vid_002"],
+  "trending": ["mus_003", "vid_003", "mus_005", "vid_004", "vid_005", "mus_002", "film_001", "vid_002"],
   "trending_music": [
+    "mus_003",
     "mus_005",
+    "trk_018",
+    "trk_011",
     "trk_035",
     "trk_029",
     "trk_031",
     "trk_027",
-    "trk_032",
-    "trk_018",
-    "trk_011",
     "trk_001",
-    "mus_003"
+    "trk_022"
   ],
   "trending_films": ["film_001"],
   "trending_shorts": [],
