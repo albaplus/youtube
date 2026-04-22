@@ -129,7 +129,25 @@
       "engagement": { "velocity": 5.8, "like_ratio": 0.056, "trend": "viral" }
     }
   ],
-  "shorts": [],
+  "shorts": [
+    {
+      "id": "short_001",
+      "type": "short",
+      "title": "Madonna \"Holiday\" 🎉💃 #INA #shorts",
+      "channel_id": "ch_001",
+      "views": 1500000,
+      "likes": 85000,
+      "dislikes": 300,
+      "upload_date": "2026-04-20",
+      "duration": "0:45",
+      "description": "Celebrating the iconic 'Holiday' with a fresh short! 💃✨ #Madonna #Holiday #Shorts",
+      "thumbnail_url": "https://i.ytimg.com/vi/q2UuI2LWE_A/maxresdefault.jpg",
+      "embed_url": "https://www.youtube.com/embed/q2UuI2LWE_A",
+      "gradient": ["#e84393", "#fd79a8", "#d63031"],
+      "liked": false,
+      "engagement": { "velocity": 3.2, "like_ratio": 0.057, "trend": "steady" }
+    }
+  ],
   "music": [
     {
       "id": "mus_001",
@@ -280,6 +298,11 @@
       { "user": "80smemories", "text": "This song never gets old. Pure nostalgia 🌺", "likes": 1900, "ts": "45 minutes ago" },
       { "user": "madonnaforever", "text": "Queen of Pop showing why she's the GOAT 👑", "likes": 1200, "ts": "30 minutes ago" }
     ],
+    "short_001": [
+      { "user": "poplover", "text": "This is the energy we need! 🎉", "likes": 450, "ts": "2 days ago" },
+      { "user": "80skid", "text": "Holiday never gets old 🙌", "likes": 320, "ts": "1 day ago" },
+      { "user": "dancefloorqueen", "text": "Madonna still ruling the shorts game 👑", "likes": 280, "ts": "12 hours ago" }
+    ],
     "mus_003": [
       { "user": "rockfan_ny", "text": "Finally! 'Broken Glass' is an instant classic 🔥", "likes": 1200, "ts": "2 hours ago" },
       { "user": "altmusicjunkie", "text": "The production on this album is insane.", "likes": 980, "ts": "5 hours ago" },
@@ -295,20 +318,21 @@
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 47814856,
-      "total_likes": 2290000,
+      "total_views": 49314856,
+      "total_likes": 2375000,
       "videos_count": 2,
       "music_count": 2,
+      "shorts_count": 1,
       "engagement_rate": 0.048,
       "analytics": {
         "subscriber_growth": [500000, 504000, 507000, 509000],
-        "views_last_7_days": 15938282,
+        "views_last_7_days": 17438282,
         "top_regions": ["US", "UK", "BR", "ES", "MX"],
-        "watch_time_hours": 5200
+        "watch_time_hours": 5350
       },
       "monetization": {
-        "total_earnings": 2150.00,
-        "monthly_earnings": 430.00,
+        "total_earnings": 2270.00,
+        "monthly_earnings": 454.00,
         "top_video": "vid_003",
         "rpm_avg": 2.4
       }
@@ -328,10 +352,10 @@
       "engagement_rate": 0.062
     }
   },
-  "trending": ["mus_003", "vid_003", "mus_004", "vid_002", "mus_001"],
+  "trending": ["mus_003", "vid_003", "mus_004", "short_001", "vid_002", "mus_001"],
   "trending_music": ["mus_003", "mus_004", "mus_001", "mus_002"],
   "trending_films": [],
-  "trending_shorts": [],
+  "trending_shorts": ["short_001"],
   "algorithm": {
     "weights": { "retention": 0.40, "likes": 0.25, "subscribers": 0.20, "recent_engagement": 0.15 },
     "viralization_threshold": 0.003,
