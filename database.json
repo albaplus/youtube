@@ -50,7 +50,34 @@
     }
   ],
   "shorts": [],
-  "music": [],
+  "music": [
+    {
+      "id": "mus_001",
+      "type": "music",
+      "title": "Holiday (7\" Version) [2022 Remaster]",
+      "artist": "Madonna",
+      "album": "Madonna (Deluxe Edition)",
+      "channel_id": "ch_001",
+      "views": 1293283,
+      "likes": 85000,
+      "dislikes": 1200,
+      "duration": "4:01",
+      "upload_date": "2026-04-22",
+      "thumbnail_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBej0BPezQHBU_TRBW73sE7jEB6Iton6Ooq8hCKaa15xtE5iGB0hp1ukk5wXtOMJvKTs3MkIfmYlJHIGFi6ShZSSpV4oP2cckY60nTJeb47YyTtWBpVKBFTQXG-Y3-P0YCdjinNhoREgi3hH-5t_FUjoJtIwF5iOA3IeIRgxI-_IV4dm5NVp8eZs0FsSN-/s1024/holiday.png",
+      "gradient": ["#e84393", "#fd79a8", "#d63031"],
+      "genre": "Pop",
+      "bpm": 116,
+      "key": "D",
+      "description": "Official remastered audio for Madonna's iconic debut single 'Holiday' (7\" Version). Originally released in 1983.",
+      "embed_url": "https://www.youtube.com/embed/p7cjMjgPHzM",
+      "liked": false,
+      "engagement": {
+        "velocity": 3.4,
+        "like_ratio": 0.065,
+        "trend": "viral"
+      }
+    }
+  ],
   "films": [],
   "live_streams": [],
   "playlists": [],
@@ -86,33 +113,53 @@
         "likes": 1200,
         "ts": "2 weeks ago"
       }
+    ],
+    "mus_001": [
+      {
+        "user": "PopMusicLover",
+        "text": "This remaster sounds incredible! The bass is so crisp. 🎧",
+        "likes": 2100,
+        "ts": "1 hour ago"
+      },
+      {
+        "user": "80sKidForever",
+        "text": "The song that started it all. Still fresh after all these years.",
+        "likes": 1800,
+        "ts": "3 hours ago"
+      },
+      {
+        "user": "MadonnaCollector",
+        "text": "Finally the 7\" version in HD quality! Thank you Madonna team!",
+        "likes": 1500,
+        "ts": "5 hours ago"
+      }
     ]
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 1928292,
-      "total_likes": 100000,
+      "total_views": 3221575,
+      "total_likes": 185000,
       "videos_count": 1,
       "shorts_count": 0,
-      "music_count": 0,
+      "music_count": 1,
       "films_count": 0,
-      "engagement_rate": 0.052,
+      "engagement_rate": 0.057,
       "analytics": {
         "subscriber_growth": [500000, 504000, 507000, 509000],
         "views_last_7_days": 12400,
-        "top_regions": ["US", "UK", "BR", "CA"],
-        "watch_time_hours": 2400
+        "top_regions": ["US", "UK", "BR", "CA", "IT"],
+        "watch_time_hours": 3600
       },
       "monetization": {
-        "total_earnings": 820.00,
-        "monthly_earnings": 68.33,
-        "top_video": "vid_001",
-        "rpm_avg": 2.1
+        "total_earnings": 1380.00,
+        "monthly_earnings": 115.00,
+        "top_video": "mus_001",
+        "rpm_avg": 2.2
       }
     }
   },
-  "trending": ["vid_001"],
-  "trending_music": [],
+  "trending": ["mus_001", "vid_001"],
+  "trending_music": ["mus_001"],
   "trending_films": [],
   "trending_shorts": [],
   "algorithm": {
@@ -128,7 +175,7 @@
   },
   "tick_system": {
     "interval": "5s",
-    "update": ["views", "likes"],
+    "update": ["views", "likes", "music_streams"],
     "persist": true
   },
   "live_simulation": {
