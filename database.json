@@ -139,11 +139,13 @@
       "album": "Diamond Life",
       "is_single": false,
       "channel_id": "ch_002",
-      "views": 45123847,
-      "likes": 621456,
-      "dislikes": 12389,
+      "views": 610394293,
+      "likes": 8912345,
+      "dislikes": 156789,
       "duration": "44:28",
-      "upload_date": "1984-07-16",
+      "upload_date": "2025-08-22",
+      "release_date": "2025-08-22",
+      "age": "8 meses",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ad27e16c5f844ea1ad6797cd",
       "gradient": ["#2c3e50", "#34495e", "#1a252f"],
       "genre": "Soul / Smooth Jazz",
@@ -154,15 +156,15 @@
         "studio": "Power Plant Studios, London"
       },
       "tracks": [
-        { "id": "trk_001", "title": "Smooth Operator", "duration": "4:58", "plays": 18512389, "likes": 421345, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
-        { "id": "trk_002", "title": "Your Love Is King", "duration": "3:39", "plays": 8234567, "likes": 211234, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
-        { "id": "trk_003", "title": "Hang on to Your Love", "duration": "5:58", "plays": 5412367, "likes": 151987, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
-        { "id": "trk_004", "title": "Frankie's First Affair", "duration": "4:38", "plays": 3123456, "likes": 89456, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
-        { "id": "trk_005", "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 2812345, "likes": 72654, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
-        { "id": "trk_006", "title": "Cherry Pie", "duration": "6:20", "plays": 1912367, "likes": 54321, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
-        { "id": "trk_007", "title": "Sally", "duration": "5:23", "plays": 1612345, "likes": 48213, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
-        { "id": "trk_008", "title": "I Will Be Your Friend", "duration": "4:45", "plays": 2213456, "likes": 61234, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
-        { "id": "trk_009", "title": "Why Can't We Live Together", "duration": "5:27", "plays": 1412367, "likes": 41238, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
+        { "id": "trk_001", "title": "Smooth Operator", "duration": "4:58", "plays": 251234567, "likes": 3214567, "embed_url": "https://www.youtube.com/embed/OPgmQc3OkFs" },
+        { "id": "trk_002", "title": "Your Love Is King", "duration": "3:39", "plays": 112345678, "likes": 2112345, "embed_url": "https://www.youtube.com/embed/TSXpYUPl1Hg" },
+        { "id": "trk_003", "title": "Hang on to Your Love", "duration": "5:58", "plays": 74123678, "likes": 1519876, "embed_url": "https://www.youtube.com/embed/z2t9RmOe4K0" },
+        { "id": "trk_004", "title": "Frankie's First Affair", "duration": "4:38", "plays": 41234567, "likes": 894567, "embed_url": "https://www.youtube.com/embed/ZU6JhRNWj7o" },
+        { "id": "trk_005", "title": "When Am I Going to Make a Living", "duration": "3:27", "plays": 38123456, "likes": 726543, "embed_url": "https://www.youtube.com/embed/PtDx82aOuBo" },
+        { "id": "trk_006", "title": "Cherry Pie", "duration": "6:20", "plays": 29123456, "likes": 543218, "embed_url": "https://www.youtube.com/embed/0kTDSRSqbio" },
+        { "id": "trk_007", "title": "Sally", "duration": "5:23", "plays": 26123456, "likes": 482134, "embed_url": "https://www.youtube.com/embed/K8N3gfuhdZQ" },
+        { "id": "trk_008", "title": "I Will Be Your Friend", "duration": "4:45", "plays": 32134567, "likes": 612345, "embed_url": "https://www.youtube.com/embed/uB-IwYVLVDA" },
+        { "id": "trk_009", "title": "Why Can't We Live Together", "duration": "5:27", "plays": 24123678, "likes": 412389, "embed_url": "https://www.youtube.com/embed/iQI2-BJPA3I" }
       ],
       "liked": false,
       "engagement": { "velocity": 2.14, "like_ratio": 0.014, "trend": "steady" }
@@ -175,12 +177,13 @@
       "album": "Color of Pain",
       "is_single": false,
       "channel_id": "ch_003",
-      "views": 190283492,
-      "likes": 12401234,
-      "dislikes": 98123,
+      "views": 880283110,
+      "likes": 32401234,
+      "dislikes": 298123,
       "duration": "52:14",
-      "upload_date": "2026-04-22",
-      "release_date": "2026-04-22",
+      "upload_date": "2025-12-22",
+      "release_date": "2025-12-22",
+      "age": "4 meses",
       "release_status": "released",
       "thumbnail_url": "https://m.media-amazon.com/images/I/61H4amLWTWL._AC_._SX500_SCLZZZZZZZ_.jpg",
       "gradient": ["#4a0000", "#660000", "#330000"],
@@ -195,23 +198,23 @@
         "studio": "Electric Lady Studios, NYC"
       },
       "tracks": [
-        { "id": "trk_010", "title": "warm", "duration": "2:37", "plays": 18412389, "likes": 1201345 },
-        { "id": "trk_011", "title": "sweetheart", "duration": "3:31", "plays": 21234567, "likes": 1452367 },
-        { "id": "trk_012", "title": "off the couch", "duration": "3:42", "plays": 15612345, "likes": 981234 },
-        { "id": "trk_013", "title": "will you still love me?", "duration": "4:01", "plays": 19823456, "likes": 1321456 },
-        { "id": "trk_014", "title": "never meant to cause trouble", "duration": "3:12", "plays": 12312345, "likes": 781234 },
-        { "id": "trk_015", "title": "puzzle", "duration": "3:36", "plays": 10823456, "likes": 691234 },
-        { "id": "trk_016", "title": "clockwork", "duration": "3:22", "plays": 14212345, "likes": 911234 },
-        { "id": "trk_017", "title": "density", "duration": "4:06", "plays": 9612345, "likes": 621345 },
-        { "id": "trk_018", "title": "color of pain", "duration": "5:01", "plays": 24812345, "likes": 1682345, "feat": "Stevie Wonder" },
-        { "id": "trk_019", "title": "trophies aren't made of gold", "duration": "4:21", "plays": 8912345, "likes": 581234 },
-        { "id": "trk_020", "title": "daisies might die", "duration": "3:56", "plays": 11212345, "likes": 721345 },
-        { "id": "trk_021", "title": "that brightness in us", "duration": "3:57", "plays": 10412345, "likes": 671234 },
-        { "id": "trk_022", "title": "skyfall", "duration": "2:59", "plays": 13612345, "likes": 891234, "feat": "Sade" },
-        { "id": "trk_023", "title": "xoxo, goodbye", "duration": "1:56", "plays": 7812345, "likes": 511234 }
+        { "id": "trk_010", "title": "warm", "duration": "2:37", "plays": 84123890, "likes": 3201345 },
+        { "id": "trk_011", "title": "sweetheart", "duration": "3:31", "plays": 112345678, "likes": 4452367 },
+        { "id": "trk_012", "title": "off the couch", "duration": "3:42", "plays": 56123456, "likes": 1981234 },
+        { "id": "trk_013", "title": "will you still love me?", "duration": "4:01", "plays": 98234567, "likes": 3321456 },
+        { "id": "trk_014", "title": "never meant to cause trouble", "duration": "3:12", "plays": 43123456, "likes": 1781234 },
+        { "id": "trk_015", "title": "puzzle", "duration": "3:36", "plays": 38234567, "likes": 1691234 },
+        { "id": "trk_016", "title": "clockwork", "duration": "3:22", "plays": 62123456, "likes": 2911234 },
+        { "id": "trk_017", "title": "density", "duration": "4:06", "plays": 36123456, "likes": 1621345 },
+        { "id": "trk_018", "title": "color of pain", "duration": "5:01", "plays": 148123456, "likes": 4682345, "feat": "Stevie Wonder" },
+        { "id": "trk_019", "title": "trophies aren't made of gold", "duration": "4:21", "plays": 39123456, "likes": 1581234 },
+        { "id": "trk_020", "title": "daisies might die", "duration": "3:56", "plays": 51234567, "likes": 1721345 },
+        { "id": "trk_021", "title": "that brightness in us", "duration": "3:57", "plays": 44123456, "likes": 1671234 },
+        { "id": "trk_022", "title": "skyfall", "duration": "2:59", "plays": 86123456, "likes": 2891234, "feat": "Sade" },
+        { "id": "trk_023", "title": "xoxo, goodbye", "duration": "1:56", "plays": 38123456, "likes": 1511234 }
       ],
       "liked": false,
-      "engagement": { "velocity": 6.82, "like_ratio": 0.065, "trend": "viral" }
+      "engagement": { "velocity": 6.82, "like_ratio": 0.036, "trend": "viral" }
     },
     {
       "id": "mus_005",
@@ -221,12 +224,13 @@
       "album": "Material Girl",
       "is_single": false,
       "channel_id": "ch_001",
-      "views": 36392299,
-      "likes": 2851234,
-      "dislikes": 34189,
+      "views": 590394293,
+      "likes": 12851234,
+      "dislikes": 234189,
       "duration": "45:23",
-      "upload_date": "2026-04-22",
-      "release_date": "2026-04-22",
+      "upload_date": "2026-04-19",
+      "release_date": "2026-04-19",
+      "age": "3 dias",
       "release_status": "released",
       "thumbnail_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5eY4ipO1QY5sZ_vDtGzHMcbktdin6nkeM280-52_dn6nQb2073lKwYH28I4CNI3tfiYzO-6CkzI6M7UGJk5MMVgs89JANX_xmmwL108nazwe2oQpj3bsXWrZGDeb4QbSBAKOLIPF1P6EAL_F7MmG0WcMCLjYJFCqV6k2u6D6ogyXPrIfAW7TqgibZWKxN/s1024/sem%20tipo%202.png",
       "gradient": ["#ff69b4", "#ff1493", "#c71585"],
@@ -241,21 +245,21 @@
         "studio": "Various"
       },
       "tracks": [
-        { "id": "trk_024", "title": "Burning Up", "duration": "3:45", "plays": 2851234, "likes": 268345, "embed_url": "https://www.youtube.com/embed/pufec0Hps00" },
-        { "id": "trk_025", "title": "Borderline", "duration": "4:00", "plays": 3451234, "likes": 320456, "embed_url": "https://www.youtube.com/embed/rSaC-YbSDpo" },
-        { "id": "trk_026", "title": "I Know It", "duration": "3:47", "plays": 1203456, "likes": 95678, "embed_url": "https://www.youtube.com/embed/e1LZbE-rovw" },
-        { "id": "trk_027", "title": "Holiday", "duration": "4:01", "plays": 4851234, "likes": 520345, "embed_url": "https://www.youtube.com/embed/p7cjMjgPHzM" },
-        { "id": "trk_028", "title": "Angel", "duration": "3:56", "plays": 2651234, "likes": 245678, "embed_url": "https://www.youtube.com/embed/J7W3oVF4O1Q" },
-        { "id": "trk_029", "title": "Material Girl", "duration": "4:04", "plays": 4981234, "likes": 510345, "embed_url": "https://www.youtube.com/embed/6p-lDYPR2P8" },
-        { "id": "trk_030", "title": "Dress You Up", "duration": "4:02", "plays": 2421234, "likes": 228456, "embed_url": "https://www.youtube.com/embed/mWtpd8mS5jw" },
-        { "id": "trk_031", "title": "Like a Virgin", "duration": "3:38", "plays": 3251234, "likes": 345678, "embed_url": "https://www.youtube.com/embed/s__rX_WL100" },
-        { "id": "trk_032", "title": "Papa Don't Preach", "duration": "4:29", "plays": 2751234, "likes": 258345, "embed_url": "https://www.youtube.com/embed/G333Is7VPOg" },
-        { "id": "trk_033", "title": "Open Your Heart", "duration": "4:13", "plays": 2351234, "likes": 222456, "embed_url": "https://www.youtube.com/embed/snsTmi9N9Gs" },
-        { "id": "trk_034", "title": "Live to Tell", "duration": "5:52", "plays": 1981234, "likes": 189345, "embed_url": "https://www.youtube.com/embed/IzAO9A9GjgI" },
-        { "id": "trk_035", "title": "La Isla Bonita", "duration": "4:02", "plays": 2651234, "likes": 252456, "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ" }
+        { "id": "trk_024", "title": "Burning Up", "duration": "3:45", "plays": 48512345, "likes": 1268345, "embed_url": "https://www.youtube.com/embed/pufec0Hps00" },
+        { "id": "trk_025", "title": "Borderline", "duration": "4:00", "plays": 64512345, "likes": 2320456, "embed_url": "https://www.youtube.com/embed/rSaC-YbSDpo" },
+        { "id": "trk_026", "title": "I Know It", "duration": "3:47", "plays": 22034567, "likes": 895678, "embed_url": "https://www.youtube.com/embed/e1LZbE-rovw" },
+        { "id": "trk_027", "title": "Holiday", "duration": "4:01", "plays": 88512345, "likes": 2520345, "embed_url": "https://www.youtube.com/embed/p7cjMjgPHzM" },
+        { "id": "trk_028", "title": "Angel", "duration": "3:56", "plays": 36512345, "likes": 1245678, "embed_url": "https://www.youtube.com/embed/J7W3oVF4O1Q" },
+        { "id": "trk_029", "title": "Material Girl", "duration": "4:04", "plays": 99812345, "likes": 3510345, "embed_url": "https://www.youtube.com/embed/6p-lDYPR2P8" },
+        { "id": "trk_030", "title": "Dress You Up", "duration": "4:02", "plays": 44212345, "likes": 1228456, "embed_url": "https://www.youtube.com/embed/mWtpd8mS5jw" },
+        { "id": "trk_031", "title": "Like a Virgin", "duration": "3:38", "plays": 72512345, "likes": 2345678, "embed_url": "https://www.youtube.com/embed/s__rX_WL100" },
+        { "id": "trk_032", "title": "Papa Don't Preach", "duration": "4:29", "plays": 37512345, "likes": 1258345, "embed_url": "https://www.youtube.com/embed/G333Is7VPOg" },
+        { "id": "trk_033", "title": "Open Your Heart", "duration": "4:13", "plays": 33512345, "likes": 1222456, "embed_url": "https://www.youtube.com/embed/snsTmi9N9Gs" },
+        { "id": "trk_034", "title": "Live to Tell", "duration": "5:52", "plays": 19812345, "likes": 889345, "embed_url": "https://www.youtube.com/embed/IzAO9A9GjgI" },
+        { "id": "trk_035", "title": "La Isla Bonita", "duration": "4:02", "plays": 46512345, "likes": 1252456, "embed_url": "https://www.youtube.com/embed/zpzdgmqIHOQ" }
       ],
       "liked": false,
-      "engagement": { "velocity": 7.24, "like_ratio": 0.078, "trend": "viral" }
+      "engagement": { "velocity": 9.24, "like_ratio": 0.021, "trend": "viral" }
     }
   ],
   "films": [],
@@ -281,41 +285,40 @@
       { "user": "latinpopfan", "text": "La Isla Bonita finally in HD! 💃", "likes": 2812, "ts": "1 hour ago" }
     ],
     "mus_003": [
-      { "user": "rockfan_ny", "text": "14 tracks of pure genius. Stevie Wonder AND Sade on the same album? 🔥", "likes": 3412, "ts": "3 hours ago" }
+      { "user": "rockfan_ny", "text": "4 meses e ainda não enjoei. Álbum do ano! 🔥", "likes": 3412, "ts": "1 month ago" }
     ],
     "mus_005": [
-      { "user": "madonnafan4life", "text": "FINALLY! All the classics in one place. Material Girl in HD is everything 👑", "likes": 2812, "ts": "30 minutes ago" },
-      { "user": "80sforever", "text": "This album is the definition of the 80s. Every track is iconic 💖", "likes": 1912, "ts": "45 minutes ago" },
-      { "user": "popemergency", "text": "Madonna just dropped the album of the century. 12 tracks of pure pop perfection.", "likes": 1212, "ts": "15 minutes ago" }
+      { "user": "madonnafan4life", "text": "3 dias e já é o álbum mais ouvido da década! Material Girl é hino 👑", "likes": 12812, "ts": "2 hours ago" },
+      { "user": "80sforever", "text": "590 milhões em 3 dias. Madonna é simplesmente inalcançável 💖", "likes": 9192, "ts": "1 hour ago" }
     ]
   },
   "channel_stats": {
     "ch_001": {
-      "total_views": 54738825,
-      "total_likes": 3942468,
+      "total_views": 608229358,
+      "total_likes": 13942468,
       "videos_count": 2,
       "music_count": 1,
       "singles_count": 0,
       "albums_count": 1,
-      "engagement_rate": 0.072
+      "engagement_rate": 0.022
     },
     "ch_002": {
-      "total_views": 268678492,
-      "total_likes": 4421234,
+      "total_views": 834072785,
+      "total_likes": 12712345,
       "videos_count": 1,
       "music_count": 1,
       "albums_count": 1,
       "singles_count": 0,
-      "engagement_rate": 0.016
+      "engagement_rate": 0.015
     },
     "ch_003": {
-      "total_views": 190283492,
-      "total_likes": 12401234,
+      "total_views": 880283110,
+      "total_likes": 32401234,
       "videos_count": 0,
       "music_count": 1,
       "albums_count": 1,
       "singles_count": 0,
-      "engagement_rate": 0.065
+      "engagement_rate": 0.036
     }
   },
   "trending": ["mus_005", "mus_003", "vid_003", "vid_002", "mus_002"],
