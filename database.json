@@ -56,7 +56,7 @@
       "handle": "@bronx",
       "subscribers": 2000000,
       "verified": true,
-      "description": "Official Bronx Channel. New album 'Color of Pain' coming soon.",
+      "description": "Official Bronx Channel. New album 'Color of Pain' out now.",
       "creation_date": "2023-06-01",
       "gradient": ["#1e1e1e", "#2a2a2a", "#0d0d0d"],
       "subscribed": false,
@@ -65,11 +65,11 @@
       "identity": {
         "aesthetic": "alternative rock",
         "tone": "edgy",
-        "upload_pattern": "teasers",
+        "upload_pattern": "recent",
         "fanbase_name": "Bronx Warriors"
       },
       "about": {
-        "bio": "Alternative rock band from New York. New music coming soon.",
+        "bio": "Alternative rock band from New York. 'Color of Pain' available now.",
         "location": "New York, USA",
         "links": ["bronxband.com", "instagram.com/bronx", "twitter.com/bronx"],
         "joined": "2023-06-01"
@@ -225,23 +225,48 @@
       "artist": "Bronx",
       "album": "Color of Pain",
       "channel_id": "ch_003",
-      "views": 0,
-      "likes": 0,
-      "dislikes": 0,
-      "duration": "00:00",
-      "upload_date": "",
-      "release_status": "coming_soon",
-      "pre_save_count": 908839,
+      "views": 900000,
+      "likes": 85000,
+      "dislikes": 1500,
+      "duration": "38:22",
+      "upload_date": "2026-04-22",
+      "release_status": "released",
       "thumbnail_url": "https://m.media-amazon.com/images/I/61H4amLWTWL._AC_._SX500_SCLZZZZZZZ_.jpg",
       "gradient": ["#4a0000", "#660000", "#330000"],
       "genre": "Alternative Rock",
-      "description": "The highly anticipated debut album from Bronx. Pre-save now to be the first to listen upon release.",
-      "tracks": [],
+      "description": "The highly anticipated debut album from Bronx. Out now.",
+      "tracks": [
+        {
+          "title": "Color of Pain",
+          "duration": "3:42",
+          "embed_url": null
+        },
+        {
+          "title": "Broken Glass",
+          "duration": "4:05",
+          "embed_url": null
+        },
+        {
+          "title": "Fading Lights",
+          "duration": "3:58",
+          "embed_url": null
+        },
+        {
+          "title": "Echoes",
+          "duration": "4:33",
+          "embed_url": null
+        },
+        {
+          "title": "Runaway",
+          "duration": "3:27",
+          "embed_url": null
+        }
+      ],
       "liked": false,
       "engagement": {
-        "velocity": 0,
-        "like_ratio": 0,
-        "trend": "pre_save"
+        "velocity": 3.8,
+        "like_ratio": 0.094,
+        "trend": "viral"
       }
     }
   ],
@@ -332,6 +357,26 @@
         "likes": 21000,
         "ts": "2 weeks ago"
       }
+    ],
+    "mus_003": [
+      {
+        "user": "rockfan_ny",
+        "text": "Finally! Bronx delivered. 'Broken Glass' is an instant classic 🔥",
+        "likes": 1200,
+        "ts": "2 hours ago"
+      },
+      {
+        "user": "altmusicjunkie",
+        "text": "The production on this album is insane. Worth the wait.",
+        "likes": 980,
+        "ts": "5 hours ago"
+      },
+      {
+        "user": "bronxwarrior",
+        "text": "Color of Pain is my new obsession. On repeat all day.",
+        "likes": 750,
+        "ts": "1 hour ago"
+      }
     ]
   },
   "channel_stats": {
@@ -378,29 +423,29 @@
       }
     },
     "ch_003": {
-      "total_views": 0,
-      "total_likes": 0,
+      "total_views": 900000,
+      "total_likes": 85000,
       "videos_count": 0,
       "shorts_count": 0,
       "music_count": 1,
       "films_count": 0,
-      "engagement_rate": 0,
+      "engagement_rate": 0.094,
       "analytics": {
         "subscriber_growth": [1950000, 1970000, 1985000, 2000000],
-        "views_last_7_days": 0,
+        "views_last_7_days": 900000,
         "top_regions": ["US", "UK", "CA", "AU"],
-        "watch_time_hours": 0
+        "watch_time_hours": 5800
       },
       "monetization": {
-        "total_earnings": 0,
-        "monthly_earnings": 0,
-        "top_video": null,
-        "rpm_avg": 0
+        "total_earnings": 4500.00,
+        "monthly_earnings": 4500.00,
+        "top_video": "mus_003",
+        "rpm_avg": 2.5
       }
     }
   },
-  "trending": ["vid_002", "mus_001", "vid_001", "mus_002", "mus_003"],
-  "trending_music": ["mus_001", "mus_002", "mus_003"],
+  "trending": ["mus_003", "vid_002", "mus_001", "vid_001", "mus_002"],
+  "trending_music": ["mus_003", "mus_001", "mus_002"],
   "trending_films": [],
   "trending_shorts": [],
   "algorithm": {
@@ -416,7 +461,7 @@
   },
   "tick_system": {
     "interval": "5s",
-    "update": ["views", "likes", "music_streams", "live_viewers", "pre_save_count"],
+    "update": ["views", "likes", "music_streams", "live_viewers"],
     "persist": true
   },
   "live_simulation": {
